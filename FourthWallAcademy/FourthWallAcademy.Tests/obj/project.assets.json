@@ -346,6 +346,42 @@
             "related": ".xml"
           }
         }
+      },
+      "FourthWallAcademy.App/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "FourthWallAcademy.Data": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/FourthWallAcademy.App.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FourthWallAcademy.App.dll": {}
+        }
+      },
+      "FourthWallAcademy.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/FourthWallAcademy.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FourthWallAcademy.Core.dll": {}
+        }
+      },
+      "FourthWallAcademy.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "FourthWallAcademy.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/FourthWallAcademy.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FourthWallAcademy.Data.dll": {}
+        }
       }
     }
   },
@@ -793,10 +829,26 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "FourthWallAcademy.App/1.0.0": {
+      "type": "project",
+      "path": "../FourthWallAcademy.App/FourthWallAcademy.App.csproj",
+      "msbuildProject": "../FourthWallAcademy.App/FourthWallAcademy.App.csproj"
+    },
+    "FourthWallAcademy.Core/1.0.0": {
+      "type": "project",
+      "path": "../FourthWallAcademy.Core/FourthWallAcademy.Core.csproj",
+      "msbuildProject": "../FourthWallAcademy.Core/FourthWallAcademy.Core.csproj"
+    },
+    "FourthWallAcademy.Data/1.0.0": {
+      "type": "project",
+      "path": "../FourthWallAcademy.Data/FourthWallAcademy.Data.csproj",
+      "msbuildProject": "../FourthWallAcademy.Data/FourthWallAcademy.Data.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net9.0": [
+      "FourthWallAcademy.App >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 17.11.1",
       "NUnit >= 4.2.2",
       "NUnit.Analyzers >= 4.3.0",
@@ -835,7 +887,11 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.App\\FourthWallAcademy.App.csproj": {
+              "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.App\\FourthWallAcademy.App.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

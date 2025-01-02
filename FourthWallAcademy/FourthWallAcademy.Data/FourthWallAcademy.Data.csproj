@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\FourthWallAcademy.Core\FourthWallAcademy.Core.csproj" />
+    </ItemGroup>
+
 </Project>

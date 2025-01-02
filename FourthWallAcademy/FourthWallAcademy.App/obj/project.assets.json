@@ -1,11 +1,48 @@
 {
   "version": 3,
   "targets": {
-    "net9.0": {}
+    "net9.0": {
+      "FourthWallAcademy.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/FourthWallAcademy.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FourthWallAcademy.Core.dll": {}
+        }
+      },
+      "FourthWallAcademy.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "FourthWallAcademy.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/FourthWallAcademy.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FourthWallAcademy.Data.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "FourthWallAcademy.Core/1.0.0": {
+      "type": "project",
+      "path": "../FourthWallAcademy.Core/FourthWallAcademy.Core.csproj",
+      "msbuildProject": "../FourthWallAcademy.Core/FourthWallAcademy.Core.csproj"
+    },
+    "FourthWallAcademy.Data/1.0.0": {
+      "type": "project",
+      "path": "../FourthWallAcademy.Data/FourthWallAcademy.Data.csproj",
+      "msbuildProject": "../FourthWallAcademy.Data/FourthWallAcademy.Data.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net9.0": []
+    "net9.0": [
+      "FourthWallAcademy.Data >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\thoma\\.nuget\\packages\\": {},
@@ -38,7 +75,11 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Data\\FourthWallAcademy.Data.csproj": {
+              "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Data\\FourthWallAcademy.Data.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
