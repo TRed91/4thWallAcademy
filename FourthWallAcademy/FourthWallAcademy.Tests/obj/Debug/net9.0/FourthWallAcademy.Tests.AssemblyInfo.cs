@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FourthWallAcademy.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+41a4574007b31b31cad39016f0aa5555ca4bafd8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+de4be83b7174f662878147bdc4bea4df7b61c7d3")]
 [assembly: System.Reflection.AssemblyProductAttribute("FourthWallAcademy.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FourthWallAcademy.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
