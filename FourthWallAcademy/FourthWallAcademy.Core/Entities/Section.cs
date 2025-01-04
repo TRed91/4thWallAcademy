@@ -7,8 +7,8 @@ public class Section
     public int InstructorID { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public TimeOnly StartTime { get; set; }
-    public TimeOnly EndTime { get; set; }
+    public TimeSpan StartTime { get; set; }
+    public TimeSpan EndTime { get; set; }
     
     public List<StudentSection> StudentSections { get; set; }
     public Instructor Instructor { get; set; }

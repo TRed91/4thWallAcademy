@@ -1,15 +1,11 @@
-﻿namespace FourthWallAcademy.Tests;
+﻿using FourthWallAcademy.App.Services;
+
+namespace FourthWallAcademy.Tests;
 
 public class Tests
 {
-    [SetUp]
-    public void Setup()
-    {
-    }
-
     [Test]
     public void Test1()
     {
-        Assert.Pass();
     }
 }
