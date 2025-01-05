@@ -19,65 +19,78 @@ public class StudentRepository : IStudentRepository
     {
         using (var cn = new SqlConnection(_connectionString))
         {
-            var studentSql = "SELECT * FROM Student WHERE StudentID = @id";
-            var studentPowerSql = @"SELECT * FROM StudentPower sp
-                            INNER JOIN Power p ON sp.PowerID = p.PowerID
-                            WHERE StudentID = @id";
-            var studentWeaknessSql = @"SELECT * FROM StudentWeakness sw
-                            INNER JOIN Weakness w ON sw.WeaknessID = w.WeaknessID
-                            WHERE StudentID = @id";
+            var sql1 = "SELECT * FROM Student WHERE StudentID = @id";
+            var sql2 = @"SELECT sp.*,
+                         p.PowerID AS pId, PowerTypeID, PowerName, PowerDescription 
+                         FROM StudentPower sp
+                         INNER JOIN Power p ON p.PowerID = sp.PowerID 
+                         WHERE StudentID = @id";
+            var sql3 = @"SELECT sw.*, 
+                        w.WeaknessID AS wId, WeaknessTypeID, WeaknessName, WeaknessDescription 
+                        FROM StudentWeakness sw
+                        INNER JOIN Weakness w ON w.WeaknessID = sw.WeaknessID
+                        WHERE StudentID = @id";
             
-            // fetch student
-            var student = cn.Query<Student>(studentSql, new { id })
-                .FirstOrDefault();
+            var student = cn.Query<Student>(sql1, new { id }).FirstOrDefault();
             
             if (student == null) return null;
             
-            // fetch powers and weaknesses
-            student.StudentPowers = new List<StudentPower>();
-            student.StudentWeaknesses = new List<StudentWeakness>();
+            student.StudentPowers = cn.Query<StudentPower, Power, StudentPower>(sql2, 
+                    (sp, p) =>
+                    {
+                        sp.Power = p;
+                        return sp;
+                    }, new { id }, splitOn: "pId")
+                .ToList();
             
-            var cmdPowers = new SqlCommand(studentPowerSql, cn);
-            var cmdWeaknesses = new SqlCommand(studentWeaknessSql, cn);
-            cmdPowers.Parameters.AddWithValue("@id", id);
-            cmdWeaknesses.Parameters.AddWithValue("@id", id);
-            cn.Open();
-            using (var reader = cmdPowers.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var studentPower = new StudentPower();
-                    studentPower.PowerID = (int)reader["PowerID"];
-                    studentPower.StudentID = (int)reader["StudentID"];
-                    studentPower.Rating = (byte)reader["Rating"];
-                    studentPower.Power = new Power
+            student.StudentWeaknesses = cn.Query<StudentWeakness, Weakness, StudentWeakness>(sql3, 
+                    (sw, w) =>
                     {
-                        PowerID = (int)reader["PowerID"],
-                        PowerTypeID = (int)reader["PowerTypeID"],
-                        PowerName = (string)reader["PowerName"],
-                        PowerDescription = (string)reader["PowerDescription"],
-                    };
-                    student.StudentPowers.Add(studentPower);
-                }
-            }
-            using (var reader = cmdWeaknesses.ExecuteReader())
-            {
-                while (reader.Read())
+                        sw.Weakness = w;
+                        return sw;
+                    }, new { id }, splitOn: "wId")
+                .ToList();
+            
+            return student;
+        }
+    }
+
+    public Student? GetStudentByAlias(string alias)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql1 = "SELECT * FROM Student WHERE Alias = @alias";
+            var sql2 = @"SELECT sp.*,
+                         p.PowerID AS pId, PowerTypeID, PowerName, PowerDescription 
+                         FROM StudentPower sp
+                         INNER JOIN Power p ON p.PowerID = sp.PowerID 
+                         WHERE StudentID = @id";
+            var sql3 = @"SELECT sw.*, 
+                        w.WeaknessID AS wId, WeaknessTypeID, WeaknessName, WeaknessDescription 
+                        FROM StudentWeakness sw
+                        INNER JOIN Weakness w ON w.WeaknessID = sw.WeaknessID
+                        WHERE StudentID = @id";
+            
+            var student = cn.Query<Student>(sql1, new { alias }).FirstOrDefault();
+            
+            if (student == null) return null;
+            
+            student.StudentPowers = cn.Query<StudentPower, Power, StudentPower>(sql2, 
+                (sp, p) =>
                 {
-                    var studentWeakness = new StudentWeakness();
-                    studentWeakness.WeaknessID = (int)reader["WeaknessID"];
-                    studentWeakness.StudentID = (int)reader["StudentID"];
-                    studentWeakness.RiskLevel = (byte)reader["RiskLevel"];
-                    studentWeakness.Weakness = new Weakness
+                    sp.Power = p;
+                    return sp;
+                }, new { id = student.StudentID }, splitOn: "pId")
+                .ToList();
+            
+            student.StudentWeaknesses = cn.Query<StudentWeakness, Weakness, StudentWeakness>(sql3, 
+                    (sw, w) =>
                     {
-                        WeaknessID = (int)reader["WeaknessID"],
-                        WeaknessTypeID = (int)reader["WeaknessTypeID"],
-                        WeaknessName = (string)reader["WeaknessName"],
-                        WeaknessDescription = (string)reader["WeaknessDescription"],
-                    };
-                    student.StudentWeaknesses.Add(studentWeakness);
-                }
-            }
+                        sw.Weakness = w;
+                        return sw;
+                    }, new { id = student.StudentID }, splitOn: "wId")
+                .ToList();
+            
             return student;
         }
     }

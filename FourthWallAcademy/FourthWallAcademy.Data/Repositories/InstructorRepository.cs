@@ -18,9 +18,53 @@ public class InstructorRepository : IInstructorRepository
     {
         using (var cn = new SqlConnection(_connectionString))
         {
-            return cn.Query<Instructor>("SELECT * FROM Instructor WHERE InstructorID = @id", 
-                    new { id })
-                .FirstOrDefault();
+            var sql = "SELECT * FROM Instructor WHERE InstructorID = @id";
+            var sql2 = @"SELECT s.*, 
+                        c.CourseID AS cId, SubjectID, CourseName, CourseDescription, Credits 
+                        FROM Section s
+                        INNER JOIN Course c ON c.CourseID = s.CourseID 
+                        WHERE s.InstructorID = @id";
+            
+            var instructor = cn.Query<Instructor>(sql, new { id }).FirstOrDefault();
+            
+            if (instructor == null) return null;
+
+            instructor.Sections = cn.Query<Section, Course, Section>(sql2, 
+                (section, course) =>
+                {
+                    section.Course = course;
+                    return section;
+                }, new { id }, splitOn: "cId")
+                .ToList();
+            
+            return instructor;
+        }
+    }
+
+    public Instructor? GetInstructorByAlias(string alias)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = "SELECT * FROM Instructor WHERE Alias = @alias";
+            var sql2 = @"SELECT s.*, 
+                        c.CourseID AS cId, SubjectID, CourseName, CourseDescription, Credits 
+                        FROM Section s
+                        INNER JOIN Course c ON c.CourseID = s.CourseID 
+                        WHERE s.InstructorID = @id";
+            
+            var instructor = cn.Query<Instructor>(sql, new { alias }).FirstOrDefault();
+            
+            if (instructor == null) return null;
+
+            instructor.Sections = cn.Query<Section, Course, Section>(sql2, 
+                    (section, course) =>
+                    {
+                        section.Course = course;
+                        return section;
+                    }, new { id = instructor.InstructorID }, splitOn: "cId")
+                .ToList();
+            
+            return instructor;
         }
     }
 
