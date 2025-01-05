@@ -8,9 +8,12 @@ public class StudentServiceTests
     [Test]
     public void StudentService_GetStudent_ReturnsExpectedEntity()
     {
-        var service = new StudentService("Server=localhost,1433;Database=FourthWallAcademy;User Id=sa;Password=SQLR0ck$;TrustServerCertificate=true;");
+        var repo = new StudentRepository(
+            "Server=localhost,1433;Database=FourthWallAcademy;"+
+            "User Id=sa;Password=SQLR0ck$;TrustServerCertificate=true;");
+        var service = new StudentService(repo);
+        
         var result = service.GetStudentById(1);
-
         var student = result.Data;
         
         Assert.That(student, Is.Not.Null);

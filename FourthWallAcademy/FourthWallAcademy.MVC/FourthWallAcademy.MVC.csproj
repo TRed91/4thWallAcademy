@@ -4,6 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>c9eb025b-d7d3-4292-8d50-3eed534e283c</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,6 +22,12 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.js" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.1-dev-02308" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+      <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="8.1.1-dev-00120" />
     </ItemGroup>
 
 </Project>

@@ -10,9 +10,9 @@ public class CourseService : ICourseService
 {
     private readonly ICourseRepository _repo;
 
-    public CourseService(string connectionString)
+    public CourseService(ICourseRepository repo)
     {
-        _repo = new CourseRepository(connectionString);
+        _repo = repo;
     }
     
     public Result<Course> GetCourseById(int id)

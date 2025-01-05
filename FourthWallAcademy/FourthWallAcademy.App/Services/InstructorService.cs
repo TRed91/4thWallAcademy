@@ -10,9 +10,9 @@ public class InstructorService : IInstructorService
 {
     private readonly IInstructorRepository _repo;
 
-    public InstructorService(string connectionString)
+    public InstructorService(IInstructorRepository repo)
     {
-        _repo = new InstructorRepository(connectionString);
+        _repo = repo;
     }
     
     public Result<Instructor> GetInstructorById(int id)

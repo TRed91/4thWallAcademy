@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("c9eb025b-d7d3-4292-8d50-3eed534e283c")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("FourthWallAcademy.MVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0cce8e1fe3b36a71d6f90e4e9c3fd33c020935e4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9bbf8356258efd51d73dcdbbdb84a93a6ed7789e")]
 [assembly: System.Reflection.AssemblyProductAttribute("FourthWallAcademy.MVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FourthWallAcademy.MVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

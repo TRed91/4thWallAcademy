@@ -1,5 +1,6 @@
 ﻿using FourthWallAcademy.App.Services;
 using System.Text.Json;
+using FourthWallAcademy.Data.Repositories;
 
 namespace FourthWallAcademy.Tests;
 
@@ -8,8 +9,11 @@ public class SectionServiceTests
     [Test]
     public void ConvertsSectionsToSchedule()
     {
-        var service =
-            new SectionService("Server=localhost,1433;Database=FourthWallAcademy;User Id=sa;Password=SQLR0ck$;TrustServerCertificate=true;");
+        var repo = new SectionRepository(
+            "Server=localhost,1433;Database=FourthWallAcademy;"+
+            "User Id=sa;Password=SQLR0ck$;TrustServerCertificate=true;");
+        var service = new SectionService(repo);
+        
         var startDate = new DateTime(2022, 9, 6);
         var endDate = new DateTime(2022, 9, 13);
         

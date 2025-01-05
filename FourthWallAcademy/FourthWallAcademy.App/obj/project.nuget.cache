@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "My5tNgZv1dw=",
+  "dgSpecHash": "+mCMhwzTHDk=",
   "success": true,
   "projectFilePath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.App\\FourthWallAcademy.App.csproj",
   "expectedPackageFiles": [
@@ -40,6 +40,7 @@
     "C:\\Users\\thoma\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\7.5.0\\microsoft.identitymodel.protocols.openidconnect.7.5.0.nupkg.sha512",
     "C:\\Users\\thoma\\.nuget\\packages\\microsoft.identitymodel.tokens\\7.5.0\\microsoft.identitymodel.tokens.7.5.0.nupkg.sha512",
     "C:\\Users\\thoma\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
+    "C:\\Users\\thoma\\.nuget\\packages\\serilog\\4.2.0\\serilog.4.2.0.nupkg.sha512",
     "C:\\Users\\thoma\\.nuget\\packages\\system.clientmodel\\1.0.0\\system.clientmodel.1.0.0.nupkg.sha512",
     "C:\\Users\\thoma\\.nuget\\packages\\system.configuration.configurationmanager\\9.0.0\\system.configuration.configurationmanager.9.0.0.nupkg.sha512",
     "C:\\Users\\thoma\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.1\\system.diagnostics.diagnosticsource.6.0.1.nupkg.sha512",

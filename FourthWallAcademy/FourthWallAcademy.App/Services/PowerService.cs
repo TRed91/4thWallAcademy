@@ -10,9 +10,9 @@ public class PowerService : IPowerService
 {
     private readonly IPowersRepository _repo;
 
-    public PowerService(string connectionString)
+    public PowerService(IPowersRepository repo)
     {
-        _repo = new PowerRepository(connectionString);
+        _repo = repo;
     }
     
     public Result<Power> GetPowerById(int id)

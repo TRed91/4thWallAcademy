@@ -10,9 +10,9 @@ public class StudentService : IStudentService
 {
     private readonly IStudentRepository _repo;
 
-    public StudentService(string connectionString)
+    public StudentService(IStudentRepository repo)
     {
-        _repo = new StudentRepository(connectionString);
+        _repo = repo;
     }
     
     public Result<Student> GetStudentById(int id)

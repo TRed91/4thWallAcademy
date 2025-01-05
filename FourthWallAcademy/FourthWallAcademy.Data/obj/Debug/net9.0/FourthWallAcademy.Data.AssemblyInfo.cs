@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FourthWallAcademy.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0cce8e1fe3b36a71d6f90e4e9c3fd33c020935e4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9bbf8356258efd51d73dcdbbdb84a93a6ed7789e")]
 [assembly: System.Reflection.AssemblyProductAttribute("FourthWallAcademy.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FourthWallAcademy.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

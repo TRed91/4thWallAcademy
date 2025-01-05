@@ -12,9 +12,9 @@ public class SectionService : ISectionService
 {
     private readonly ISectionRepository _repo;
 
-    public SectionService(string connectionString)
+    public SectionService(ISectionRepository repo)
     {
-        _repo = new SectionRepository(connectionString);
+        _repo = repo;
     }
     
     public Result<StudentSchedule> GetStudentSchedule(int studentId, DateTime startDate, DateTime endDate)

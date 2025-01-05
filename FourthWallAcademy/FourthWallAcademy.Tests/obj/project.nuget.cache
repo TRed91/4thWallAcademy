@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tePRFQjmyqg=",
+  "dgSpecHash": "pLxSGeYVDJg=",
   "success": true,
   "projectFilePath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Tests\\FourthWallAcademy.Tests.csproj",
   "expectedPackageFiles": [
@@ -49,6 +49,7 @@
     "C:\\Users\\thoma\\.nuget\\packages\\nunit\\4.2.2\\nunit.4.2.2.nupkg.sha512",
     "C:\\Users\\thoma\\.nuget\\packages\\nunit.analyzers\\4.3.0\\nunit.analyzers.4.3.0.nupkg.sha512",
     "C:\\Users\\thoma\\.nuget\\packages\\nunit3testadapter\\4.6.0\\nunit3testadapter.4.6.0.nupkg.sha512",
+    "C:\\Users\\thoma\\.nuget\\packages\\serilog\\4.2.0\\serilog.4.2.0.nupkg.sha512",
     "C:\\Users\\thoma\\.nuget\\packages\\system.clientmodel\\1.0.0\\system.clientmodel.1.0.0.nupkg.sha512",
     "C:\\Users\\thoma\\.nuget\\packages\\system.configuration.configurationmanager\\9.0.0\\system.configuration.configurationmanager.9.0.0.nupkg.sha512",
     "C:\\Users\\thoma\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.1\\system.diagnostics.diagnosticsource.6.0.1.nupkg.sha512",

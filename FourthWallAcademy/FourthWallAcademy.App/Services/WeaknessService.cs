@@ -9,9 +9,9 @@ public class WeaknessService : IWeaknessService
 {
     private readonly IWeaknessRepository _repo;
 
-    public WeaknessService(string connectionString)
+    public WeaknessService(IWeaknessRepository repo)
     {
-        _repo = new WeaknessRepository(connectionString);
+        _repo = repo;
     }
     
     public Result<Weakness> GetWeaknessById(int id)
