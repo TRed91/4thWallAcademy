@@ -22,13 +22,23 @@ public class SectionService : ISectionService
         try
         {
             var sections = _repo.GetSectionsByStudent(studentId);
-            sections = sections
+            var filteredSections = sections
                 .Where(s => s.EndDate >= startDate && s.StartDate <= endDate)
                 .OrderBy(s => s.StartDate)
                 .ThenBy(s => s.StartTime)
                 .ToList();
+
+            var schedule = new StudentSchedule();
             
-            var schedule = ScheduleConverter.ConvertToSchedule(sections, startDate, endDate);
+            if (filteredSections.Count > 0)
+            {
+                schedule = ScheduleConverter.ConvertToSchedule(sections, startDate, endDate);
+            }
+            else
+            {
+                schedule.StudentAlias = sections[0].StudentSections[0].Student.Alias;
+                schedule.ScheduleDays = new List<ScheduleDay>();
+            }
             
             return ResultFactory.Success(schedule);
         }
@@ -56,7 +66,7 @@ public class SectionService : ISectionService
         }
     }
 
-    public Result<List<Section>> GetSectionsList(int studentId)
+    public Result<List<Section>> GetStudentSections(int studentId)
     {
         try
         {

@@ -1,0 +1,55 @@
+﻿@model ScheduleModel
+
+@{
+    ViewData["Title"] = "4th Wall Academy: Schedule";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center">
+    <form asp-controller="Student" asp-action="Schedule" method="post" class="d-flex gap-5 mb-3">
+        @Html.AntiForgeryToken()
+        <div class="d-flex gap-3">
+            <label asp-for="Form.From" class="form-label"></label>
+            <input asp-for="Form.From" class="form-control"/>
+        </div>
+        <div class="d-flex gap-3">
+            <label asp-for="Form.To" class="form-label"></label>
+            <input asp-for="Form.To" class="form-control"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
+    <p>Student: <strong>@Model.Schedule.StudentAlias</strong></p>
+</div>
+
+@if (Model.Schedule.ScheduleDays.Count == 0)
+{
+    <h3>Not courses scheduled in the given timeframe</h3>
+}
+else
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr class="text-center">
+            <td></td>
+            <td>9:00</td>
+            <td>10:00</td>
+            <td>11:00</td>
+            <td>12:00</td>
+            <td>13:00</td>
+            <td>14:00</td>
+            <td>15:00</td>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var day in Model.Schedule.ScheduleDays)
+        {
+            <tr>
+                <td class="text-center"><span class="fw-bold">@day.Weekday</span><br/>@day.Date.Day-@day.Date.Month-@day.Date.Year</td>
+                @foreach (var course in day.ScheduleCourses)
+                {
+                    <td class="text-center">@course.Course</td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+}

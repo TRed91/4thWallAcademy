@@ -14,6 +14,10 @@ public class ScheduleConverter
     /// <returns></returns>
     public static StudentSchedule ConvertToSchedule(List<Section> sections, DateTime startDate, DateTime endDate)
     {
+        if (sections == null || sections.Count == 0)
+        {
+            return new StudentSchedule();
+        }
         // get the number of days in the schedule
         int days = endDate.Subtract(startDate).Days;
         
@@ -30,20 +34,42 @@ public class ScheduleConverter
                 Weekday = startDate.AddDays(i).DayOfWeek.ToString(),
                 ScheduleCourses = new List<ScheduleCourse>()
             };
-            foreach (var section in sections)
+            // Courses are empty on Weekends and holidays
+            if (scheduleDay.Weekday == "Sunday" ||
+                scheduleDay.Weekday == "Saturday" ||
+                (scheduleDay.Date.Month == 12 && scheduleDay.Date.Day >= 25) ||
+                (scheduleDay.Date.Month == 1 && scheduleDay.Date.Day == 1) ||
+                scheduleDay.Date.Month == 7 ||
+                scheduleDay.Date.Month == 8)
             {
-                if (section.StartDate <= scheduleDay.Date && section.EndDate >= scheduleDay.Date)
+                scheduleDay.ScheduleCourses = new List<ScheduleCourse>();
+                for (int j = 0; j < 7; j++)
                 {
-                    var scheduleCourse = new ScheduleCourse
+                    scheduleDay.ScheduleCourses.Add(new ScheduleCourse
                     {
-                        Course = section.Course.CourseName,
-                        StartTime = TimeOnly.FromTimeSpan(section.StartTime),
-                    };
-                    scheduleDay.ScheduleCourses.Add(scheduleCourse);
+                        Course = "",
+                        StartTime = new TimeOnly(9 + j, 0, 0),
+                    });
                 }
+            }
+            else
+            {
+                foreach (var section in sections)
+                {
+                    if (section.StartDate <= scheduleDay.Date && section.EndDate >= scheduleDay.Date)
+                    {
+                        var scheduleCourse = new ScheduleCourse
+                        {
+                            Course = section.Course.CourseName,
+                            StartTime = TimeOnly.FromTimeSpan(section.StartTime),
+                        };
+                        scheduleDay.ScheduleCourses.Add(scheduleCourse);
+                    }
+                }   
             }
             schedule.ScheduleDays.Add(scheduleDay);
         }
+        
         return schedule;
     }
 }

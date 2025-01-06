@@ -28,4 +28,23 @@ public class SectionServiceTests
         Assert.That(schedule.ScheduleDays[1].ScheduleCourses[0].StartTime.ToString(), Is.EqualTo("9:00 AM"));
         Assert.That(schedule.ScheduleDays[1].ScheduleCourses[0].Course, Is.EqualTo("Creative Writing"));
     }
+    
+    [Test]
+    public void ConvertsSections_ToEmptySchedule_DateOutOfRange()
+    {
+        var repo = new SectionRepository(
+            "Server=localhost,1433;Database=FourthWallAcademy;"+
+            "User Id=sa;Password=SQLR0ck$;TrustServerCertificate=true;");
+        var service = new SectionService(repo);
+        
+        var startDate = new DateTime(2024, 9, 6);
+        var endDate = new DateTime(2024, 9, 13);
+        
+        var result = service.GetStudentSchedule(2, startDate, endDate);
+        var schedule = result.Data;
+        
+        Assert.That(result.Message, Is.EqualTo(string.Empty));
+        Assert.That(schedule.StudentAlias, Is.EqualTo("Thunder Bolt"));
+        Assert.That(schedule.ScheduleDays.Count, Is.EqualTo(0));
+    }
 }

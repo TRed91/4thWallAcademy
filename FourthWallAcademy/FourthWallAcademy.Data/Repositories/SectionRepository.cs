@@ -109,7 +109,8 @@ public class SectionRepository : ISectionRepository
                 INNER JOIN Course c ON c.CourseID = se.CourseID
                 INNER JOIN StudentSection ss ON ss.SectionID = se.SectionID
                 INNER JOIN Student s ON s.StudentID = ss.StudentID
-                WHERE s.StudentID = @studentId;";
+                WHERE s.StudentID = @studentId
+                ORDER BY se.StartDate DESC, se.StartTime";
             
             return cn.Query<Section, Course, StudentSection, Student, Section>(sql,
                 (section, course, studentSection, student) =>
