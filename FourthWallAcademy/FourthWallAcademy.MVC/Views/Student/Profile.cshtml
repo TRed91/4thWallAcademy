@@ -1,0 +1,93 @@
+﻿@model StudentProfile
+
+@{
+    ViewData["Title"] = "4th Wall Academy: Profile";
+}
+
+<h1>Student Profile: @Model.Student.Alias</h1>
+<div class="d-flex justify-content-start gap-5 m-3">
+    <div>
+        <p class="mb-1">Last Name:</p>
+        <p class="lead">@Model.Student.LastName</p>
+    </div>
+    <div>
+        <p class="mb-1">First Name:</p>
+        <p class="lead">@Model.Student.FirstName</p>
+    </div>
+    <div>
+        <p class="mb-1">Date Of Birth:</p>
+        <p class="lead">@Model.Student.DoB.Day-@Model.Student.DoB.Month-@Model.Student.DoB.Year</p>
+    </div>
+</div>
+<div class="d-flex flex-wrap gap-5">
+    <div class="flex-grow-1">
+        <h2>Powers</h2>
+        <table class="table table-striped table-bordered">
+            <thead class="table-primary">
+            <tr>
+                <th>Power</th>
+                <th class="text-center">Rating</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var power in Model.Student.StudentPowers)
+            {
+                <tr>
+                    <td>@power.Power.PowerName</td>
+                    <td class="text-center">@power.Rating</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <div class="flex-grow-1">
+        <h2>Weaknesses</h2>
+        <table class="table table-striped table-bordered">
+            <thead class="table-primary">
+            <tr>
+                <th>Weakness</th>
+                <th class="text-center">Risk</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var weakness in Model.Student.StudentWeaknesses)
+            {
+                <tr>
+                    <td>@weakness.Weakness.WeaknessName</td>
+                    <td class="text-center">@weakness.RiskLevel</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <h2>Sections</h2>
+    <table class="table table-bordered table-striped table-responsive">
+        <thead class="table-primary">
+        <tr>
+            <th>St. Time</th>
+            <th>Course</th>
+            <th>St. Date</th>
+            <th>E. Date</th>
+            <th>Gr.</th>
+            <th>Abs.</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var sec in Model.Sections)
+        {
+            <tr>
+                <td>@(sec.StartTime.Hours < 10 ? "0" + sec.StartTime.Hours : sec.StartTime.Hours):@(sec.StartTime.Minutes < 10 ? "0" + sec.StartTime.Minutes : sec.StartTime.Minutes)</td>
+                <td>@sec.Course.CourseName</td>
+                <td>@sec.StartDate.Day-@sec.StartDate.Month-@sec.StartDate.Year</td>
+                <td>@sec.EndDate.Day-@sec.EndDate.Month-@sec.EndDate.Year</td>
+                <td>@sec.StudentSections[0].Grade</td>
+                <td>@sec.StudentSections[0].Absences</td>
+                <td><a asp-controller="Sections" asp-action="Details" asp-route-id="@sec.SectionID">Details</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
