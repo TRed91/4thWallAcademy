@@ -51,7 +51,7 @@ public class StudentController : Controller
         
         return View(model);
     }
-
+    
     public IActionResult Schedule(int id, ScheduleModel? model)
     {
         if (model.Form == null)
@@ -74,5 +74,19 @@ public class StudentController : Controller
         model.Schedule = scheduleResult.Data;
         
         return View(model);
+    }
+
+    public IActionResult Section(int id)
+    {
+        var sectionResult = _sectionService.GetSectionById(id);
+        if (!sectionResult.Ok)
+        {
+            _logger.LogWarning($"Error retrieving section details with id {id}: {sectionResult.Message}");
+            var msg = new TempDataExtension(false,  $"Error retrieving section details with id {id}");
+            TempData["message"] = TempDataSerializer.Serialize(msg);
+            return RedirectToAction("Index", "Home");
+                // !!! refactor to Redirect to profile with student Id instead !!!
+        }
+        return View(sectionResult.Data);
     }
 }

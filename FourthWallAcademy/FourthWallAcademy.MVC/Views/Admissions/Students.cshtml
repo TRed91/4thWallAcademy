@@ -1,0 +1,47 @@
+@model AdmissionsStudentsModel
+
+@{
+    ViewData["Title"] = "4th Wall Academy: Students";
+}
+
+<div class="mb-3 p-3" style="border: 1px solid #d1d1d1; border-radius: 3px">
+    <form asp-controller="Admissions" asp-action="Students" method="get" class="d-flex flex-wrap gap-5">
+        @Html.AntiForgeryToken()
+        <div class="d-flex gap-3 align-items-center">
+            <label asp-for="Form.Order" class="form-label"></label>
+            <select asp-for="Form.Order" asp-items="@Model.OrderList" class="form-select"></select>
+        </div>
+        <div class="d-flex gap-3 align-items-center">
+            <label asp-for="Form.startsWith" class="form-label" style="min-width: 90px"></label>
+            <select asp-for="Form.startsWith" asp-items="@Model.LetterList" class="form-select"></select>
+        </div>
+        <div class="d-flex align-items-center">
+            <input asp-for="Form.searchString" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
+</div>
+<a asp-controller="Admissions" asp-action="NewStudent">Add Student</a>
+<table class="table table-bordered table-striped mt-2">
+    <thead class="table-primary">
+    <tr>
+        <th>Name</th>
+        <th>Birth Date</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model.Students)
+        {
+            <tr>
+                <td>@student.Alias</td>
+                <td>@student.DoB.Day-@student.DoB.Month-@student.DoB.Year</td>
+                <td>
+                    <a asp-controller="Student" asp-action="Profile" asp-route-id="@student.StudentID">
+                        Details
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

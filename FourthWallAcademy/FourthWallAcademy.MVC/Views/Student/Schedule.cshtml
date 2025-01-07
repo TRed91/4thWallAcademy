@@ -4,8 +4,8 @@
     ViewData["Title"] = "4th Wall Academy: Schedule";
 }
 
-<div class="d-flex flex-wrap justify-content-between align-items-center">
-    <form asp-controller="Student" asp-action="Schedule" method="post" class="d-flex gap-5 mb-3">
+<div class="mb-3 p-3 d-flex justify-content-between align-items-center" style="border: 1px solid #d1d1d1; border-radius: 3px">
+    <form asp-controller="Student" asp-action="Schedule" method="get" class="d-flex flex-wrap gap-5 mb-3">
         @Html.AntiForgeryToken()
         <div class="d-flex gap-3">
             <label asp-for="Form.From" class="form-label"></label>

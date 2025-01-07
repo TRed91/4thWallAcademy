@@ -1,0 +1,29 @@
+@model FourthWallAcademy.Core.Entities.Section
+
+@{
+    ViewData["Title"] = "4th Wall Academy: Section";
+}
+
+@{
+    Layout = null;
+}
+
+<h1 class="display-2 text-center mb-4">Section Details</h1>
+<p>Course: <span class="lead">@Model.Course.CourseName</span></p>
+<p>Instructor: <span class="lead">@Model.Instructor.Alias</span></p>
+
+<div class="d-flex gap-5 mt-4 mb-4">
+    <div>
+        <p>Start Date: <span class="lead">@Model.StartDate.Day-@Model.StartDate.Month-@Model.StartDate.Year</span></p>
+        <p>End Date: <span class="lead">@Model.EndDate.Day-@Model.EndDate.Month-@Model.EndDate.Year</span></p>
+    </div>
+    <div>
+        <p>Start Time: <span class="lead">@Model.StartTime.Hours:@(Model.StartTime.Minutes < 10 
+                                                                     ? "0" + Model.StartTime.Minutes 
+                                                                     : Model.StartTime.Minutes)</span></p>
+        <p>End Time: <span class="lead">@Model.EndTime.Hours:@(Model.EndTime.Minutes < 10
+                                                                 ? "0" + Model.EndTime.Minutes
+                                                                 : Model.EndTime.Minutes)</span></p>
+    </div>
+</div>
+<a onclick="history.back()" class="link-info">Go Back</a>
