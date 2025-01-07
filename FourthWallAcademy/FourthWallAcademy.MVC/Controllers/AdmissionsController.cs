@@ -11,11 +11,13 @@ public class AdmissionsController : Controller
 {
     private readonly ILogger _logger;
     private readonly IStudentService _studentService;
+    private readonly ISectionService _sectionService;
 
-    public AdmissionsController(ILogger<AdmissionsController> logger, IStudentService studentService)
+    public AdmissionsController(ILogger<AdmissionsController> logger, IStudentService studentService, ISectionService sectionService)
     {
         _logger = logger;
         _studentService = studentService;
+        _sectionService = sectionService;
     }
     
     public IActionResult Students(AdmissionsStudentsModel? model)
@@ -97,5 +99,36 @@ public class AdmissionsController : Controller
         var tempMsg = new TempDataExtension(true, msg);
         TempData["message"] = TempDataSerializer.Serialize(tempMsg);
         return RedirectToAction("Students");
+    }
+
+    public IActionResult StudentDetails(int id)
+    {
+        var profileResult = _studentService.GetStudentById(id);
+
+        if (!profileResult.Ok)
+        {
+            var msg = $"Error retrieving Student Details for Student with id {id}: {profileResult.Message}";
+            _logger.LogError(msg);
+            var errorMsg = new TempDataExtension(false, msg);
+            TempData["message"] = TempDataSerializer.Serialize(errorMsg);
+        }
+
+        var sectionsResult = _sectionService.GetStudentSections(id);
+
+        if (!sectionsResult.Ok)
+        {
+            var msg = $"Error retrieving Sections for Student with id {id}: {sectionsResult.Message}";
+            _logger.LogError(msg);
+            var errorMsg = new TempDataExtension(false, msg);
+            TempData["message"] = TempDataSerializer.Serialize(errorMsg);
+        }
+
+        var model = new StudentProfile
+        {
+            Student = profileResult.Data,
+            Sections = sectionsResult.Data
+        };
+        
+        return View(model);
     }
 }
