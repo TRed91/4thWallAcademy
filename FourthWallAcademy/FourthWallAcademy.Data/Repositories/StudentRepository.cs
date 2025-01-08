@@ -118,6 +118,64 @@ public class StudentRepository : IStudentRepository
         }
     }
 
+    public void AddStudentPower(StudentPower studentPower)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"INSERT INTO StudentPower (StudentID, PowerID, Rating)
+                        VALUES (@StudentID, @PowerID, @Rating);";
+            cn.Execute(sql, new
+            {
+                studentPower.StudentID, 
+                studentPower.PowerID, 
+                studentPower.Rating
+            });
+        }
+    }
+
+    public void DeleteStudentPower(StudentPower studentPower)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"DELETE FROM StudentPower 
+                        WHERE StudentID = @StudentID AND PowerID = @PowerID";
+            cn.Execute(sql, new
+            {
+                studentPower.StudentID, 
+                studentPower.PowerID
+            });
+        }
+    }
+
+    public void AddStudentWeakness(StudentWeakness studentWeakness)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"INSERT INTO StudentWeakness (StudentID, WeaknessID, RiskLevel)
+                        VALUES (@StudentID, @WeaknessID, @RiskLevel);";
+            cn.Execute(sql, new
+            {
+                studentWeakness.StudentID,
+                studentWeakness.WeaknessID,
+                studentWeakness.RiskLevel
+            });
+        }
+    }
+
+    public void DeleteStudentWeakness(StudentWeakness studentWeakness)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"DELETE FROM StudentWeakness 
+                        WHERE StudentID = @StudentID AND WeaknessID = @WeaknessID";
+            cn.Execute(sql, new
+            {
+                studentWeakness.StudentID,
+                studentWeakness.WeaknessID,
+            });
+        }
+    }
+
     public void AddStudent(Student student)
     {
         using (var cn = new SqlConnection(_connectionString))

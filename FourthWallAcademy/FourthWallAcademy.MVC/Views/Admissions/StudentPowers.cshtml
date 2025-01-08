@@ -6,7 +6,11 @@
 
 <h2 class="display-3">Powers: @Model.StudentAlias</h2>
 <div class="card mb-3">
-    <form asp-controller="Admissions" asp-action="StudentPowers" method="post" class="d-flex gap-5 align-items-center p-3">
+    <form asp-controller="Admissions" 
+          asp-action="StudentPowers" 
+          asp-route-id="@Model.StudentID" 
+          method="post" 
+          class="d-flex gap-5 align-items-center p-3">
         @Html.AntiForgeryToken()
         <div>
             <select asp-for="Form.PowerID" asp-items="@Model.PowersSelectList" class="form-select"></select>

@@ -1,3 +1,4 @@
+using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Services;
 using FourthWallAcademy.MVC.Models;
 using FourthWallAcademy.MVC.UtilityClasses;
@@ -200,6 +201,7 @@ public class AdmissionsController : Controller
         return View(model);
     }
 
+    [HttpGet]
     public IActionResult StudentPowers(int id)
     {
         var studentResult = _studentService.GetStudentById(id);
@@ -235,5 +237,37 @@ public class AdmissionsController : Controller
         };
         
         return View(model);
+    }
+
+    [HttpPost]
+    public IActionResult StudentPowers(int id, StudentPowersModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            var errMsg = new TempDataExtension(false, "Invalid data input");
+            TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            return RedirectToAction("StudentPowers", new { id });
+        }
+
+        var studentPower = new StudentPower
+        {
+            StudentID = id,
+            PowerID = model.Form.PowerID,
+            Rating = (byte)model.Form.Rating,
+        };
+        
+        var addResult = _studentService.AddStudentPower(studentPower);
+        if (!addResult.Ok)
+        {
+            _logger.LogError($"Error adding Student Power: {addResult.Message}");
+            var errMsg = new TempDataExtension(false, "Error adding Student Power");
+            TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            return RedirectToAction("StudentPowers", new { id });
+        }
+        
+        _logger.LogInformation($"Student power added");
+        var msg = new TempDataExtension(true, $"Student power added");
+        TempData["message"] = TempDataSerializer.Serialize(msg);
+        return RedirectToAction("StudentDetails", new { id });
     }
 }

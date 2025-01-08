@@ -59,6 +59,58 @@ public class StudentService : IStudentService
         }
     }
 
+    public Result AddStudentPower(StudentPower studentPower)
+    {
+        try
+        {
+            _repo.AddStudentPower(studentPower);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
+    }
+
+    public Result DeleteStudentPower(StudentPower studentPower)
+    {
+        try
+        {
+            _repo.DeleteStudentPower(studentPower);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
+    }
+
+    public Result AddStudentWeakness(StudentWeakness studentWeakness)
+    {
+        try
+        {
+            _repo.AddStudentWeakness(studentWeakness);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
+    }
+
+    public Result DeleteStudentWeakness(StudentWeakness studentWeakness)
+    {
+        try
+        {
+            _repo.DeleteStudentWeakness(studentWeakness);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
+    }
+
     public Result AddStudent(Student student)
     {
         if (DateTime.Today.Year - student.DoB.Year < 14)
