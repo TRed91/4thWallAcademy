@@ -7,6 +7,7 @@ public interface IPowerService
 {
     Result<Power> GetPowerById(int id);
     Result<List<Power>> GetPowers();
+    Result<List<PowerType>> GetPowerTypes();
     Result AddPower(Power power);
     Result UpdatePower(Power power);
     Result DeletePower(int id);

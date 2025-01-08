@@ -6,5 +6,5 @@ public class PowerType
     public string PowerTypeName { get; set; }
     public string PowerTypeDescription { get; set; }
     
-    public List<Power> Powers { get; set; }
+    public List<Power> Powers { get; set; } = new ();
 }

@@ -1,12 +1,12 @@
 @model StudentFormModel
 
 @{
-    ViewData["Title"] = "4th Wall Academy: Enroll Student";
+    ViewData["Title"] = "4th Wall Academy: Edit Student";
 }
 
-<h1 class="display-4">Enroll new Student</h1>
+<h1 class="display-4">Edit Student Data</h1>
 
-<form asp-controller="Admissions" asp-action="NewStudent" method="post" class="m-4 w-50">
+<form asp-controller="Admissions" asp-action="EditStudent" method="post" class="m-4 w-50">
     @Html.AntiForgeryToken()
     <div class="mb-3">
         <label asp-for="Alias" class="form-label"></label>

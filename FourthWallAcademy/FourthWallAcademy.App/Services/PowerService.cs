@@ -46,6 +46,30 @@ public class PowerService : IPowerService
         }
     }
 
+    public Result<List<PowerType>> GetPowerTypes()
+    {
+        try
+        {
+            var powerTypes = _repo.GetPowerTypes();
+            var powers = _repo.GetPowers();
+            foreach (var type in powerTypes)
+            {
+                foreach (var power in powers)
+                {
+                    if (type.PowerTypeID == power.PowerTypeID)
+                    {
+                        type.Powers.Add(power);
+                    }
+                }
+            }
+            return ResultFactory.Success(powerTypes);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<List<PowerType>>(ex.Message);
+        }
+    }
+
     public Result AddPower(Power power)
     {
         try

@@ -7,5 +7,5 @@ public class Instructor
     public DateTime HireDate { get; set; }
     public DateTime? TermDate { get; set; }
     
-    public List<Section> Sections { get; set; }
+    public List<Section> Sections { get; set; } = new();
 }

@@ -8,7 +8,7 @@ public class Student
     public string Alias  { get; set; }
     public DateTime DoB { get; set; }
     
-    public List<StudentPower> StudentPowers { get; set; }
-    public List<StudentWeakness> StudentWeaknesses { get; set; }
-    public List<StudentSection> StudentSections { get; set; }
+    public List<StudentPower> StudentPowers { get; set; } = new();
+    public List<StudentWeakness> StudentWeaknesses { get; set; } = new();
+    public List<StudentSection> StudentSections { get; set; } = new();
 }

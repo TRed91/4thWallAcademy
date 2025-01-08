@@ -3,11 +3,11 @@ using FourthWallAcademy.Core.Entities;
 
 namespace FourthWallAcademy.MVC.Models;
 
-public class NewStudentModel : IValidatableObject
+public class StudentFormModel : IValidatableObject
 {
-    public NewStudentModel() { }
+    public StudentFormModel() { }
 
-    public NewStudentModel(Student entity)
+    public StudentFormModel(Student entity)
     {
         Alias = entity.Alias;
         FirstName = entity.FirstName;

@@ -1,0 +1,43 @@
+@model StudentPowersModel
+
+@{
+    ViewData["Title"] = "4th Wall Academy: Student Powers";
+}
+
+<h2 class="display-3">Powers: @Model.StudentAlias</h2>
+<div class="card mb-3">
+    <form asp-controller="Admissions" asp-action="StudentPowers" method="post" class="d-flex gap-5 align-items-center p-3">
+        @Html.AntiForgeryToken()
+        <div>
+            <select asp-for="Form.PowerID" asp-items="@Model.PowersSelectList" class="form-select"></select>
+        </div>
+        <div class="d-flex gap-1 align-items-center">
+            <label asp-for="Form.Rating" class="form-label"></label>
+            <input asp-for="Form.Rating" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>
+<table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Power Type</th>
+        <th>Rating</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var power in Model.Powers)
+        {
+            <tr>
+                <td>@power.Power.PowerName</td>
+                <td>@power.Power.PowerDescription</td>
+                <td>@power.Power.PowerType.PowerTypeName</td>
+                <td>@power.Rating</td>
+                <td><a href="" class="text-primary">Details</a> | <a href="" class="text-danger">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

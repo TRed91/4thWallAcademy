@@ -36,7 +36,22 @@ public class PowerRepository : IPowersRepository
     {
         using (var cn = new SqlConnection(_connectionString))
         {
-            return cn.Query<Power>("SELECT * FROM Power").ToList();
+            var sql = @"SELECT p.*, 
+                    pt.PowerTypeID AS ptId, PowerTypeName, PowerTypeDescription FROM Power p 
+                    INNER JOIN PowerType pt ON pt.PowerTypeID = p.PowerTypeID";
+            return cn.Query<Power, PowerType, Power>(sql, (power, type) =>
+            {
+                power.PowerType = type;
+                return power;
+            }, splitOn: "ptId").ToList();
+        }
+    }
+
+    public List<PowerType> GetPowerTypes()
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            return cn.Query<PowerType>("SELECT * FROM PowerType").ToList();
         }
     }
 

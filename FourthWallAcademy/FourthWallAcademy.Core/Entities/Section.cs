@@ -10,7 +10,7 @@ public class Section
     public TimeSpan StartTime { get; set; }
     public TimeSpan EndTime { get; set; }
     
-    public List<StudentSection> StudentSections { get; set; }
+    public List<StudentSection> StudentSections { get; set; } = new();
     public Instructor Instructor { get; set; }
     public Course Course { get; set; }
 }

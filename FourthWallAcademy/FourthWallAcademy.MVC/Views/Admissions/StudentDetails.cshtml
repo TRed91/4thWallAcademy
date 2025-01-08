@@ -8,7 +8,9 @@
     <h1>Student Profile: @Model.Student.Alias</h1>
     <a onclick="history.back()" style="cursor: pointer" class="link-primary fs-5">Go Back</a>
 </div>
-<a asp-controller="Admissions" asp-action="EditStudent" class="link-primary fs-5">Edit Personal Info</a>
+<a asp-controller="Admissions" asp-action="EditStudent" asp-route-id="@Model.Student.StudentID" class="link-primary fs-5">
+    Edit Personal Info
+</a>
 <div class="d-flex justify-content-start gap-5 m-3">
     <div>
         <p class="mb-1">Last Name:</p>
@@ -27,7 +29,9 @@
     <div class="flex-grow-1">
         <div class="d-flex justify-content-between align-items-center">
             <h2>Powers</h2>
-            <a asp-controller="Admissions" asp-action="EditPowers" class="link-primary fs-5">Edit Powers</a>
+            <a asp-controller="Admissions" asp-action="StudentPowers" asp-route-id="@Model.Student.StudentID" class="link-primary fs-5">
+                Edit Powers
+            </a>
         </div>
         <table class="table table-striped table-bordered">
             <thead class="table-primary">

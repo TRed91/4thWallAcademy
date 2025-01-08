@@ -8,6 +8,6 @@ public class Course
     public string CourseDescription { get; set; }
     public decimal Credits { get; set; }
     
-    public List<Section> Sections { get; set; }
+    public List<Section> Sections { get; set; } = new();
     public Subject Subject { get; set; }
 }

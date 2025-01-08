@@ -1,39 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.App\\FourthWallAcademy.App.csproj": {}
+    "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.App/FourthWallAcademy.App.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.App\\FourthWallAcademy.App.csproj": {
+    "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.App/FourthWallAcademy.App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.App\\FourthWallAcademy.App.csproj",
+        "projectUniqueName": "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.App/FourthWallAcademy.App.csproj",
         "projectName": "FourthWallAcademy.App",
-        "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.App\\FourthWallAcademy.App.csproj",
-        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.App\\obj\\",
+        "projectPath": "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.App/FourthWallAcademy.App.csproj",
+        "packagesPath": "/Users/thomasroth/.nuget/packages/",
+        "outputPath": "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.App/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/thomasroth/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Data\\FourthWallAcademy.Data.csproj": {
-                "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Data\\FourthWallAcademy.Data.csproj"
+              "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Data/FourthWallAcademy.Data.csproj": {
+                "projectPath": "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Data/FourthWallAcademy.Data.csproj"
               }
             }
           }
@@ -69,32 +63,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/Users/thomasroth/.dotnet/sdk/9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Core\\FourthWallAcademy.Core.csproj": {
+    "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Core/FourthWallAcademy.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Core\\FourthWallAcademy.Core.csproj",
+        "projectUniqueName": "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Core/FourthWallAcademy.Core.csproj",
         "projectName": "FourthWallAcademy.Core",
-        "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Core\\FourthWallAcademy.Core.csproj",
-        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Core\\obj\\",
+        "projectPath": "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Core/FourthWallAcademy.Core.csproj",
+        "packagesPath": "/Users/thomasroth/.nuget/packages/",
+        "outputPath": "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Core/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/thomasroth/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -140,40 +128,34 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/Users/thomasroth/.dotnet/sdk/9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Data\\FourthWallAcademy.Data.csproj": {
+    "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Data/FourthWallAcademy.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Data\\FourthWallAcademy.Data.csproj",
+        "projectUniqueName": "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Data/FourthWallAcademy.Data.csproj",
         "projectName": "FourthWallAcademy.Data",
-        "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Data\\FourthWallAcademy.Data.csproj",
-        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Data\\obj\\",
+        "projectPath": "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Data/FourthWallAcademy.Data.csproj",
+        "packagesPath": "/Users/thomasroth/.nuget/packages/",
+        "outputPath": "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Data/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/thomasroth/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Core\\FourthWallAcademy.Core.csproj": {
-                "projectPath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Core\\FourthWallAcademy.Core.csproj"
+              "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Core/FourthWallAcademy.Core.csproj": {
+                "projectPath": "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Core/FourthWallAcademy.Core.csproj"
               }
             }
           }
@@ -243,7 +225,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/Users/thomasroth/.dotnet/sdk/9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

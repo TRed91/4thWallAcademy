@@ -7,6 +7,6 @@ public class Power
     public string PowerName { get; set; }
     public string PowerDescription { get; set; }
     
-    public List <StudentPower> StudentPowers { get; set; }
+    public List<StudentPower> StudentPowers { get; set; } = new ();
     public PowerType PowerType { get; set; }
 }

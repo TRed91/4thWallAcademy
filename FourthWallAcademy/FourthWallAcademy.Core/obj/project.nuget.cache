@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "WRi2RO3A/2k=",
+  "dgSpecHash": "pNAk9Ge8LlQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\thoma\\source\\repos\\CS400\\4thWallAcademy\\FourthWallAcademy\\FourthWallAcademy.Core\\FourthWallAcademy.Core.csproj",
+  "projectFilePath": "/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.Core/FourthWallAcademy.Core.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\thoma\\.nuget\\packages\\serilog\\4.2.0\\serilog.4.2.0.nupkg.sha512"
+    "/Users/thomasroth/.nuget/packages/serilog/4.2.0/serilog.4.2.0.nupkg.sha512"
   ],
   "logs": []
 }

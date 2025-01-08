@@ -21,34 +21,40 @@ public class StudentRepository : IStudentRepository
         {
             var sql1 = "SELECT * FROM Student WHERE StudentID = @id";
             var sql2 = @"SELECT sp.*,
-                         p.PowerID AS pId, PowerTypeID, PowerName, PowerDescription 
+                         p.PowerID AS pId, p.PowerTypeID, PowerName, PowerDescription,
+                         pt.PowerTypeID AS ptId, PowerTypeName, PowerTypeDescription
                          FROM StudentPower sp
                          INNER JOIN Power p ON p.PowerID = sp.PowerID 
+                         INNER JOIN PowerType pt ON pt.PowerTypeID = p.PowerTypeID
                          WHERE StudentID = @id";
             var sql3 = @"SELECT sw.*, 
-                        w.WeaknessID AS wId, WeaknessTypeID, WeaknessName, WeaknessDescription 
+                        w.WeaknessID AS wId, w.WeaknessTypeID, WeaknessName, WeaknessDescription,
+                        wt.WeaknessTypeID AS wtId, WeaknessTypeName, WeaknessTypeDescription
                         FROM StudentWeakness sw
                         INNER JOIN Weakness w ON w.WeaknessID = sw.WeaknessID
+                        INNER JOIN WeaknessType wt ON wt.WeaknessTypeID = w.WeaknessTypeID
                         WHERE StudentID = @id";
             
             var student = cn.Query<Student>(sql1, new { id }).FirstOrDefault();
             
             if (student == null) return null;
             
-            student.StudentPowers = cn.Query<StudentPower, Power, StudentPower>(sql2, 
-                    (sp, p) =>
+            student.StudentPowers = cn.Query<StudentPower, Power, PowerType, StudentPower>(sql2, 
+                    (sp, p, pt) =>
                     {
                         sp.Power = p;
+                        sp.Power.PowerType = pt;
                         return sp;
-                    }, new { id }, splitOn: "pId")
+                    }, new { id }, splitOn: "pId, ptId")
                 .ToList();
             
-            student.StudentWeaknesses = cn.Query<StudentWeakness, Weakness, StudentWeakness>(sql3, 
-                    (sw, w) =>
+            student.StudentWeaknesses = cn.Query<StudentWeakness, Weakness, WeaknessType, StudentWeakness>(sql3, 
+                    (sw, w, wt) =>
                     {
                         sw.Weakness = w;
+                        sw.Weakness.WeaknessType = wt;
                         return sw;
-                    }, new { id }, splitOn: "wId")
+                    }, new { id }, splitOn: "wId, wtId")
                 .ToList();
             
             return student;

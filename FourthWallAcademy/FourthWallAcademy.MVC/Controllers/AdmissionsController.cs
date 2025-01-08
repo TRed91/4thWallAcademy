@@ -12,12 +12,17 @@ public class AdmissionsController : Controller
     private readonly ILogger _logger;
     private readonly IStudentService _studentService;
     private readonly ISectionService _sectionService;
+    private readonly IPowerService _powerService;
 
-    public AdmissionsController(ILogger<AdmissionsController> logger, IStudentService studentService, ISectionService sectionService)
+    public AdmissionsController(ILogger<AdmissionsController> logger, 
+        IStudentService studentService, 
+        ISectionService sectionService,
+        IPowerService powerService)
     {
         _logger = logger;
         _studentService = studentService;
         _sectionService = sectionService;
+        _powerService = powerService;
     }
     
     public IActionResult Students(AdmissionsStudentsModel? model)
@@ -70,20 +75,20 @@ public class AdmissionsController : Controller
     [HttpGet]
     public IActionResult NewStudent()
     {
-        var model = new NewStudentModel();
+        var model = new StudentFormModel();
         model.DoB = DateTime.Today;
         return View(model);
     }
 
     [HttpPost]
-    public IActionResult NewStudent(NewStudentModel model)
+    public IActionResult NewStudent(StudentFormModel formModel)
     {
         if (!ModelState.IsValid)
         {
-            return View(model);
+            return View(formModel);
         }
 
-        var student = model.ToEntity();
+        var student = formModel.ToEntity();
         var addResult = _studentService.AddStudent(student);
         
         if (!addResult.Ok)
@@ -91,7 +96,7 @@ public class AdmissionsController : Controller
             _logger.LogError($"Error adding new student: {addResult.Message}");
             var errMsg = new TempDataExtension(false, $"Error adding new student: {addResult.Message}");
             TempData["message"] = TempDataSerializer.Serialize(errMsg);
-            return View(model);
+            return View(formModel);
         }
 
         var msg = $"New student added: Id: {student.StudentID}, Alias: {student.Alias}";
@@ -99,6 +104,69 @@ public class AdmissionsController : Controller
         var tempMsg = new TempDataExtension(true, msg);
         TempData["message"] = TempDataSerializer.Serialize(tempMsg);
         return RedirectToAction("Students");
+    }
+
+    [HttpGet]
+    public IActionResult EditStudent(int id)
+    {
+        var studentResult = _studentService.GetStudentById(id);
+        if (!studentResult.Ok)
+        {
+            var msg = $"Error retrieving student with id {id}: {studentResult.Message}";
+            _logger.LogError(msg);
+            var errMsg = new TempDataExtension(false, msg);
+            TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            return RedirectToAction("StudentDetails", new { id });
+        }
+        var model = new StudentFormModel(studentResult.Data);
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult EditStudent(int id, StudentFormModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+        
+        // Fetch the old previous student data
+        var studentResult = _studentService.GetStudentById(id);
+        if (!studentResult.Ok)
+        {
+            var msg = $"Error retrieving student with id {id}: {studentResult.Message}";
+            _logger.LogError(msg);
+            var errMsg = new TempDataExtension(false, msg);
+            TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            
+            return View(model);
+        }
+        // replace the student data with model
+        var student = studentResult.Data;
+        student.Alias = model.Alias;
+        student.FirstName = model.FirstName;
+        student.LastName = model.LastName;
+        student.DoB = model.DoB;
+        
+        // update
+        var updateResult = _studentService.UpdateStudent(student);
+        if (!updateResult.Ok)
+        {
+            var msg = $"Error updating student with id {id}: {updateResult.Message}";
+            _logger.LogError(msg);
+            var errMsg = new TempDataExtension(false, msg);
+            TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            
+            return View(model);
+        }
+
+        var successMsg = $"Student with id {id} updated";
+        _logger.LogInformation(successMsg);
+        var tempMsg = new TempDataExtension(true, successMsg);
+        TempData["message"] = TempDataSerializer.Serialize(tempMsg);
+        
+        return RedirectToAction("StudentDetails", new { id });
     }
 
     public IActionResult StudentDetails(int id)
@@ -127,6 +195,43 @@ public class AdmissionsController : Controller
         {
             Student = profileResult.Data,
             Sections = sectionsResult.Data
+        };
+        
+        return View(model);
+    }
+
+    public IActionResult StudentPowers(int id)
+    {
+        var studentResult = _studentService.GetStudentById(id);
+        if (!studentResult.Ok)
+        {
+            var msg = $"Error retrieving student with id {id}: {studentResult.Message}";
+            _logger.LogError(msg);
+            var errorMsg = new TempDataExtension(false, msg);
+            TempData["message"] = TempDataSerializer.Serialize(errorMsg);
+            return RedirectToAction("StudentDetails", new { id });
+        }
+
+        var powersResult = _powerService.GetPowers();
+
+        var selectList = powersResult.Data.OrderBy(p => p.PowerName)
+            .Select(p => new SelectListItem
+            {
+                Value = p.PowerID.ToString(),
+                Text = p.PowerName
+            }).ToList();
+        var head = new SelectListItem { Value = "", Text = "- SELECT POWER" };
+        selectList.Insert(0, head);
+            
+        var model = new StudentPowersModel
+        {
+            Form = new StudentPowersForm(),
+            Powers = studentResult.Data.StudentPowers
+                .OrderBy(p => p.Power.PowerName)
+                .ToList(),
+            PowersSelectList = new SelectList(selectList, "Value", "Text"),
+            StudentID = studentResult.Data.StudentID,
+            StudentAlias = studentResult.Data.Alias
         };
         
         return View(model);

@@ -7,6 +7,6 @@ public class Weakness
     public string WeaknessName { get; set; }
     public string WeaknessDescription { get; set; }
     
-    public List<StudentWeakness> StudentWeaknesses { get; set; }
+    public List<StudentWeakness> StudentWeaknesses { get; set; } = new ();
     public WeaknessType WeaknessType { get; set; }
 }
