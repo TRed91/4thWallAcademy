@@ -273,7 +273,7 @@ public class AdmissionsController : Controller
         _logger.LogInformation($"Student power added");
         var msg = new TempDataExtension(true, $"Student power added");
         TempData["message"] = TempDataSerializer.Serialize(msg);
-        return RedirectToAction("StudentDetails", new { id });
+        return RedirectToAction("StudentPowers", new { id });
     }
 
     [HttpGet]
@@ -342,5 +342,51 @@ public class AdmissionsController : Controller
         var msg = new TempDataExtension(true, $"Student Weakness added");
         TempData["message"] = TempDataSerializer.Serialize(msg);
         return RedirectToAction("StudentWeaknesses", new { id });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult RemoveStudentWeakness(int studentId, int weaknessId)
+    {
+        var weakness = new StudentWeakness
+        {
+            StudentID = studentId,
+            WeaknessID = weaknessId
+        };
+        var removeResult = _studentService.DeleteStudentWeakness(weakness);
+        if (!removeResult.Ok)
+        {
+            _logger.LogError($"Error deleting Student Weakness: {removeResult.Message}");
+            var errMsg = new TempDataExtension(false, "Error deleting Student Weakness");
+            TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            return RedirectToAction("StudentWeaknesses", new { id = studentId });
+        }
+        _logger.LogInformation($"Student Weakness removed");
+        var msg = new TempDataExtension(true, $"Student Weakness removed");
+        TempData["message"] = TempDataSerializer.Serialize(msg);
+        return RedirectToAction("StudentWeaknesses", new { id = studentId });
+    }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult RemoveStudentPower(int studentId, int powerId)
+    {
+        var power = new StudentPower
+        {
+            StudentID = studentId,
+            PowerID = powerId
+        };
+        var removeResult = _studentService.DeleteStudentPower(power);
+        if (!removeResult.Ok)
+        {
+            _logger.LogError($"Error deleting Student Weakness: {removeResult.Message}");
+            var errMsg = new TempDataExtension(false, "Error deleting Student Power");
+            TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            return RedirectToAction("StudentPowers", new { id = studentId });
+        }
+        _logger.LogInformation($"Student Weakness removed");
+        var msg = new TempDataExtension(true, $"Student Power removed");
+        TempData["message"] = TempDataSerializer.Serialize(msg);
+        return RedirectToAction("StudentPowers", new { id = studentId });
     }
 }

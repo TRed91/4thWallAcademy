@@ -19,5 +19,6 @@ public class StudentWeaknessForm
     public int WeaknessID { get; set; }
     [Required]
     [Range(1, 10)]
+    [Display(Name = "Risk Lv.(1-10)")]
     public int RiskLevel { get; set; }
 }

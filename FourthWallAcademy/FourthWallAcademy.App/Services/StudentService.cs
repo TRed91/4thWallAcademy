@@ -78,6 +78,14 @@ public class StudentService : IStudentService
 
     public Result DeleteStudentPower(StudentPower studentPower)
     {
+        if (studentPower.PowerID == 0)
+        {
+            return ResultFactory.Fail("Power ID must be set");
+        }
+        if (studentPower.StudentID == 0)
+        {
+            return ResultFactory.Fail("Student ID must be set");
+        }
         try
         {
             _repo.DeleteStudentPower(studentPower);
@@ -108,6 +116,14 @@ public class StudentService : IStudentService
 
     public Result DeleteStudentWeakness(StudentWeakness studentWeakness)
     {
+        if (studentWeakness.WeaknessID == 0)
+        {
+            return ResultFactory.Fail("Weakness ID must be set");
+        }
+        if (studentWeakness.StudentID == 0)
+        {
+            return ResultFactory.Fail("Student ID must be set");
+        }
         try
         {
             _repo.DeleteStudentWeakness(studentWeakness);
