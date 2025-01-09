@@ -61,6 +61,10 @@ public class StudentService : IStudentService
 
     public Result AddStudentPower(StudentPower studentPower)
     {
+        if (studentPower.Rating < 1 || studentPower.Rating > 100)
+        {
+            return ResultFactory.Fail("Rating must be between 1 and 100");
+        }
         try
         {
             _repo.AddStudentPower(studentPower);
@@ -87,6 +91,10 @@ public class StudentService : IStudentService
 
     public Result AddStudentWeakness(StudentWeakness studentWeakness)
     {
+        if (studentWeakness.RiskLevel < 1 || studentWeakness.RiskLevel > 10)
+        {
+            return ResultFactory.Fail("Risk level must be between 1 and 10");
+        }
         try
         {
             _repo.AddStudentWeakness(studentWeakness);

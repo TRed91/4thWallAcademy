@@ -1,4 +1,5 @@
 using FourthWallAcademy.Core.Entities;
+using FourthWallAcademy.Core.Interfaces.Repositories;
 using FourthWallAcademy.Core.Interfaces.Services;
 using FourthWallAcademy.MVC.Models;
 using FourthWallAcademy.MVC.UtilityClasses;
@@ -14,16 +15,19 @@ public class AdmissionsController : Controller
     private readonly IStudentService _studentService;
     private readonly ISectionService _sectionService;
     private readonly IPowerService _powerService;
+    private readonly IWeaknessService _weaknessService;
 
     public AdmissionsController(ILogger<AdmissionsController> logger, 
         IStudentService studentService, 
         ISectionService sectionService,
-        IPowerService powerService)
+        IPowerService powerService,
+        IWeaknessService weaknessService)
     {
         _logger = logger;
         _studentService = studentService;
         _sectionService = sectionService;
         _powerService = powerService;
+        _weaknessService = weaknessService;
     }
     
     public IActionResult Students(AdmissionsStudentsModel? model)
@@ -222,7 +226,7 @@ public class AdmissionsController : Controller
                 Value = p.PowerID.ToString(),
                 Text = p.PowerName
             }).ToList();
-        var head = new SelectListItem { Value = "", Text = "- SELECT POWER" };
+        var head = new SelectListItem { Value = "", Text = "- SELECT POWER -" };
         selectList.Insert(0, head);
             
         var model = new StudentPowersModel
@@ -240,6 +244,7 @@ public class AdmissionsController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult StudentPowers(int id, StudentPowersModel model)
     {
         if (!ModelState.IsValid)
@@ -269,5 +274,73 @@ public class AdmissionsController : Controller
         var msg = new TempDataExtension(true, $"Student power added");
         TempData["message"] = TempDataSerializer.Serialize(msg);
         return RedirectToAction("StudentDetails", new { id });
+    }
+
+    [HttpGet]
+    public IActionResult StudentWeaknesses (int id)
+    {
+        var studentResult = _studentService.GetStudentById(id);
+        if (!studentResult.Ok)
+        {
+            var msg = $"Error retrieving student with id {id}: {studentResult.Message}";
+            _logger.LogError(msg);
+            var errorMsg = new TempDataExtension(false, msg);
+            TempData["message"] = TempDataSerializer.Serialize(errorMsg);
+        }
+
+        var weaknessesResult = _weaknessService.GetWeaknesses();
+        var selectList = weaknessesResult.Data
+            .OrderBy(w => w.WeaknessName)
+            .Select(w => new SelectListItem
+            {
+                Value = w.WeaknessID.ToString(),
+                Text = w.WeaknessName
+            }).ToList();
+        var head = new SelectListItem { Value = "", Text = "- SELECT WEAKNESS -" };
+        selectList.Insert(0, head);
+
+        var model = new StudentWeaknessModel
+        {
+            Form = new StudentWeaknessForm(),
+            Weaknesses = studentResult.Data.StudentWeaknesses
+                .OrderBy(w => w.Weakness.WeaknessName)
+                .ToList(),
+            WeaknessesSelectList = new SelectList(selectList, "Value", "Text"),
+            StudentID = studentResult.Data.StudentID,
+            StudentAlias = studentResult.Data.Alias
+        };
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult StudentWeaknesses(int id, StudentWeaknessModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            var errMsg = new TempDataExtension(false, "Invalid data input");
+            TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            return RedirectToAction("StudentWeaknesses", new { id });
+        }
+
+        var studentWeakness = new StudentWeakness
+        {
+            StudentID = id,
+            WeaknessID = model.Form.WeaknessID,
+            RiskLevel = (byte)model.Form.RiskLevel,
+        };
+        
+        var addResult = _studentService.AddStudentWeakness(studentWeakness);
+        if (!addResult.Ok)
+        {
+            _logger.LogError($"Error adding Student Weakness: {addResult.Message}");
+            var errMsg = new TempDataExtension(false, "Error adding Student Weakness");
+            TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            return RedirectToAction("StudentWeaknesses", new { id });
+        }
+        _logger.LogInformation($"Student Weakness added");
+        var msg = new TempDataExtension(true, $"Student Weakness added");
+        TempData["message"] = TempDataSerializer.Serialize(msg);
+        return RedirectToAction("StudentWeaknesses", new { id });
     }
 }

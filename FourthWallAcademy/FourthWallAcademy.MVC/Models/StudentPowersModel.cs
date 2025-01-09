@@ -18,6 +18,7 @@ public class StudentPowersForm
     [Required]
     public int PowerID { get; set; }
     [Required]
-    [Range(1, byte.MaxValue)]
+    [Range(1, 100)]
+    [Display(Name = "Rating (1-100)")]
     public int Rating { get; set; }
 }
