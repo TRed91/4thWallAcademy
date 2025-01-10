@@ -77,15 +77,14 @@ public class AdmissionsController : Controller
         return View(model);
     }
 
-    [HttpGet]
+    [HttpGet("/Enroll")]
     public IActionResult NewStudent()
     {
         var model = new StudentFormModel();
         model.DoB = DateTime.Today;
         return View(model);
     }
-
-    [HttpPost]
+    
     public IActionResult NewStudent(StudentFormModel formModel)
     {
         if (!ModelState.IsValid)

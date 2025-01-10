@@ -19,8 +19,16 @@ public class CourseRepository : ICourseRepository
     {
         using (var cn = new SqlConnection(_connectionString))
         {
-            return cn.Query<Course>("SELECT * FROM Course WHERE CourseID = @id;",
-                new { id }).FirstOrDefault();
+            var sql = @"SELECT c.*, s.SubjectID AS sId, SubjectName FROM Course c 
+                         INNER JOIN Subject s ON c.SubjectID = s.SubjectID
+                         WHERE CourseID = @id;";
+            return cn.Query<Course, Subject, Course>(sql, 
+                (course, subject) =>
+                {
+                    course.Subject = subject;
+                    return course;
+                }, splitOn: "sId",
+                param: new { id }).FirstOrDefault();
         }
     }
 
@@ -28,7 +36,23 @@ public class CourseRepository : ICourseRepository
     {
         using (var cn = new SqlConnection(_connectionString))
         {
-            return cn.Query<Course>("SELECT * FROM Course").ToList();
+            var sql = @"SELECT c.*, s.SubjectID AS sId, SubjectName 
+                        FROM Course c 
+                        INNER JOIN Subject s ON c.SubjectID = s.SubjectID";
+            return cn.Query<Course, Subject, Course>(sql, (course, subject) =>
+            {
+                course.Subject = subject;
+                return course;
+            }, splitOn: "sId").ToList();
+        }
+    }
+
+    public List<Subject> GetSubjects()
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            return cn.Query<Subject>("SELECT * FROM Subject")
+                .ToList();
         }
     }
 

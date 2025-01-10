@@ -1,4 +1,5 @@
-﻿using _4thWallCafe.Core.Utilities;
+﻿using System.Xml.Linq;
+using _4thWallCafe.Core.Utilities;
 using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Repositories;
 using FourthWallAcademy.Core.Interfaces.Services;
@@ -43,6 +44,19 @@ public class CourseService : ICourseService
         catch (Exception ex)
         {
             return ResultFactory.Fail<List<Course>>(ex.Message);
+        }
+    }
+
+    public Result<List<Subject>> GetSubjects()
+    {
+        try
+        {
+            var subjects = _repo.GetSubjects();
+            return ResultFactory.Success(subjects);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<List<Subject>>(ex.Message);
         }
     }
 

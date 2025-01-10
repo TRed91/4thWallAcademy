@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FourthWallAcademy.MVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8a3911fc98c42858812566152c132b62a62cbd7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ba185d8f61a065f9fc6acd87183dfa7f35745f8")]
 [assembly: System.Reflection.AssemblyProductAttribute("FourthWallAcademy.MVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FourthWallAcademy.MVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

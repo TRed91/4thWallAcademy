@@ -7,6 +7,7 @@ public interface ICourseService
 {
     Result<Course> GetCourseById(int id);
     Result<List<Course>> GetCourses();
+    Result<List<Subject>> GetSubjects();
     Result AddCourse(Course course);
     Result UpdateCourse(Course course);
     Result DeleteCourse(int id);
