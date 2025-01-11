@@ -1,0 +1,15 @@
+﻿@model CourseDetailsModel
+
+@{
+    ViewData["Title"] = $"4th Wall Academy : Delete {Model.CourseName}?";
+}
+
+<h2 class="display-3 text-danger text-center">Are you sure you want to delete course:</h2>
+<h2 class="display-3 text-danger text-center">@Model.CourseName</h2>
+<div class="p-5 d-flex align-items-center gap-5">
+    <form asp-controller="Courses" asp-action="DeleteCourse" asp-route-id="@Model.CourseID" class="p-0 m-0">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger">Confirm</button>
+    </form>
+    <a onclick="javascript:history.go(-1)" class="link-primary" style="cursor: pointer">Go Back</a>
+</div>

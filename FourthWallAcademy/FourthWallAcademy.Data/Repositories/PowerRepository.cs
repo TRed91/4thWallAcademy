@@ -99,6 +99,7 @@ public class PowerRepository : IPowersRepository
             var sql1 = @"DELETE FROM Power WHERE PowerID = @id;";
             var sql2 = @"DELETE FROM StudentPower WHERE PowerID = @id;";
 
+            cn.Open();
             using (var tr = cn.BeginTransaction())
             {
                 tr.Execute(sql2, new { id });

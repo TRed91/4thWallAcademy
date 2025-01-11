@@ -199,6 +199,7 @@ public class SectionRepository : ISectionRepository
             var sql1 = "DELETE FROM Section WHERE SectionID = @id;";
             var sql2 = "DELETE FROM StudentSection WHERE SectionID = @id;";
 
+            cn.Open();
             using (var tr = cn.BeginTransaction())
             {
                 tr.Execute(sql2, new { id });

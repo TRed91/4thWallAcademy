@@ -84,6 +84,7 @@ public class WeaknessRepository : IWeaknessRepository
             var sql1 = @"DELETE FROM Weakness WHERE WeaknessID = @id;";
             var sql2 = @"DELETE FROM StudentWeakness WHERE WeaknessID = @id;";
 
+            cn.Open();
             using (var tr = cn.BeginTransaction())
             {
                 tr.Execute(sql2, new { id });

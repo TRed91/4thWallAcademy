@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FourthWallAcademy.MVC.Models;
 
-public class CoursesModel
+public class CoursesIndexModel
 {
-    public CoursesForm Form { get; set; } = new CoursesForm();
+    public CoursesFilterForm FilterForm { get; set; } = new CoursesFilterForm();
     public SelectList OrderSelectList { get; set; }
     public SelectList SubjectSelectList { get; set; }
     public List<Subject> Subjects { get; set; } = new List<Subject>();
 }
 
-public class CoursesForm
+public class CoursesFilterForm
 {
     public CoursesOrder Order { get; set; } = CoursesOrder.Course;
     [Display(Name = "Subject")]

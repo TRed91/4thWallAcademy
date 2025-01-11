@@ -1,4 +1,4 @@
-﻿@model CoursesModel
+﻿@model CoursesIndexModel
 
 @{
     ViewData["Title"] = "4th Wall Academy : Courses";
@@ -8,17 +8,17 @@
     <form asp-controller="Courses" asp-action="Index" method="get" class="d-flex gap-5 align-items-center">
         <div>
             <div class="d-flex gap-2">
-                <label asp-for="Form.Order" class="form-label"></label>
-                <select asp-for="Form.Order" asp-items="@Model.OrderSelectList" class="form-select"></select>
+                <label asp-for="FilterForm.Order" class="form-label"></label>
+                <select asp-for="FilterForm.Order" asp-items="@Model.OrderSelectList" class="form-select"></select>
             </div>
             <div class="d-flex gap-2">
-                <label asp-for="Form.SubjectId" class="form-label"></label>
-                <select asp-for="Form.SubjectId" asp-items="@Model.SubjectSelectList" class="form-select">
+                <label asp-for="FilterForm.SubjectId" class="form-label"></label>
+                <select asp-for="FilterForm.SubjectId" asp-items="@Model.SubjectSelectList" class="form-select">
                     <option value="0">All</option>
                 </select>
             </div>
             <div class="mt-2">
-                <input asp-for="Form.SearchString" placeholder="Search" class="form-control">
+                <input asp-for="FilterForm.SearchString" placeholder="Search" class="form-control">
             </div>
         </div>
         <div>
@@ -26,6 +26,8 @@
         </div>
     </form>
 </div>
+
+<a asp-controller="Courses" asp-action="AddCourse" class="link-primary mb-3 fs-5">Add Course</a>
 
 @if (Model.Subjects.Count == 0)
 {
@@ -52,7 +54,9 @@ else
                     <td>@course.CourseName</td>
                     <td>@course.CourseDescription</td>
                     <td>@course.Credits</td>
-                    <td><a href="">Details</a></td>
+                    <td><a asp-controller="Courses" asp-action="Details" asp-route-id="@course.CourseID" class="link-primary">
+                        Details
+                    </a></td>
                 </tr>
             }
             </tbody>

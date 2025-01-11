@@ -105,6 +105,7 @@ public class CourseRepository : ICourseRepository
             var sql3 = @"DELETE ss FROM StudentSection ss 
                     INNER JOIN Section s ON ss.SectionID = s.SectionID 
                     WHERE CourseID = @id;";
+            cn.Open();
             using (var tr = cn.BeginTransaction())
             {
                 tr.Execute(sql3, new { id });

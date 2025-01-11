@@ -77,6 +77,11 @@ public class CourseService : ICourseService
     {
         try
         {
+            var originalCourse = _repo.GetCourseById(course.CourseID);
+            if (originalCourse == null)
+            {
+                return ResultFactory.Fail<Course>($"Course with id {course.CourseID} not found");
+            }
             _repo.UpdateCourse(course);
             return ResultFactory.Success();
         }
@@ -90,6 +95,11 @@ public class CourseService : ICourseService
     {
         try
         {
+            var course = _repo.GetCourseById(id);
+            if (course == null)
+            {
+                return ResultFactory.Fail<Course>($"Course with id {id} not found");
+            }
             _repo.DeleteCourse(id);
             return ResultFactory.Success();
         }

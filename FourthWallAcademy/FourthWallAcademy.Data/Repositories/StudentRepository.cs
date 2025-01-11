@@ -229,6 +229,7 @@ public class StudentRepository : IStudentRepository
 
             var p = new { id };
 
+            cn.Open();
             using (var tr = cn.BeginTransaction())
             {
                 tr.Execute(sql2, p);

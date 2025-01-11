@@ -85,6 +85,8 @@ public class AdmissionsController : Controller
         return View(model);
     }
     
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult NewStudent(StudentFormModel formModel)
     {
         if (!ModelState.IsValid)
