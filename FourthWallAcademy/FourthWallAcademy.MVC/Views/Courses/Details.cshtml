@@ -8,15 +8,15 @@
 <section>
     <h2 class="display-3 mt-3">@Model.CourseName</h2>
     <div class="mt-5 mb-3">
-        <p class="fw-bold">Description:</p>
+        <p class="fw-bold mb-1">Description:</p>
         <p>@Model.CourseDescription</p>
     </div>
     <p class="mb-3"><strong>Credits:</strong> @Model.Credits</p>
     <p class="mb-3"><strong>Subject:</strong> @Model.Subject</p>
 </section>
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between mt-5">
     <div class="d-flex gap-3 align-items-center">
-        <a asp-controller="Courses" asp-action="EditCourse" asp-route-id="@Model.CourseID" class="btn btn-primary">Edit</a>
+        <a asp-controller="Courses" asp-action="Edit" asp-route-id="@Model.CourseID" class="btn btn-primary">Edit</a>
         <a onclick="javascript:history.go(-1)" class="link-primary" style="cursor: pointer">Go Back</a>
     </div>
     <a asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.CourseID" class="btn btn-danger">Delete</a>

@@ -5,7 +5,7 @@
 }
 
 <h2 class="display-2 mb-5">Edit Course</h2>
-<form asp-controller="Courses" asp-action="EditCourse" method="post" class="d-flex flex-column gap-5">
+<form asp-controller="Courses" asp-action="Edit" method="post" class="d-flex flex-column gap-5 col-sm-12 col-md-6 col-lg-4">
     @Html.AntiForgeryToken()
     <div class="d-flex flex-column gap-1">
         <label asp-for="Form.CourseName" class="form-label"></label>
@@ -18,17 +18,16 @@
         <span class="text-danger" asp-validation-for="Form.CourseDescription"></span>
     </div>
     <div class="d-flex flex-column gap-2">
-        <div class="d-flex gap-3">
+        <div class="d-flex align-items-center gap-3">
             <label asp-for="Form.Credits" class="form-label"></label>
             <input asp-for="Form.Credits" class="form-control">
         </div>
         <span class="text-danger" asp-validation-for="Form.Credits"></span>
     </div>
     <div class="d-flex flex-column gap-2">
-        <div class="d-flex gap-3">
+        <div class="d-flex align-items-center gap-3">
             <label asp-for="Form.SubjectId"></label>
             <select asp-for="Form.SubjectId" asp-items="@Model.SubjectList" class="form-select form-control">
-                <option value="">- SELECT -</option>
             </select>
         </div>
         <span class="text-danger" asp-validation-for="Form.SubjectId"></span>

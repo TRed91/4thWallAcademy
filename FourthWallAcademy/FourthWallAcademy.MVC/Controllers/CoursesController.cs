@@ -133,7 +133,7 @@ public class CoursesController : Controller
     }
 
     [HttpGet]
-    public IActionResult AddCourse()
+    public IActionResult Add()
     {
         var subjectResult = _courseService.GetSubjects();
 
@@ -163,7 +163,7 @@ public class CoursesController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult AddCourse(CourseFormModel model)
+    public IActionResult Add(CourseFormModel model)
     {
         var subjectResult = _courseService.GetSubjects();
 
@@ -208,7 +208,7 @@ public class CoursesController : Controller
     }
 
     [HttpGet]
-    public IActionResult EditCourse(int id)
+    public IActionResult Edit(int id)
     {
         var courseResult = _courseService.GetCourseById(id);
         var subjectResult = _courseService.GetSubjects();
@@ -234,9 +234,8 @@ public class CoursesController : Controller
         {
             Text = s.SubjectName,
             Value = s.SubjectID.ToString(),
-            Selected = s.SubjectID == courseResult.Data.SubjectID
-        });
-
+        }).ToList();
+        
         var model = new CourseFormModel
         {
             SubjectList = new SelectList(subjectsSelectItems, "Value", "Text"),
@@ -248,7 +247,7 @@ public class CoursesController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult EditCourse(int id, CourseFormModel model)
+    public IActionResult Edit(int id, CourseFormModel model)
     {
         var subjectResult = _courseService.GetSubjects();
 

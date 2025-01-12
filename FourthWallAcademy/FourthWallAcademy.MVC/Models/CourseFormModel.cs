@@ -25,6 +25,7 @@ public class CourseForm : IValidatableObject
     public decimal Credits { get; set; }
     
     [Required]
+    [Display(Name = "Subject")]
     public int SubjectId { get; set; }
 
     public CourseForm() { }
@@ -34,7 +35,7 @@ public class CourseForm : IValidatableObject
         CourseName = entity.CourseName;
         CourseDescription = entity.CourseDescription;
         Credits = entity.Credits;
-        SubjectId = entity.Subject.SubjectID;
+        SubjectId = entity.SubjectID;
     }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
