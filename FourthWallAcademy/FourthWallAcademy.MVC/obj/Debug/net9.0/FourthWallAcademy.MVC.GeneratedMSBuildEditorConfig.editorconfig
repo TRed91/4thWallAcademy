@@ -9,89 +9,97 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = FourthWallAcademy.MVC
 build_property.RootNamespace = FourthWallAcademy.MVC
-build_property.ProjectDir = C:\Users\thoma\source\repos\CS400\4thWallAcademy\FourthWallAcademy\FourthWallAcademy.MVC\
+build_property.ProjectDir = /Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\thoma\source\repos\CS400\4thWallAcademy\FourthWallAcademy\FourthWallAcademy.MVC
+build_property.MSBuildProjectDirectory = /Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Admissions/EditStudent.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaXNzaW9uc1xFZGl0U3R1ZGVudC5jc2h0bWw=
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Admissions/EditStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaXNzaW9ucy9FZGl0U3R1ZGVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Admissions/NewStudent.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaXNzaW9uc1xOZXdTdHVkZW50LmNzaHRtbA==
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Admissions/NewStudent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaXNzaW9ucy9OZXdTdHVkZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Admissions/StudentDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaXNzaW9uc1xTdHVkZW50RGV0YWlscy5jc2h0bWw=
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Admissions/StudentDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaXNzaW9ucy9TdHVkZW50RGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Admissions/StudentPowers.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaXNzaW9uc1xTdHVkZW50UG93ZXJzLmNzaHRtbA==
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Admissions/StudentPowers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaXNzaW9ucy9TdHVkZW50UG93ZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Admissions/Students.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaXNzaW9uc1xTdHVkZW50cy5jc2h0bWw=
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Admissions/Students.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaXNzaW9ucy9TdHVkZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Admissions/StudentWeaknesses.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaXNzaW9uc1xTdHVkZW50V2Vha25lc3Nlcy5jc2h0bWw=
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Admissions/StudentWeaknesses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaXNzaW9ucy9TdHVkZW50V2Vha25lc3Nlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Courses/Add.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlc1xBZGQuY3NodG1s
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Courses/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ291cnNlcy9BZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Courses/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlc1xEZWxldGUuY3NodG1s
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Courses/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ291cnNlcy9EZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Courses/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlc1xEZXRhaWxzLmNzaHRtbA==
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Courses/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ291cnNlcy9EZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Courses/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlc1xFZGl0LmNzaHRtbA==
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Courses/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ291cnNlcy9FZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Courses/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlc1xJbmRleC5jc2h0bWw=
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Courses/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ291cnNlcy9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Management/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxJbmRleC5jc2h0bWw=
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Management/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTWFuYWdlbWVudC9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Student/Profile.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxQcm9maWxlLmNzaHRtbA==
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Sections/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2VjdGlvbnMvQWRkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Student/Schedule.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxTY2hlZHVsZS5jc2h0bWw=
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Sections/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2VjdGlvbnMvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Student/Section.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxTZWN0aW9uLmNzaHRtbA==
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Student/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3R1ZGVudC9Qcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/_ViewImports.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Student/Schedule.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3R1ZGVudC9TY2hlZHVsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/_ViewStart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Student/Section.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3R1ZGVudC9TZWN0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/thoma/source/repos/CS400/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Shared/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-q8999u699r
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/thomasroth/RiderProjects/4thWallAcademy/FourthWallAcademy/FourthWallAcademy.MVC/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-4rb823wlgw
