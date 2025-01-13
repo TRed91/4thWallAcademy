@@ -120,29 +120,13 @@ public class SectionService : ISectionService
 
     public Result AddSection(Section section)
     {
-        // ensure start time is within the allowed time frame
-        if (section.StartTime < new TimeSpan(9, 0, 0))
+        var validationResult = ValidationResult(section);
+        if (!string.IsNullOrEmpty(validationResult))
         {
-            return ResultFactory.Fail("Start Time must be after 9:00.");
-        }
-
-        if (section.StartTime > new TimeSpan(15, 0, 0))
-        {
-            return ResultFactory.Fail("Start Time must be before 15:00.");
-        }
-        // ensure start date isn't in the past
-        if (section.StartDate < DateTime.Today)
-        {
-            return ResultFactory.Fail("Start Date can't be in the past.");
-        }
-        // ensure end date is after start date
-        if (section.EndDate < section.StartDate)
-        {
-            return ResultFactory.Fail("End Date can't be before start date.");
+            return ResultFactory.Fail(validationResult);
         }
         // set end time to start time + 45 minutes
         section.EndTime = section.StartTime.Add(new TimeSpan(0, 45, 0));
-        
         try
         {
             _repo.AddSection(section);
@@ -156,6 +140,13 @@ public class SectionService : ISectionService
 
     public Result UpdateSection(Section section)
     {
+        var validationResult = ValidationResult(section);
+        if (!string.IsNullOrEmpty(validationResult))
+        {
+            return ResultFactory.Fail(validationResult);
+        }
+        // set end time to start time + 45 minutes
+        section.EndTime = section.StartTime.Add(new TimeSpan(0, 45, 0));
         try
         {
             _repo.UpdateSection(section);
@@ -178,5 +169,31 @@ public class SectionService : ISectionService
         {
             return ResultFactory.Fail(ex.Message);
         }
+    }
+
+    private string ValidationResult(Section section)
+    {
+        // ensure start time is within the allowed time frame
+        if (section.StartTime < new TimeSpan(9, 0, 0))
+        {
+            return "Start Time must be after 9:00.";
+        }
+
+        if (section.StartTime > new TimeSpan(15, 0, 0))
+        {
+            return "Start Time must be before 15:00.";
+        }
+        // ensure start date isn't in the past
+        if (section.StartDate < DateTime.Today)
+        {
+            return "Start Date can't be in the past.";
+        }
+        // ensure end date is after start date
+        if (section.EndDate < section.StartDate)
+        {
+            return "End Date can't be before start date.";
+        }
+
+        return "";
     }
 }

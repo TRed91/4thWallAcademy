@@ -38,6 +38,16 @@ public class SectionForm : IValidatableObject
     [Display(Name = "Start Time")]
     public TimeOnly StartTime { get; set; } = new TimeOnly(9, 0, 0);
 
+    public SectionForm() { }
+
+    public SectionForm(Section entity)
+    {
+        CourseId = entity.CourseID;
+        InstructorId = entity.InstructorID;
+        StartDate = entity.StartDate;
+        EndDate = entity.EndDate;
+        StartTime = TimeOnly.FromTimeSpan(entity.StartTime);
+    }
     public Section ToEntity()
     {
         return new Section

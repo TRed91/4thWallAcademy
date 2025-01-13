@@ -132,6 +132,7 @@ public class SectionsController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Add(SectionsFormModel model)
     {
         var coursesResult = _courseService.GetCourses();
@@ -148,13 +149,6 @@ public class SectionsController : Controller
         
         if (!ModelState.IsValid)
         {
-            foreach (var modelError in ModelState.Values)
-            {
-                foreach (var error in modelError.Errors)
-                {
-                    _logger.LogError(error.ErrorMessage);
-                }
-            }
             return View(model);
         }
 
@@ -174,5 +168,67 @@ public class SectionsController : Controller
         var sucTempData = new TempDataExtension(true, successMsg);
         TempData["Message"] = TempDataSerializer.Serialize(sucTempData);
         return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        var sectionsResult = _sectionService.GetSectionById(id);
+        var instructorsResult = _instructorService.GetInstructors();
+        var coursesResult = _courseService.GetCourses();
+        if (!sectionsResult.Ok)
+        {
+            var errMsg = "There was an error retrieving the section details.";
+            var tempData = new TempDataExtension(false, errMsg);
+            TempData["Message"] = TempDataSerializer.Serialize(tempData);
+            _logger.LogError(errMsg + ": " + sectionsResult.Message);
+            return RedirectToAction("Index");
+        }
+        
+        var model = new SectionsFormModel();
+        model.GenerateSelectLists(coursesResult.Data, instructorsResult.Data);
+        model.Form = new SectionForm(sectionsResult.Data);
+        
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(int id, SectionsFormModel model)
+    {
+        var coursesResult = _courseService.GetCourses();
+        var instructorsResult = _instructorService.GetInstructors();
+        if (!coursesResult.Ok || !instructorsResult.Ok)
+        {
+            var errMsg = "There was an error retrieving select list data.";
+            var tempData = new TempDataExtension(false, errMsg);
+            TempData["Message"] = TempDataSerializer.Serialize(tempData);
+            _logger.LogError(errMsg + ": " + coursesResult.Message + ", " + instructorsResult.Message);
+            return RedirectToAction("Index");
+        }
+        model.GenerateSelectLists(coursesResult.Data, instructorsResult.Data);
+        
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+        
+        var section = model.Form.ToEntity();
+        section.SectionID = id;
+        var editResult = _sectionService.UpdateSection(section);
+        if (!editResult.Ok)
+        {
+            var errMsg = $"There was an error editing section with id: {id}.";
+            var errTempData = new TempDataExtension(false, errMsg);
+            TempData["Message"] = TempDataSerializer.Serialize(errTempData);
+            _logger.LogError(errMsg + ": " + editResult.Message);
+            return View(model);
+        }
+        
+        var successMsg = $"Section with id '{id}' updated successfully.";
+        _logger.LogInformation(successMsg);
+        var sucTempData = new TempDataExtension(true, successMsg);
+        TempData["Message"] = TempDataSerializer.Serialize(sucTempData);
+        return RedirectToAction("Details", new { id });
     }
 }
