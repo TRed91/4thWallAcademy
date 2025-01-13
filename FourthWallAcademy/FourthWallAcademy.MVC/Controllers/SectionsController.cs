@@ -92,6 +92,25 @@ public class SectionsController : Controller
         return View(model);
     }
 
+    public IActionResult Details(int id)
+    {
+        var sectionsResult = _sectionService.GetSectionById(id);
+        var studentSectionsResult = _sectionService.GetStudentsBySection(id);
+
+        if (!sectionsResult.Ok || !studentSectionsResult.Ok)
+        {
+            var errMsg = "There was an error retrieving the section details.";
+            var tempData = new TempDataExtension(false, errMsg);
+            TempData["Message"] = TempDataSerializer.Serialize(tempData);
+            _logger.LogError(errMsg + ": " + sectionsResult.Message + ", " + studentSectionsResult.Message);
+            return RedirectToAction("Index");
+        }
+
+        sectionsResult.Data.StudentSections = studentSectionsResult.Data;
+        
+        return View(sectionsResult.Data);
+    }
+
     [HttpGet]
     public IActionResult Add()
     {
