@@ -38,7 +38,8 @@ public class CourseRepository : ICourseRepository
         {
             var sql = @"SELECT c.*, s.SubjectID AS sId, SubjectName 
                         FROM Course c 
-                        INNER JOIN Subject s ON c.SubjectID = s.SubjectID";
+                        INNER JOIN Subject s ON c.SubjectID = s.SubjectID
+                        ORDER BY c.CourseName";
             return cn.Query<Course, Subject, Course>(sql, (course, subject) =>
             {
                 course.Subject = subject;

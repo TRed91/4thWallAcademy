@@ -15,4 +15,7 @@ public interface ISectionService
     Result AddSection(Section section);
     Result UpdateSection(Section section);
     Result DeleteSection(Section section);
+    Result AddStudentSection(StudentSection studentSection);
+    Result UpdateStudentSection(StudentSection studentSection);
+    Result DeleteStudentSection(int studentId, int sectionId);
 }

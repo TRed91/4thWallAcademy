@@ -1,4 +1,4 @@
-@model SectionsIndexModel
+@model FourthWallAcademy.MVC.Models.SectionModels.SectionsIndexModel
 
 @{
     ViewData["Title"] = "4th Wall Academy : Sections";
@@ -30,8 +30,9 @@
         </div>
     </div>
 </div>
-
-<a asp-controller="Sections" asp-action="Add" class="link-primary mb-3 fs-5">Add Section</a>
+<div class="m-3">
+ <a asp-controller="Sections" asp-action="Add" class="link-primary fs-5">Add Section</a>
+</div>
 
 @if (Model.Courses.Count == 0)
 {
@@ -44,7 +45,7 @@ else
         <h3 class="display-6 p-2 bg-primary text-white">@course.CourseName</h3>
         <table class="table table-responsive table-bordered table-striped">
             <thead class="table-primary">
-            <tr>
+            <tr class="text-center">
                 <th>Instructor</th>
                 <th>From - To</th>
                 <th>Start Time</th>
@@ -54,7 +55,7 @@ else
             <tbody>
             @foreach (var s in course.Sections)
             {
-                <tr>
+                <tr class="text-center">
                     <td>@s.Instructor.Alias</td>
                     <td>@s.StartDate.ToShortDateString() - @s.EndDate.ToShortDateString()</td>
                     <td>@s.StartTime.Hours:@(s.StartTime.Minutes < 10 ? "0" + s.StartTime.Minutes : s.StartTime.Minutes)</td>

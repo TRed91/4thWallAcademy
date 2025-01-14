@@ -1,4 +1,4 @@
-﻿@model CoursesIndexModel
+﻿@model FourthWallAcademy.MVC.Models.CourseModels.CoursesIndexModel
 
 @{
     ViewData["Title"] = "4th Wall Academy : Courses";
@@ -34,7 +34,9 @@
     </div>
 </div>
 
-<a asp-controller="Courses" asp-action="Add" class="link-primary mb-3 fs-5">Add Course</a>
+<div class="m-3">
+    <a asp-controller="Courses" asp-action="Add" class="link-primary mb-3 fs-5">Add Course</a>
+</div>
 
 @if (Model.Subjects.Count == 0)
 {

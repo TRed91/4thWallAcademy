@@ -42,6 +42,16 @@ public class SectionRepository : ISectionRepository
         }
     }
 
+    public StudentSection? GetStudentSection(int studentId, int sectionId)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"SELECT * FROM StudentSection 
+                        WHERE StudentID = @studentId AND SectionID = @sectionId";
+            return cn.QueryFirstOrDefault<StudentSection>(sql, new { studentId, sectionId });
+        }
+    }
+
     public List<Section> GetSections()
     {
         using (var cn = new SqlConnection(_connectionString))
@@ -206,6 +216,54 @@ public class SectionRepository : ISectionRepository
                 tr.Execute(sql1, new { id });
                 tr.Commit();
             }
+        }
+    }
+
+    public void AddStudentSection(StudentSection studentSection)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"INSERT INTO StudentSection(StudentID, SectionID, Grade, Absences)
+                        VALUES (@StudentID, @SectionID, @Grade, @Absences);";
+            var p = new
+            {
+                studentSection.StudentID,
+                studentSection.SectionID,
+                studentSection.Grade,
+                studentSection.Absences
+            };
+            cn.Execute(sql, p);
+        }
+    }
+
+    public void UpdateStudentSection(StudentSection studentSection)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"UPDATE StudentSection 
+                        SET Grade = @Grade, 
+                            Absences = @Absences;";
+            var p = new
+            {
+                studentSection.Grade,
+                studentSection.Absences
+            };
+            cn.Execute(sql, p);
+        }
+    }
+
+    public void DeleteStudentSection(int studentId, int sectionId)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"DELETE FROM StudentSection 
+                        WHERE StudentID = @studentId AND SectionID = @sectionId;";
+            var p = new
+            {
+                studentId,
+                sectionId
+            };
+            cn.Execute(sql, p);
         }
     }
 }

@@ -1,46 +1,46 @@
-@model FourthWallAcademy.Core.Entities.Section
+@model FourthWallAcademy.MVC.Models.SectionModels.SectionDetailsModel
 
 @{
-    ViewData["Title"] = $"4th Wall Academy : Section Details {Model.SectionID}";
+    ViewData["Title"] = $"4th Wall Academy : Section Details {Model.Section.SectionID}";
 }
 
 <h1 class="display-2 text-center">Section Details</h1>
 <section>
     <div class="mb-3">
-        <p class="mb-3"><strong>Course:</strong> @Model.Course.CourseName</p>
-        <p class="mb-3"><strong>Instructor:</strong> @Model.Instructor.Alias</p>
+        <p class="mb-3"><strong>Course:</strong> @Model.Section.Course.CourseName</p>
+        <p class="mb-3"><strong>Instructor:</strong> @Model.Section.Instructor.Alias</p>
     </div>
     <div class="mb-3 d-flex flex-wrap gap-sm-2 gap-md-3 gap-lg-5">
         <div>
-            <p class="mb-3"><strong>Start Date:</strong> @Model.StartDate.ToShortDateString()</p>
-            <p class="mb-3"><strong>End Date:</strong> @Model.EndDate.ToShortDateString()</p>
+            <p class="mb-3"><strong>Start Date:</strong> @Model.Section.StartDate.ToShortDateString()</p>
+            <p class="mb-3"><strong>End Date:</strong> @Model.Section.EndDate.ToShortDateString()</p>
         </div>
         <div>
             <p class="mb-3">
                 <strong>Start Time:</strong> 
-                @Model.StartTime.Hours:@(Model.StartTime.Minutes < 10
-                    ? "0" + Model.StartTime.Minutes
-                    : Model.StartTime.Minutes)
+                @Model.Section.StartTime.Hours:@(Model.Section.StartTime.Minutes < 10
+                    ? "0" + Model.Section.StartTime.Minutes
+                    : Model.Section.StartTime.Minutes)
             </p>
             <p class="mb-3">
                 <strong>End Time:</strong> 
-                @Model.EndTime.Hours:@(Model.EndTime.Minutes < 10
-                    ? "0" + Model.EndTime.Minutes
-                    : Model.EndTime.Minutes)
+                @Model.Section.EndTime.Hours:@(Model.Section.EndTime.Minutes < 10
+                    ? "0" + Model.Section.EndTime.Minutes
+                    : Model.Section.EndTime.Minutes)
             </p>
         </div>
     </div>
 </section>
 <div class="d-flex justify-content-between mt-5">
     <div class="d-flex gap-3 align-items-center">
-        <a asp-controller="Sections" asp-action="Edit" asp-route-id="@Model.SectionID" class="btn btn-primary">Edit</a>
-        <a onclick="javascript:history.go(-1)" class="link-primary" style="cursor: pointer">Go Back</a>
+        <a asp-controller="Sections" asp-action="Edit" asp-route-id="@Model.Section.SectionID" class="btn btn-primary">Edit</a>
+        <a asp-controller="Sections" asp-action="Index" class="link-primary" style="cursor: pointer">Go Back</a>
     </div>
-    <a asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.CourseID" class="btn btn-danger">Delete</a>
+    <a asp-controller="Courses" asp-action="Delete" asp-route-id="@Model.Section.CourseID" class="btn btn-danger">Delete</a>
 </div>
 <div class="d-flex flex-wrap mt-4 align-items-center gap-5">
 <h2 class="display-6">Enrolled Students</h2>
-<a class="fs-5 link-primary" asp-controller="Sections" asp-action="Enrollment" asp-route-id="@Model.SectionID">Enroll Student</a>
+<a class="fs-5 link-primary" asp-controller="Sections" asp-action="Enroll" asp-route-id="@Model.Section.SectionID">Enroll Student</a>
 </div>
 <table class="mt-2 table table-bordered table-striped">
     <thead class="table-primary">
@@ -52,15 +52,17 @@
     </tr>
     </thead>
     <tbody>
-        @foreach (var student in Model.StudentSections)
+        @foreach (var student in Model.Section.StudentSections)
         {
             <tr>
                 <td>@student.Student.Alias</td>
                 <td>@student.Grade</td>
                 <td>@student.Absences</td>
                 <td>
-                    <form asp-controller="Sections" asp-action="Remove" asp-route-id="@Model.SectionID">
-                        <input type="text" value="@student.StudentID" hidden>
+                    <form asp-controller="Sections" asp-action="Remove" method="get">
+                        @Html.AntiForgeryToken()
+                        <input name="sectionId" value="@Model.Section.SectionID" hidden>
+                        <input name="studentId" value="@student.StudentID" hidden>
                         <button class="btn btn-link text-danger">Remove</button>
                     </form>
                     </td>

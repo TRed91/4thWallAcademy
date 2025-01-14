@@ -171,6 +171,60 @@ public class SectionService : ISectionService
         }
     }
 
+    public Result AddStudentSection(StudentSection studentSection)
+    {
+        try
+        {
+            _repo.AddStudentSection(studentSection);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
+    }
+
+    public Result UpdateStudentSection(StudentSection studentSection)
+    {
+        try
+        {
+            var stSection = _repo.GetStudentSection(studentSection.StudentID, studentSection.SectionID);
+            if (stSection == null)
+            {
+                return ResultFactory.Fail("Section not found");
+            }
+
+            stSection.Grade = studentSection.Grade;
+            stSection.Absences = studentSection.Absences;
+
+            _repo.UpdateStudentSection(stSection);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
+    }
+
+    public Result DeleteStudentSection(int studentId, int sectionId)
+    {
+        try
+        {
+            var stSection = _repo.GetStudentSection(studentId, sectionId);
+            if (stSection == null)
+            {
+                return ResultFactory.Fail("Section not found");
+            }
+
+            _repo.DeleteStudentSection(studentId, sectionId);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
+    }
+
     private string ValidationResult(Section section)
     {
         // ensure start time is within the allowed time frame

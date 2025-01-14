@@ -1,6 +1,8 @@
+using _4thWallCafe.Core.Utilities;
 using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Services;
 using FourthWallAcademy.MVC.Models;
+using FourthWallAcademy.MVC.Models.SectionModels;
 using FourthWallAcademy.MVC.UtilityClasses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,16 +15,19 @@ public class SectionsController : Controller
     private readonly ISectionService _sectionService;
     private readonly ICourseService _courseService;
     private readonly IInstructorService _instructorService;
+    private readonly IStudentService _studentService;
 
     public SectionsController(ILogger<SectionsController> logger, 
         ISectionService sectionService, 
         ICourseService courseService,
-        IInstructorService instructorService)
+        IInstructorService instructorService,
+        IStudentService studentService)
     {
         _logger = logger;
         _sectionService = sectionService;
         _courseService = courseService;
         _instructorService = instructorService;
+        _studentService = studentService;
     }
     
     public IActionResult Index(SectionsIndexModel model)
@@ -107,8 +112,13 @@ public class SectionsController : Controller
         }
 
         sectionsResult.Data.StudentSections = studentSectionsResult.Data;
+
+        var model = new SectionDetailsModel
+        {
+            Section = sectionsResult.Data,
+        };
         
-        return View(sectionsResult.Data);
+        return View(model);
     }
 
     [HttpGet]
@@ -230,5 +240,133 @@ public class SectionsController : Controller
         var sucTempData = new TempDataExtension(true, successMsg);
         TempData["Message"] = TempDataSerializer.Serialize(sucTempData);
         return RedirectToAction("Details", new { id });
+    }
+
+    [HttpGet]
+    public IActionResult Enroll(int id, SectionEnrollModel model)
+    {
+        // fetch a list of all students and enrolled students then filter out students that aren't already enrolled
+        Result<List<Student>> studentsResult;
+        if (model.Form.StartLetter != '0')
+        {
+            studentsResult = _studentService.GetStudentsByStartingLetter(model.Form.StartLetter);
+        }
+        else
+        {
+            studentsResult = _studentService.GetStudents();
+        }
+        var studentSectionsResult = _sectionService.GetStudentsBySection(id);
+
+        if (!studentsResult.Ok || !studentSectionsResult.Ok)
+        {
+            var errMsg = "There was an error retrieving student list.";
+            var tempData = new TempDataExtension(false, errMsg);
+            TempData["Message"] = TempDataSerializer.Serialize(tempData);
+            _logger.LogError(errMsg + ": " + studentsResult.Message + ", " + studentSectionsResult.Message);
+            return RedirectToAction("Details", new { id });
+        }
+        
+        var enrolledStudentIds = studentSectionsResult.Data
+            .Select(s => s.StudentID)
+            .ToList();
+        
+        var availableStudents = studentsResult.Data
+            .Where(s => !enrolledStudentIds.Contains(s.StudentID))
+            .ToList();
+
+        // Order the list base on the Form
+        if (model.Form.Order == OrderStudent.Name)
+        {
+            availableStudents = availableStudents.OrderBy(s => s.Alias).ToList();
+        }
+        else
+        {
+            availableStudents = availableStudents.OrderByDescending(s => s.DoB).ToList();
+        }
+        
+        // Filter the list based on the searchstring
+        if (!string.IsNullOrEmpty(model.Form.SearchString))
+        {
+            availableStudents = availableStudents
+                .Where(s => s.Alias.Contains(model.Form.SearchString))
+                .ToList();
+        }
+        
+        model.Students = availableStudents;
+        model.SectionId = id;
+        
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult EnrollStudent(int id, SectionEnrollModel model)
+    {
+        var studentSection = new StudentSection
+        {
+            StudentID = model.StudentId,
+            SectionID = id,
+            Absences = 0,
+            Grade = 0
+        };
+        var enrollResult = _sectionService.AddStudentSection(studentSection);
+        if (!enrollResult.Ok)
+        {
+            var errMsg = "There was an error adding student section.";
+            var errTempData = new TempDataExtension(false, errMsg);
+            TempData["Message"] = TempDataSerializer.Serialize(errTempData);
+            _logger.LogError(errMsg + ": " + enrollResult.Message);
+            return RedirectToAction("Enroll", new { id });
+        }
+        
+        var sucMsg = "Student enrolled successfully.";
+        _logger.LogInformation($"{sucMsg}: StudentID={model.StudentId}, SectionID={id}");
+        var sucTempData = new TempDataExtension(true, sucMsg);
+        TempData["Message"] = TempDataSerializer.Serialize(sucTempData);
+        return RedirectToAction("Enroll", new { id });
+    }
+
+    [HttpGet]
+    public IActionResult Remove(int sectionId, int studentId)
+    {
+        var studentResult = _studentService.GetStudentById(studentId);
+        if (!studentResult.Ok)
+        {
+            var errMsg = $"Error fetching student information";
+            var errTempData = new TempDataExtension(false, errMsg);
+            TempData["Message"] = TempDataSerializer.Serialize(errTempData);
+            _logger.LogError(errMsg + ": " + studentResult.Message);
+            return RedirectToAction("Details", new { id = sectionId });
+        }
+
+        var model = new StudentSectionRemoveModel
+        {
+            SectionId = sectionId,
+            StudentId = studentId,
+            StudentAlias = studentResult.Data.Alias
+        };
+        
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Remove(StudentSectionRemoveModel model)
+    {
+        var removeResult = _sectionService.DeleteStudentSection(model.StudentId, model.SectionId);
+        if (!removeResult.Ok)
+        {
+            var errMsg = $"There was an error removing student with Id:{model.StudentId} from section with Id:{model.SectionId}.";
+            var errTempData = new TempDataExtension(false, errMsg);
+            TempData["Message"] = TempDataSerializer.Serialize(errTempData);
+            _logger.LogError(errMsg + ": " + removeResult.Message);
+            return RedirectToAction("Details", new { id = model.SectionId });
+        }
+        
+        var sucMsg = $"Student with Id:{model.StudentId} removed successfully from section with Id:{model.SectionId}.";
+        _logger.LogInformation(sucMsg);
+        var sucTempData = new TempDataExtension(true, sucMsg);
+        TempData["Message"] = TempDataSerializer.Serialize(sucTempData);
+        return RedirectToAction("Details", new { id = model.SectionId });
     }
 }

@@ -2,6 +2,7 @@ using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Repositories;
 using FourthWallAcademy.Core.Interfaces.Services;
 using FourthWallAcademy.MVC.Models;
+using FourthWallAcademy.MVC.Models.StudentModels;
 using FourthWallAcademy.MVC.UtilityClasses;
 using FourthWallAcademy.MVC.Views.Utilities;
 using Microsoft.AspNetCore.Mvc;
