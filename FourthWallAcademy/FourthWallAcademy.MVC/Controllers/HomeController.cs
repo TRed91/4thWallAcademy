@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using FourthWallAcademy.MVC.UtilityClasses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FourthWallAcademy.MVC.Controllers;

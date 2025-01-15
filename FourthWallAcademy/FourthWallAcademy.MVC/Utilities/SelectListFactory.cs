@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace FourthWallAcademy.MVC.Views.Utilities;
+namespace FourthWallAcademy.MVC.Utilities;
 
 public class SelectListFactory
 {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace FourthWallAcademy.MVC.UtilityClasses;
+namespace FourthWallAcademy.MVC.Utilities;
 
 public static class TempDataSerializer
 {

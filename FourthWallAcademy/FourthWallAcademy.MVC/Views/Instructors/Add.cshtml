@@ -1,0 +1,19 @@
+﻿@model FourthWallAcademy.MVC.Models.InstructorsModels.InstructorFormModel
+
+@{
+    ViewData["Title"] = $"4th Wall Academy : Add Instructor";
+}
+
+<h2 class="display-2 mb-5">Add Instructor</h2>
+<form asp-controller="Instructors" asp-action="Add" method="post" class="d-flex flex-column gap-5 col-sm-12 col-md-6 col-lg-4">
+    @Html.AntiForgeryToken()
+    <div class="d-flex flex-column gap-1">
+        <label asp-for="Alias" class="form-label"></label>
+        <input asp-for="Alias" class="form-control">
+        <span class="text-danger" asp-validation-for="Alias"></span>
+    </div>
+    <div class="d-flex gap-5">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="link-primary" style="cursor: pointer">Go Back</a>
+    </div>
+</form>

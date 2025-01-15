@@ -2,7 +2,7 @@
 using FourthWallAcademy.Core.Interfaces.Services;
 using FourthWallAcademy.MVC.Models;
 using FourthWallAcademy.MVC.Models.CourseModels;
-using FourthWallAcademy.MVC.UtilityClasses;
+using FourthWallAcademy.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

@@ -1,0 +1,62 @@
+﻿@model FourthWallAcademy.MVC.Models.InstructorsModels.InstructorDetailsModel
+
+@{
+    ViewData["Title"] = $"4th Wall Academy : Instructor Details {Model.Alias}";
+}
+
+<h1 class="display-1 text-center mb-5">Instructor Details</h1>
+<h2 class="display-2 mb-3">@Model.Alias</h2>
+<p class="lead"><strong>Hire Date:</strong> @Model.HireDate.ToShortDateString()</p>
+@if (Model.TermDate.HasValue)
+{
+    var termDate = (DateTime)Model.TermDate;
+    <p class="lead mb-5"><strong>Termination Date:</strong> @termDate.ToShortDateString()</p>
+}
+else
+{
+    <p class="lead mb-5"><strong>Termination Date:</strong> none</p>
+}
+<div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex gap-5 align-items-center">
+        <a asp-action="Edit" asp-route-id="@Model.InstructorID" class="m-0 p-0">
+            <button class="btn btn-primary">Edit</button>
+        </a>
+        <a asp-controller="Instructors" asp-action="Index" class="link-primary">Go Back</a>
+    </div>
+    <div>
+        <a asp-action="Delete" asp-route-id="@Model.InstructorID" class="m-0 p-0">
+            <button class="btn btn-danger">Terminate</button>
+        </a>
+    </div>
+</div>
+<h3 class="fs-3 bg-primary text-white p-1 mt-5">Sections</h3>
+@if (Model.Sections.Count == 0)
+{
+    <h4>No Sections assigned</h4>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-primary">
+        <tr>
+            <th>Course</th>
+            <th>Start Time</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var s in Model.Sections)
+        {
+            <tr>
+                <td>@s.Course.CourseName</td>
+                <td>@s.StartTime.Hours:@(s.StartTime.Minutes < 10 ? "0" + s.StartTime.Minutes : s.StartTime.Minutes)</td>
+                <td>@s.StartDate.ToShortDateString()</td>
+                <td>@s.EndDate.ToShortDateString()</td>
+                <td><a asp-controller="Sections" asp-action="Details" asp-route-id="@s.SectionID" class="link-primary text-center">Details</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

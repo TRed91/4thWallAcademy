@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using FourthWallAcademy.Core.Entities;
-using FourthWallAcademy.MVC.Views.Utilities;
+using FourthWallAcademy.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FourthWallAcademy.MVC.Models.SectionModels;

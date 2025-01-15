@@ -32,6 +32,7 @@ public class InstructorRepository : IInstructorRepository
             instructor.Sections = cn.Query<Section, Course, Section>(sql2, 
                 (section, course) =>
                 {
+                    course.CourseID = section.CourseID;
                     section.Course = course;
                     return section;
                 }, new { id }, splitOn: "cId")

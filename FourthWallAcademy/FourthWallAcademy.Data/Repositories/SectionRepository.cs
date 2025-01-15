@@ -147,6 +147,7 @@ public class SectionRepository : ISectionRepository
                     WHERE s.SectionID = @sectionId;";
             return cn.Query<StudentSection, Student, StudentSection>(sql, (section, student) =>
                 {
+                    student.StudentID = section.StudentID;
                     section.Student = student;
                     return section;
                 }, new { sectionId }, splitOn: "stId")
