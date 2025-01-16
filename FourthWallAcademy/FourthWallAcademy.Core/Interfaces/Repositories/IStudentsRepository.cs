@@ -1,4 +1,5 @@
 ﻿using FourthWallAcademy.Core.Entities;
+using FourthWallAcademy.Core.Models;
 
 namespace FourthWallAcademy.Core.Interfaces.Repositories;
 
@@ -15,4 +16,5 @@ public interface IStudentRepository
     void AddStudent(Student student);
     void UpdateStudent(Student student);
     void DeleteStudent(int id);
+    GradesReport GetGradesReport();
 }

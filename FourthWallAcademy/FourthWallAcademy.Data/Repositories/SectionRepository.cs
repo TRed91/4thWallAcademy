@@ -2,6 +2,7 @@
 using Dapper.Transaction;
 using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Repositories;
+using FourthWallAcademy.Core.Models;
 using Microsoft.Data.SqlClient;
 
 namespace FourthWallAcademy.Data.Repositories;
@@ -266,5 +267,10 @@ public class SectionRepository : ISectionRepository
             };
             cn.Execute(sql, p);
         }
+    }
+
+    public EnrollmentReport GetEnrollmentReport()
+    {
+        throw new NotImplementedException();
     }
 }

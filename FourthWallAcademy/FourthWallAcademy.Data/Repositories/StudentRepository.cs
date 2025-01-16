@@ -2,6 +2,7 @@
 using Dapper.Transaction;
 using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Repositories;
+using FourthWallAcademy.Core.Models;
 using Microsoft.Data.SqlClient;
 
 namespace FourthWallAcademy.Data.Repositories;
@@ -238,6 +239,28 @@ public class StudentRepository : IStudentRepository
                 tr.Execute(sql1, p);
                 tr.Commit();
             }
+        }
+    }
+
+    public GradesReport GetGradesReport()
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"SELECT Max(Grade) AS MaxGrade, 
+                               AVG(Grade) AS AvgGrade,
+                               MIN(Grade) AS MinGrade 
+                        FROM StudentSection";
+            var sql2 = @"SELECT Max(Grade) AS StudentMaxGrade, 
+                                Avg(Grade) AS StudentAvgGrade, 
+                                Min(Grade) AS StudentMinGrade,
+                                s.Alias
+                        FROM StudentSection ss 
+                        INNER JOIN Student s ON s.StudentID = ss.StudentID
+                        GROUP BY s.Alias;";
+            
+            var report = cn.Query<GradesReport>(sql).FirstOrDefault();
+            report.StudentGrades = cn.Query<StudentGrades>(sql2).ToList();
+            return report;
         }
     }
 }

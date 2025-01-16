@@ -1,4 +1,5 @@
 ﻿using FourthWallAcademy.Core.Entities;
+using FourthWallAcademy.Core.Models;
 
 namespace FourthWallAcademy.Core.Interfaces.Repositories;
 
@@ -16,4 +17,5 @@ public interface ISectionRepository
     void AddStudentSection(StudentSection studentSection);
     void UpdateStudentSection(StudentSection studentSection);
     void DeleteStudentSection(int studentId, int sectionId);
+    EnrollmentReport GetEnrollmentReport();
 }
