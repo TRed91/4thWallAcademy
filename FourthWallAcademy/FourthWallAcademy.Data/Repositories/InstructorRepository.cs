@@ -104,6 +104,7 @@ public class InstructorRepository : IInstructorRepository
                       HireDate = @HireDate,
                       TermDate = @TermDate
                       WHERE InstructorID = @InstructorID;";
+            
             var p = new
             {
                 instructor.Alias,

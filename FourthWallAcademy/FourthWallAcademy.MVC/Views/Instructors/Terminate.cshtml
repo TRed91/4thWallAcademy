@@ -1,0 +1,20 @@
+@model FourthWallAcademy.MVC.Models.InstructorsModels.InstructorTerminateModel
+
+@{
+    ViewData["Title"] = $"4th Wall Academy : Terminate {Model.Instructor.Alias}?";
+}
+
+<h2 class="display-3 text-danger text-center">Are you sure you want to terminate instructor:</h2>
+<h2 class="display-3 text-danger text-center">@Model.Instructor.Alias</h2>
+<div class="p-5">
+    <form asp-controller="Instructors" asp-action="Terminate" asp-route-id="@Model.Instructor.InstructorID" method="post" class="p-0 m-0">
+        @Html.AntiForgeryToken()
+        <label asp-for="TerminationDate" class="form-label"></label>
+        <input asp-for="TerminationDate" class="form-control">
+        <span asp-validation-for="TerminationDate" class="text-danger"></span>
+        <div class="d-flex gap-5 align-items-center mt-5">
+            <button type="submit" class="btn btn-danger">Confirm</button>
+            <a asp-controller="Instructors" asp-action="Details" asp-route-id="@Model.Instructor.InstructorID" class="link-primary">Go Back</a>
+        </div>
+    </form>
+</div>

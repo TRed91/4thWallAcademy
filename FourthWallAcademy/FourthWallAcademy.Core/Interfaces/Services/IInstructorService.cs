@@ -10,4 +10,5 @@ public interface IInstructorService
     Result AddInstructor(Instructor instructor);
     Result UpdateInstructor(Instructor instructor);
     Result DeleteInstructor(int id);
+    Result TerminateInstructor(int id, DateTime terminationDate);
 }

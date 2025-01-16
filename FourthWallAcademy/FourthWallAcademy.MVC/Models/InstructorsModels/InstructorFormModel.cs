@@ -24,7 +24,6 @@ public class InstructorFormModel : IValidatableObject
         return new Instructor
         {
             Alias = Alias,
-            HireDate = DateTime.Now,
         };
     }
 }
