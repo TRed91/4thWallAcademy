@@ -225,6 +225,19 @@ public class SectionService : ISectionService
         }
     }
 
+    public Result<EnrollmentReport> GetEnrollmentReport(DateTime startDate, DateTime endDate)
+    {
+        try
+        {
+            var report = _repo.GetEnrollmentReport(startDate, endDate);
+            return ResultFactory.Success(report);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<EnrollmentReport>(ex.Message);
+        }
+    }
+
     private string ValidationResult(Section section)
     {
         // ensure start time is within the allowed time frame

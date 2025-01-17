@@ -2,6 +2,7 @@
 using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Repositories;
 using FourthWallAcademy.Core.Interfaces.Services;
+using FourthWallAcademy.Core.Models;
 using FourthWallAcademy.Data.Repositories;
 
 namespace FourthWallAcademy.App.Services;
@@ -106,6 +107,19 @@ public class PowerService : IPowerService
         catch (Exception ex)
         {
             return ResultFactory.Fail(ex.Message);
+        }
+    }
+
+    public Result<PowersReport> GetPowersReport()
+    {
+        try
+        {
+            var report = _repo.PowersReport();
+            return ResultFactory.Success(report);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<PowersReport>(ex.Message);
         }
     }
 }

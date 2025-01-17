@@ -18,4 +18,5 @@ public interface ISectionService
     Result AddStudentSection(StudentSection studentSection);
     Result UpdateStudentSection(StudentSection studentSection);
     Result DeleteStudentSection(int studentId, int sectionId);
+    Result<EnrollmentReport> GetEnrollmentReport(DateTime startDate, DateTime endDate);
 }

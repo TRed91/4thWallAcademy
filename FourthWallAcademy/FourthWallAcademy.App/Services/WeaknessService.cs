@@ -1,6 +1,7 @@
 ﻿using _4thWallCafe.Core.Utilities;
 using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Repositories;
+using FourthWallAcademy.Core.Models;
 using FourthWallAcademy.Data.Repositories;
 
 namespace FourthWallAcademy.App.Services;
@@ -81,6 +82,19 @@ public class WeaknessService : IWeaknessService
         catch (Exception ex)
         {
             return ResultFactory.Fail(ex.Message);
+        }
+    }
+
+    public Result<WeaknessesReport> GetWeaknessReport()
+    {
+        try
+        {
+            var weaknessReport = _repo.WeaknessReport();
+            return ResultFactory.Success(weaknessReport);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<WeaknessesReport>(ex.Message);
         }
     }
 }

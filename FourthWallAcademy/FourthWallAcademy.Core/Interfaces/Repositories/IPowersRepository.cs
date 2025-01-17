@@ -1,4 +1,5 @@
 ﻿using FourthWallAcademy.Core.Entities;
+using FourthWallAcademy.Core.Models;
 
 namespace FourthWallAcademy.Core.Interfaces.Repositories;
 
@@ -10,4 +11,5 @@ public interface IPowersRepository
     void AddPower(Power power);
     void UpdatePower(Power power);
     void DeletePower(int id);
+    PowersReport PowersReport();
 }

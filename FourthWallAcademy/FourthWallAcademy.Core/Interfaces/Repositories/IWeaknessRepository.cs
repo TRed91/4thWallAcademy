@@ -1,4 +1,5 @@
 ﻿using FourthWallAcademy.Core.Entities;
+using FourthWallAcademy.Core.Models;
 
 namespace FourthWallAcademy.Core.Interfaces.Repositories;
 
@@ -9,4 +10,5 @@ public interface IWeaknessRepository
     void AddWeakness(Weakness weakness);
     void UpdateWeakness(Weakness weakness);
     void DeleteWeakness(int id);
+    WeaknessesReport WeaknessReport();
 }

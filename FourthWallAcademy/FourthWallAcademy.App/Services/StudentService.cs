@@ -2,6 +2,7 @@
 using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Repositories;
 using FourthWallAcademy.Core.Interfaces.Services;
+using FourthWallAcademy.Core.Models;
 using FourthWallAcademy.Data.Repositories;
 
 namespace FourthWallAcademy.App.Services;
@@ -184,6 +185,19 @@ public class StudentService : IStudentService
         catch (Exception ex)
         {
             return ResultFactory.Fail(ex.Message);
+        }
+    }
+
+    public Result<GradesReport> GetGradesReport()
+    {
+        try
+        {
+            var gradesReport = _repo.GetGradesReport();
+            return ResultFactory.Success(gradesReport);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<GradesReport>(ex.Message);
         }
     }
 }

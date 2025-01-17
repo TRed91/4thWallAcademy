@@ -2,6 +2,7 @@
 using Dapper.Transaction;
 using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Repositories;
+using FourthWallAcademy.Core.Models;
 using Microsoft.Data.SqlClient;
 
 namespace FourthWallAcademy.Data.Repositories;
@@ -91,6 +92,19 @@ public class WeaknessRepository : IWeaknessRepository
                 tr.Execute(sql1, new { id });
                 tr.Commit();
             }
+        }
+    }
+
+    public WeaknessesReport WeaknessReport()
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"SELECT MIN(RiskLevel) AS MinRiskLv,
+                               AVG(RiskLevel) AS AvgRiskLv,
+                               MAX(RiskLevel) AS MaxRiskLv
+                               FROM StudentWeakness;";
+            
+            return cn.Query<WeaknessesReport>(sql).FirstOrDefault();
         }
     }
 }

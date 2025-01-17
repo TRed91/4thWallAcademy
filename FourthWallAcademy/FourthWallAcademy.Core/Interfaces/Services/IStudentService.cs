@@ -1,5 +1,6 @@
 ﻿using _4thWallCafe.Core.Utilities;
 using FourthWallAcademy.Core.Entities;
+using FourthWallAcademy.Core.Models;
 
 namespace FourthWallAcademy.Core.Interfaces.Services;
 
@@ -15,4 +16,5 @@ public interface IStudentService
     Result AddStudent(Student student);
     Result UpdateStudent(Student student);
     Result DeleteStudent(int id);
+    Result<GradesReport> GetGradesReport();
 }

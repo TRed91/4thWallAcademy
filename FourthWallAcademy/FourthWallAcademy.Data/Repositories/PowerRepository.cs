@@ -2,6 +2,7 @@
 using Dapper.Transaction;
 using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Repositories;
+using FourthWallAcademy.Core.Models;
 using Microsoft.Data.SqlClient;
 
 namespace FourthWallAcademy.Data.Repositories;
@@ -106,6 +107,19 @@ public class PowerRepository : IPowersRepository
                 tr.Execute(sql1, new { id });
                 tr.Commit();
             }
+        }
+    }
+
+    public PowersReport PowersReport()
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"SELECT MIN(Rating) AS MinRating, 
+                               AVG(Rating) AS AvgRating, 
+                               MAX(Rating) AS MaxRating 
+                        FROM StudentPower";
+            
+            return cn.Query<PowersReport>(sql).FirstOrDefault();
         }
     }
 }

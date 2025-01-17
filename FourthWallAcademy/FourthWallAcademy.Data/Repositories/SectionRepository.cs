@@ -269,8 +269,31 @@ public class SectionRepository : ISectionRepository
         }
     }
 
-    public EnrollmentReport GetEnrollmentReport()
+    public EnrollmentReport GetEnrollmentReport(DateTime startDate, DateTime endDate)
     {
-        throw new NotImplementedException();
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var enrollmentsQuery = @"SELECT COUNT(*) FROM StudentSection ss 
+                         INNER JOIN Section s ON ss.SectionID = s.SectionID
+                         WHERE s.StartDate >= @startDate AND s.StartDate <= @endDate;";
+            var absencesQuery = @"SELECT SUM(Absences) FROM StudentSection ss 
+                         INNER JOIN Section s ON ss.SectionID = s.SectionID
+                         WHERE s.StartDate >= @startDate AND s.StartDate <= @endDate;";
+            var studentsQuery = "SELECT COUNT(*) FROM Student";
+            var sectionsQuery = "SELECT COUNT(*) FROM Section";
+
+            var p = new
+            {
+                startDate,
+                endDate,
+            };
+            
+            var report = new EnrollmentReport();
+            report.CountEnrollments = cn.ExecuteScalar<int>(enrollmentsQuery, p);
+            report.SumAbsences = cn.ExecuteScalar<int>(absencesQuery, p);
+            report.CountStudents = cn.ExecuteScalar<int>(studentsQuery, p);
+            report.CountSections = cn.ExecuteScalar<int>(sectionsQuery, p);
+            return report;
+        }
     }
 }
