@@ -15,8 +15,8 @@ public class SectionEnrollment
 {
     public string CourseName { get; set; }
     public string InstructorAlias { get; set; }
-    public int NumStudents { get; set; }
-    public int TotalAbsences { get; set; }
+    public int StudentCount { get; set; }
+    public int Absences { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
 }
@@ -24,6 +24,6 @@ public class SectionEnrollment
 public class StudentEnrollment
 {
     public string StudentAlias { get; set; }
-    public int NumSections { get; set; }
-    public int TotalAbsences { get; set; }
+    public int SectionsCount { get; set; }
+    public int Absences { get; set; }
 }

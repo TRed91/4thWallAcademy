@@ -281,7 +281,25 @@ public class SectionRepository : ISectionRepository
                          WHERE s.StartDate >= @startDate AND s.StartDate <= @endDate;";
             var studentsQuery = "SELECT COUNT(*) FROM Student";
             var sectionsQuery = "SELECT COUNT(*) FROM Section";
-
+            var sectionListQuery = @"SELECT Alias AS InstructorAlias, CourseName, StartDate, EndDate, 
+                                            COUNT(DISTINCT StudentID) AS StudentCount, 
+                                            SUM(Absences) AS Absences 
+                                     FROM Section s
+                                     INNER JOIN Instructor i ON i.InstructorID = s.InstructorID
+                                     INNER JOIN Course c ON c.CourseID = s.CourseID
+                                     INNER JOIN StudentSection ss ON ss.SectionID = s.SectionID
+                                     WHERE StartDate >= @startDate AND StartDate <= @endDate
+                                     GROUP BY CourseName, Alias, StartDate, EndDate
+                                     ORDER BY StartDate";
+            var studentListQuery = @"SELECT Alias AS StudentAlias, 
+                                            COUNT(ss.SectionID) AS SectionsCount, 
+                                            SUM(Absences) AS Absences
+                                     FROM Student s 
+                                     INNER JOIN StudentSection ss ON ss.StudentID = s.StudentID
+                                     INNER JOIN Section se ON ss.SectionID = se.SectionID
+                                     WHERE StartDate >= @startDate AND StartDate <= @endDate
+                                     GROUP BY Alias;";
+            
             var p = new
             {
                 startDate,
@@ -293,6 +311,8 @@ public class SectionRepository : ISectionRepository
             report.SumAbsences = cn.ExecuteScalar<int>(absencesQuery, p);
             report.CountStudents = cn.ExecuteScalar<int>(studentsQuery, p);
             report.CountSections = cn.ExecuteScalar<int>(sectionsQuery, p);
+            report.SectionEnrollments = cn.Query<SectionEnrollment>(sectionListQuery, p).ToList();
+            report.StudentEnrollments = cn.Query<StudentEnrollment>(studentListQuery, p).ToList();
             return report;
         }
     }

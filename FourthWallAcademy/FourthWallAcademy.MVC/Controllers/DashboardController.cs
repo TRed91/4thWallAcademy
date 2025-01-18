@@ -29,7 +29,7 @@ public class DashboardController : Controller
     
     public IActionResult Index()
     {
-        var startDate = new DateTime(1900, 1, 1);
+        var startDate = new DateTime(1990, 1, 1);
         var endDate = new DateTime(9999, 12, 31);
         var gradesResult = _studentService.GetGradesReport(startDate, endDate);
         var enrollmentResult = _sectionService.GetEnrollmentReport(startDate, endDate);
@@ -114,6 +114,108 @@ public class DashboardController : Controller
 
         model.GradesReport = report;
         
+        return View(model);
+    }
+
+    public IActionResult Sections(SectionsReportModel model)
+    {
+        var enrollmentResult = _sectionService.GetEnrollmentReport(model.Form.StartDate, model.Form.EndDate);
+        if (!enrollmentResult.Ok)
+        {
+            var errMsg = "There was an error retrieving reports data.";
+            _logger.LogError(errMsg + ": " + enrollmentResult.Message);
+            var tempData = new TempDataExtension(false, errMsg);
+            TempData["Message"] = TempDataSerializer.Serialize(tempData);
+            return RedirectToAction("Index");
+        }
+        var report = enrollmentResult.Data;
+
+        switch (model.Form.Order)
+        {
+            case SectionsReportOrder.Instructor:
+                report.SectionEnrollments = report.SectionEnrollments
+                    .OrderBy(s => s.InstructorAlias).ToList();
+                break;
+            case SectionsReportOrder.Course:
+                report.SectionEnrollments = report.SectionEnrollments
+                    .OrderBy(s => s.CourseName).ToList();
+                break;
+            case SectionsReportOrder.StudentCountAsc:
+                report.SectionEnrollments = report.SectionEnrollments
+                    .OrderBy(s => s.StudentCount).ToList();
+                break;
+            case SectionsReportOrder.StudentCountDesc:
+                report.SectionEnrollments = report.SectionEnrollments
+                    .OrderByDescending(s => s.StudentCount).ToList();
+                break;
+            case SectionsReportOrder.AbsencesAsc:
+                report.SectionEnrollments = report.SectionEnrollments
+                    .OrderBy(s => s.Absences).ToList();
+                break;
+            case SectionsReportOrder.AbsencesDesc:
+                report.SectionEnrollments = report.SectionEnrollments
+                    .OrderByDescending(s => s.Absences).ToList();
+                break;
+            case SectionsReportOrder.StartDateAsc:
+                report.SectionEnrollments = report.SectionEnrollments
+                    .OrderBy(s => s.StartDate).ToList();
+                break;
+            case SectionsReportOrder.StartDateDesc:
+                report.SectionEnrollments = report.SectionEnrollments
+                    .OrderByDescending(s => s.StartDate).ToList();
+                break;
+            case SectionsReportOrder.EndDateAsc:
+                report.SectionEnrollments = report.SectionEnrollments
+                    .OrderBy(s => s.EndDate).ToList();
+                break;
+            case SectionsReportOrder.EndDateDesc:
+                report.SectionEnrollments = report.SectionEnrollments
+                    .OrderByDescending(s => s.EndDate).ToList();
+                break;
+        }
+        
+        model.Report = report;
+        return View(model);
+    }
+    
+    public IActionResult Students(StudentsReportModel model)
+    {
+        var enrollmentResult = _sectionService.GetEnrollmentReport(model.Form.StartDate, model.Form.EndDate);
+        if (!enrollmentResult.Ok)
+        {
+            var errMsg = "There was an error retrieving reports data.";
+            _logger.LogError(errMsg + ": " + enrollmentResult.Message);
+            var tempData = new TempDataExtension(false, errMsg);
+            TempData["Message"] = TempDataSerializer.Serialize(tempData);
+            return RedirectToAction("Index");
+        }
+        var report = enrollmentResult.Data;
+
+        switch (model.Form.Order)
+        {
+            case StudentsReportOrder.Student:
+                report.StudentEnrollments = report.StudentEnrollments
+                    .OrderBy(s => s.StudentAlias).ToList();
+                break;
+            case StudentsReportOrder.EnrollmentsAsc:
+                report.StudentEnrollments = report.StudentEnrollments
+                    .OrderBy(s => s.SectionsCount).ToList();
+                break;
+            case StudentsReportOrder.AbsencesAsc:
+                report.StudentEnrollments = report.StudentEnrollments
+                    .OrderBy(s => s.Absences).ToList();
+                break;
+            case StudentsReportOrder.EnrollmentsDesc:
+                report.StudentEnrollments = report.StudentEnrollments
+                    .OrderByDescending(s => s.SectionsCount).ToList();
+                break;
+            case StudentsReportOrder.AbsencesDesc:
+                report.StudentEnrollments = report.StudentEnrollments
+                    .OrderByDescending(s => s.Absences).ToList();
+                break;
+        }
+        
+        model.Report = report;
         return View(model);
     }
 }

@@ -1,0 +1,68 @@
+﻿@model FourthWallAcademy.MVC.Models.ReportModels.SectionsReportModel
+
+@{
+    ViewData["Title"] = "4th Wall Academy : Grades Report";
+}
+
+<div class="card p-2 mb-3 mt-3 d-flex gap-3 justify-content-between flex-wrap">
+    <form asp-controller="Dashboard" asp-action="Sections" method="get" class="d-flex flex-wrap gap-4 align-items-center">
+        <div class="d-flex align-items-center gap-2">
+            <label asp-for="Form.Order" class="form-label"></label>
+            <select asp-for="Form.Order" asp-items="@Model.OrderList" class="form-select"></select>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <label asp-for="Form.StartDate" class="form-label"></label>
+            <input asp-for="Form.StartDate" class="form-control">
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <label asp-for="Form.EndDate" class="form-label"></label>
+            <input asp-for="Form.EndDate" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
+    <div>
+        <a asp-action="Sections" class="link-primary me-3">Sections</a>
+        <a asp-action="Students" class="link-primary text-decoration-none">Students</a>
+    </div>
+    <a asp-action="Index" class="link-primary text-decoration-none">Go Back</a>
+</div>
+
+<table class="table table-bordered table-primary">
+    <thead>
+    <tr>
+        <th># Total Enrollments</th>
+        <th># Total Absences</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>@Model.Report.CountEnrollments</td>
+        <td>@Model.Report.SumAbsences</td>
+    </tr>
+    </tbody>
+</table>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Course</th>
+        <th>Instructor</th>
+        <th># Students</th>
+        <th>Absences</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var report in Model.Report.SectionEnrollments)
+    {
+        <tr>
+            <td>@report.CourseName</td>
+            <td>@report.InstructorAlias</td>
+            <td>@report.StudentCount</td>
+            <td>@report.Absences</td>
+            <td>@report.StartDate.ToShortDateString()</td>
+            <td>@report.EndDate.ToShortDateString()</td>
+        </tr>
+    }
+    </tbody>
+</table>

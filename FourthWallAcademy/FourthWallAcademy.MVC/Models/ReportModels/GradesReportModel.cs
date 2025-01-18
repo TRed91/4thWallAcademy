@@ -29,7 +29,7 @@ public class GradesReportForm
     
     [Display(Name = "From")]
     [DataType(DataType.Date)]
-    public DateTime FromDate { get; set; } = new DateTime(1900, 1, 1);
+    public DateTime FromDate { get; set; } = new DateTime(1990, 1, 1);
     
     [Display(Name = "To")]
     [DataType(DataType.Date)]
