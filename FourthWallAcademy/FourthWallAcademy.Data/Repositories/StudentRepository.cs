@@ -242,24 +242,34 @@ public class StudentRepository : IStudentRepository
         }
     }
 
-    public GradesReport GetGradesReport()
+    public GradesReport GetGradesReport(DateTime startDate, DateTime endDate)
     {
         using (var cn = new SqlConnection(_connectionString))
         {
             var sql = @"SELECT Max(Grade) AS MaxGrade, 
                                AVG(Grade) AS AvgGrade,
                                MIN(Grade) AS MinGrade 
-                        FROM StudentSection";
+                        FROM StudentSection ss 
+                        INNER JOIN Section s ON s.SectionID = ss.SectionID
+                        WHERE s.StartDate >= @startDate AND s.StartDate <= @endDate";
             var sql2 = @"SELECT Max(Grade) AS StudentMaxGrade, 
                                 Avg(Grade) AS StudentAvgGrade, 
                                 Min(Grade) AS StudentMinGrade,
                                 s.Alias
                         FROM StudentSection ss 
                         INNER JOIN Student s ON s.StudentID = ss.StudentID
+                        INNER JOIN Section se on se.SectionID = ss.SectionID
+                        WHERE se.StartDate >= @startDate AND se.StartDate <= @endDate
                         GROUP BY s.Alias;";
+
+            var p = new
+            {
+                startDate,
+                endDate
+            };
             
-            var report = cn.Query<GradesReport>(sql).FirstOrDefault();
-            report.StudentGrades = cn.Query<StudentGrades>(sql2).ToList();
+            var report = cn.Query<GradesReport>(sql, p).FirstOrDefault();
+            report.StudentGrades = cn.Query<StudentGrades>(sql2, p).ToList();
             return report;
         }
     }

@@ -188,11 +188,11 @@ public class StudentService : IStudentService
         }
     }
 
-    public Result<GradesReport> GetGradesReport()
+    public Result<GradesReport> GetGradesReport(DateTime startDate, DateTime endDate)
     {
         try
         {
-            var gradesReport = _repo.GetGradesReport();
+            var gradesReport = _repo.GetGradesReport(startDate, endDate);
             return ResultFactory.Success(gradesReport);
         }
         catch (Exception ex)

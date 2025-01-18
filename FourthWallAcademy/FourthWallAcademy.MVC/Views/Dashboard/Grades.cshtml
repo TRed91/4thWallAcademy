@@ -1,0 +1,66 @@
+﻿@model FourthWallAcademy.MVC.Models.ReportModels.GradesReportModel
+
+@{
+    ViewData["Title"] = "4th Wall Academy : Grades Report";
+}
+
+<div class="card p-2 mb-3 mt-3 d-flex gap-3 justify-content-between">
+    <form asp-controller="Dashboard" asp-action="Grades" method="get" class="d-flex flex-wrap gap-4 align-items-center">
+        <div class="d-flex align-items-center gap-2">
+            <label asp-for="Form.Order" class="form-label"></label>
+            <select asp-for="Form.Order" asp-items="@Model.OrderList" class="form-select"></select>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <label asp-for="Form.FromDate" class="form-label"></label>
+            <input asp-for="Form.FromDate" class="form-control">
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <label asp-for="Form.ToDate" class="form-label"></label>
+            <input asp-for="Form.ToDate" class="form-control">
+        </div>
+        <div class="d-flex align-items-center">
+            <input asp-for="Form.SearchString" placeholder="Search" class="form-control align-self-center">
+        </div>
+        <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
+    <a asp-action="Index" class="link-primary">Go Back</a>
+</div>
+
+<table class="table table-bordered text-center table-primary">
+    <thead>
+    <tr><th colspan="3">Overall Grades</th></tr>
+    <tr>
+        <th>Min</th>
+        <th>Avg</th>
+        <th>Max</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>@Model.GradesReport.MinGrade</td>
+        <td>@Model.GradesReport.AvgGrade</td>
+        <td>@Model.GradesReport.MaxGrade</td>
+    </tr>
+    </tbody>
+</table>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Student</th>
+        <th>Min Grade</th>
+        <th>Avg Grade</th>
+        <th>Max Grade</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var student in Model.GradesReport.StudentGrades)
+    {
+        <tr>
+            <td>@student.Alias</td>
+            <td>@student.StudentMinGrade</td>
+            <td>@student.StudentAvgGrade</td>
+            <td>@student.StudentMaxGrade</td>
+        </tr>
+    }
+    </tbody>
+</table>

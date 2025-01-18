@@ -16,5 +16,5 @@ public interface IStudentRepository
     void AddStudent(Student student);
     void UpdateStudent(Student student);
     void DeleteStudent(int id);
-    GradesReport GetGradesReport();
+    GradesReport GetGradesReport(DateTime startDate, DateTime endDate);
 }

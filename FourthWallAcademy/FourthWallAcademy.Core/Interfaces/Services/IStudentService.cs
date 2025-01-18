@@ -16,5 +16,5 @@ public interface IStudentService
     Result AddStudent(Student student);
     Result UpdateStudent(Student student);
     Result DeleteStudent(int id);
-    Result<GradesReport> GetGradesReport();
+    Result<GradesReport> GetGradesReport(DateTime startDate, DateTime endDate);
 }
