@@ -1,8 +1,10 @@
 using FourthWallAcademy.Core.Interfaces.Repositories;
 using FourthWallAcademy.Core.Interfaces.Services;
+using FourthWallAcademy.Core.Models;
 using FourthWallAcademy.MVC.Models.ReportModels;
 using FourthWallAcademy.MVC.Utilities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FourthWallAcademy.MVC.Controllers;
 
@@ -216,6 +218,132 @@ public class DashboardController : Controller
         }
         
         model.Report = report;
+        return View(model);
+    }
+
+    public IActionResult Powers(PowersReportModel model)
+    {
+        // Fetch Data
+        var reportsListResult = _powerService.GetPowersReportList();
+        if (!reportsListResult.Ok)
+        {
+            var errMsg = "There was an error retrieving power reports.";
+            var tempData = new TempDataExtension(false, errMsg);
+            _logger.LogError(errMsg + ": " + reportsListResult.Message);
+            TempData["Message"] = TempDataSerializer.Serialize(tempData);
+            return RedirectToAction("Index");
+        }
+
+        var reportsList = reportsListResult.Data;
+        
+        // Filter by selected Power Type
+        if (model.Form.PowerTypeID != 0)
+        {
+            reportsList = reportsList
+                .Where(p => p.PowerTypeID == model.Form.PowerTypeID)
+                .ToList();
+        }
+
+        // Apply Search String
+        if (!string.IsNullOrEmpty(model.Form.SearchString) && 
+            !string.IsNullOrWhiteSpace(model.Form.SearchString))
+        {
+            var search = model.Form.SearchString.ToLower().Trim();
+            foreach (var powerType in reportsList)
+            {
+                powerType.PowerRatings = powerType.PowerRatings
+                    .Where(r => r.PowerName.ToLower().Contains(search))
+                    .ToList();
+            }
+            reportsList = reportsList.Where(r => r.PowerRatings.Count > 0).ToList();
+        }
+
+        // Order Reports
+        foreach (var type in reportsList)
+        {
+            switch (model.Form.Order)
+            {
+                case PowerRatingsOrder.Power:
+                    type.PowerRatings = type.PowerRatings.OrderBy(p => p.PowerName).ToList();
+                    break;
+                case PowerRatingsOrder.MinRating:
+                    type.PowerRatings = type.PowerRatings.OrderByDescending(p => p.MinRating).ToList();
+                    break;
+                case PowerRatingsOrder.AvgRating:
+                    type.PowerRatings = type.PowerRatings.OrderByDescending(p => p.AvgRating).ToList();
+                    break;
+                case PowerRatingsOrder.MaxRating:
+                    type.PowerRatings = type.PowerRatings.OrderByDescending(p => p.MaxRating).ToList();
+                    break;
+            }
+        }
+
+        model.Reports = reportsList;
+        model.PowerTypes = new SelectList(reportsListResult.Data, "PowerTypeID", "PowerTypeName");
+        
+        return View(model);
+    }
+
+    public IActionResult Weaknesses(WeaknessReportModel model)
+    {
+        // Fetch Data
+        var reportsListResult = _weaknessService.GetWeaknessReportList();
+        if (!reportsListResult.Ok)
+        {
+            var errMsg = "There was an error retrieving power reports.";
+            var tempData = new TempDataExtension(false, errMsg);
+            _logger.LogError(errMsg + ": " + reportsListResult.Message);
+            TempData["Message"] = TempDataSerializer.Serialize(tempData);
+            return RedirectToAction("Index");
+        }
+
+        var reportsList = reportsListResult.Data;
+        
+        // Filter by selected Power Type
+        if (model.Form.WeaknessTypeID != 0)
+        {
+            reportsList = reportsList
+                .Where(w => w.WeaknessTypeID == model.Form.WeaknessTypeID)
+                .ToList();
+        }
+
+        // Apply Search String
+        if (!string.IsNullOrEmpty(model.Form.SearchString) && 
+            !string.IsNullOrWhiteSpace(model.Form.SearchString))
+        {
+            var search = model.Form.SearchString.ToLower().Trim();
+            foreach (var weaknessType in reportsList)
+            {
+                weaknessType.WeaknessRiskLvs = weaknessType.WeaknessRiskLvs
+                    .Where(r => r.WeaknessName.ToLower().Contains(search))
+                    .ToList();
+            }
+            reportsList = reportsList.Where(r => r.WeaknessRiskLvs.Count > 0).ToList();
+        }
+
+        // Order Reports
+        foreach (var type in reportsList)
+        {
+            switch (model.Form.Order)
+            {
+                case WeaknessReportOrder.Weakness:
+                    type.WeaknessRiskLvs = type.WeaknessRiskLvs.OrderBy(w => w.WeaknessName).ToList();
+                    break;
+                case WeaknessReportOrder.MinRisk:
+                    type.WeaknessRiskLvs = type.WeaknessRiskLvs.OrderBy(w => w.MinRiskLv).ToList();
+                    break;
+                case WeaknessReportOrder.AvgRisk:
+                    type.WeaknessRiskLvs = type.WeaknessRiskLvs.OrderBy(w => w.AvgRiskLv).ToList();
+                    break;
+                case WeaknessReportOrder.MaxRisk:
+                    type.WeaknessRiskLvs = type.WeaknessRiskLvs.OrderBy(w => w.MaxRiskLv).ToList();
+                    break;
+            }
+        }
+
+        model.Reports = reportsList;
+        model.WeaknessTypes = new SelectList(reportsListResult.Data, "WeaknessTypeID", "WeaknessTypeName");
+        
         return View(model);
     }
 }

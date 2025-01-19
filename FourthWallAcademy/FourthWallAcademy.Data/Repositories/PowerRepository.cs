@@ -116,10 +116,27 @@ public class PowerRepository : IPowersRepository
         {
             var sql = @"SELECT MIN(Rating) AS MinRating, 
                                AVG(Rating) AS AvgRating, 
-                               MAX(Rating) AS MaxRating 
+                               MAX(Rating) AS MaxRating
                         FROM StudentPower";
             
             return cn.Query<PowersReport>(sql).FirstOrDefault();
+        }
+    }
+
+    public List<PowerRatings> PowersReportList()
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"SELECT MIN(Rating) AS MinRating, 
+                               AVG(Rating) AS AvgRating, 
+                               MAX(Rating) AS MaxRating,
+                               PowerName,
+                               PowerTypeID
+                        FROM StudentPower sp
+                        INNER JOIN Power p ON p.PowerID = sp.PowerID
+                        GROUP BY PowerName, PowerTypeID";
+            
+            return cn.Query<PowerRatings>(sql).ToList();
         }
     }
 }

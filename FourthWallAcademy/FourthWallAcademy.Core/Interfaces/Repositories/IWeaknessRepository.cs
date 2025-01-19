@@ -7,8 +7,10 @@ public interface IWeaknessRepository
 {
     Weakness? GetWeaknessById(int id);
     List<Weakness> GetWeaknesses();
+    List<WeaknessType> GetWeaknessTypes();
     void AddWeakness(Weakness weakness);
     void UpdateWeakness(Weakness weakness);
     void DeleteWeakness(int id);
     WeaknessesReport WeaknessReport();
+    List<WeaknessRiskLvs> WeaknessReportList();
 }

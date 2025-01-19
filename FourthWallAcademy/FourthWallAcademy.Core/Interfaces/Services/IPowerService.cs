@@ -13,4 +13,5 @@ public interface IPowerService
     Result UpdatePower(Power power);
     Result DeletePower(int id);
     Result<PowersReport> GetPowersReport();
+    Result<List<PowerTypeReport>> GetPowersReportList();
 }

@@ -12,4 +12,5 @@ public interface IPowersRepository
     void UpdatePower(Power power);
     void DeletePower(int id);
     PowersReport PowersReport();
+    List<PowerRatings> PowersReportList();
 }

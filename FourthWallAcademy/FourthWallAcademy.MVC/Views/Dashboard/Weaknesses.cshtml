@@ -1,0 +1,76 @@
+﻿@model FourthWallAcademy.MVC.Models.ReportModels.WeaknessReportModel
+
+@{
+    ViewData["Title"] = "4th Wall Academy : Weaknesses Report";
+}
+
+<div class="card p-2 mb-3 mt-3 d-flex gap-3 justify-content-between">
+    <form asp-controller="Dashboard" asp-action="Weaknesses" method="get" class="d-flex flex-wrap gap-4 align-items-center">
+        <div class="d-flex align-items-center gap-2">
+            <label asp-for="Form.Order" class="form-label"></label>
+            <select asp-for="Form.Order" asp-items="@Model.OrderList" class="form-select"></select>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <label asp-for="Form.WeaknessTypeID" class="form-label flex-shrink-0"></label>
+            <select asp-for="Form.WeaknessTypeID" asp-items="@Model.WeaknessTypes" class="form-select">
+                <option value="0">All</option>
+            </select>
+        </div>
+        <div class="d-flex align-items-center">
+            <input asp-for="Form.SearchString" placeholder="Search" class="form-control align-self-center">
+        </div>
+        <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
+    <a asp-action="Index" class="link-primary">Go Back</a>
+</div>
+
+<table class="table table-primary table-bordered text-center">
+    <thead>
+    <tr>
+        <th colspan="4">Weakness Type</th>
+    </tr>
+    <tr class="d-flex">
+        <th style="flex: 0 0 40%">Weakness</th>
+        <th style="flex: 0 0 20%">Min Risk Lv</th>
+        <th style="flex: 0 0 20%">Avg Risk Lv</th>
+        <th style="flex: 0 0 20%">Max Risk Lv</th>
+    </tr>
+    </thead>
+</table>
+@if (Model.Reports.Count == 0)
+{
+    <h2 class="display-5">No Weaknesses found</h2>
+}
+else
+{
+    foreach (var report in Model.Reports)
+    {
+        <table class="table table-bordered table-striped text-center">
+            <thead>
+            <tr>
+                <th colspan="4">@report.WeaknessTypeName</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (report.WeaknessRiskLvs.Count == 0)
+            {
+                <tr>
+                    <td colspan="4">No reports for this Weakness Type</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var w in report.WeaknessRiskLvs)
+                {
+                    <tr class="d-flex">
+                        <td style="flex: 0 0 40%">@w.WeaknessName</td>
+                        <td style="flex: 0 0 20%">@w.MinRiskLv</td>
+                        <td style="flex: 0 0 20%">@w.AvgRiskLv</td>
+                        <td style="flex: 0 0 20%">@w.MaxRiskLv</td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    }
+}

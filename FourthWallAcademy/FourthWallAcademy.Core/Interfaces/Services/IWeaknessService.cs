@@ -12,4 +12,5 @@ public interface IWeaknessService
     Result UpdateWeakness(Weakness weakness);
     Result DeleteWeakness(int id);
     Result<WeaknessesReport> GetWeaknessReport();
+    Result<List<WeaknessTypeReport>> GetWeaknessReportList();
 }

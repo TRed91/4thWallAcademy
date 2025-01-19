@@ -41,6 +41,14 @@ public class WeaknessRepository : IWeaknessRepository
         }
     }
 
+    public List<WeaknessType> GetWeaknessTypes()
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            return cn.Query<WeaknessType>("SELECT * FROM WeaknessType").ToList();
+        }
+    }
+
     public void AddWeakness(Weakness weakness)
     {
         using (var cn = new SqlConnection(_connectionString))
@@ -105,6 +113,23 @@ public class WeaknessRepository : IWeaknessRepository
                                FROM StudentWeakness;";
             
             return cn.Query<WeaknessesReport>(sql).FirstOrDefault();
+        }
+    }
+
+    public List<WeaknessRiskLvs> WeaknessReportList()
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"SELECT MIN(RiskLevel) AS MinRiskLv, 
+                               AVG(RiskLevel) AS AvgRiskLv, 
+                               MAX(RiskLevel) AS MaxRiskLv,
+                               WeaknessName,
+                               WeaknessTypeID
+                        FROM StudentWeakness sw
+                        INNER JOIN Weakness w ON w.WeaknessID = sw.WeaknessID
+                        GROUP BY WeaknessName, WeaknessTypeID";
+            
+            return cn.Query<WeaknessRiskLvs>(sql).ToList();
         }
     }
 }

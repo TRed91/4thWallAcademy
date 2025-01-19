@@ -97,4 +97,26 @@ public class WeaknessService : IWeaknessService
             return ResultFactory.Fail<WeaknessesReport>(ex.Message);
         }
     }
+
+    public Result<List<WeaknessTypeReport>> GetWeaknessReportList()
+    {
+        try
+        {
+            var types = _repo.GetWeaknessTypes();
+            var reports = _repo.WeaknessReportList();
+            var typeReports = types.Select(t => new WeaknessTypeReport
+            {
+                WeaknessTypeID = t.WeaknessTypeID,
+                WeaknessTypeName = t.WeaknessTypeName,
+                WeaknessRiskLvs = reports
+                    .Where(r => r.WeaknessTypeID == t.WeaknessTypeID)
+                    .ToList()
+            }).ToList();
+            return ResultFactory.Success(typeReports);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<List<WeaknessTypeReport>>(ex.Message);
+        }
+    }
 }

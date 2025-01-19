@@ -122,4 +122,26 @@ public class PowerService : IPowerService
             return ResultFactory.Fail<PowersReport>(ex.Message);
         }
     }
+
+    public Result<List<PowerTypeReport>> GetPowersReportList()
+    {
+        try
+        {
+            var types = _repo.GetPowerTypes();
+            var reports = _repo.PowersReportList();
+            var typeReports = types.Select(t => new PowerTypeReport
+            {
+                PowerTypeID = t.PowerTypeID,
+                PowerTypeName = t.PowerTypeName,
+                PowerRatings = reports
+                    .Where(r => r.PowerTypeID == t.PowerTypeID)
+                    .ToList()
+            }).ToList();
+            return ResultFactory.Success(typeReports);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<List<PowerTypeReport>>(ex.Message);
+        }
+    }
 }
