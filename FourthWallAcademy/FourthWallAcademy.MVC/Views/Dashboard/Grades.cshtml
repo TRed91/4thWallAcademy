@@ -4,7 +4,9 @@
     ViewData["Title"] = "4th Wall Academy : Grades Report";
 }
 
+<h1 class="text-center display-2">Grades Report</h1>
 <div class="card p-2 mb-3 mt-3 d-flex gap-3 justify-content-between">
+    <a asp-action="Index" class="link-primary text-decoration-none text-end">Go Back</a>
     <form asp-controller="Dashboard" asp-action="Grades" method="get" class="d-flex flex-wrap gap-4 align-items-center">
         <div class="d-flex align-items-center gap-2">
             <label asp-for="Form.Order" class="form-label"></label>
@@ -23,7 +25,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Apply</button>
     </form>
-    <a asp-action="Index" class="link-primary">Go Back</a>
 </div>
 
 <table class="table table-bordered text-center table-primary">
