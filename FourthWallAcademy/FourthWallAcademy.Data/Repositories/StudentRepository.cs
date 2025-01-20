@@ -242,6 +242,37 @@ public class StudentRepository : IStudentRepository
         }
     }
 
+    public void AddStudentPassword(StudentPassword studentPassword)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"INSERT INTO StudentPassword (StudentID, Password) 
+                        VALUES (@StudentID, @Password);
+                        SELECT SCOPE_IDENTITY();";
+
+            cn.ExecuteScalar<int>(sql, new
+            {
+                studentPassword.StudentID,
+                studentPassword.Password
+            });
+        }
+    }
+
+    public void UpdateStudentPassword(StudentPassword studentPassword)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"UPDATE StudentPassword SET 
+                           Password = @Password
+                           WHERE StudentID = @StudentID;";
+            cn.Execute(sql, new
+            {
+                studentPassword.StudentID,
+                studentPassword.Password
+            });
+        }
+    }
+
     public GradesReport GetGradesReport(DateTime startDate, DateTime endDate)
     {
         using (var cn = new SqlConnection(_connectionString))

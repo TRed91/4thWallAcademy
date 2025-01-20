@@ -4,6 +4,7 @@ using FourthWallAcademy.Core.Interfaces.Services;
 using FourthWallAcademy.MVC.Models;
 using FourthWallAcademy.MVC.Models.StudentModels;
 using FourthWallAcademy.MVC.Utilities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -16,18 +17,21 @@ public class AdmissionsController : Controller
     private readonly ISectionService _sectionService;
     private readonly IPowerService _powerService;
     private readonly IWeaknessService _weaknessService;
+    private readonly UserManager<IdentityUser> _userManager;
 
     public AdmissionsController(ILogger<AdmissionsController> logger, 
         IStudentService studentService, 
         ISectionService sectionService,
         IPowerService powerService,
-        IWeaknessService weaknessService)
+        IWeaknessService weaknessService,
+        UserManager<IdentityUser> userManager)
     {
         _logger = logger;
         _studentService = studentService;
         _sectionService = sectionService;
         _powerService = powerService;
         _weaknessService = weaknessService;
+        _userManager = userManager;
     }
     
     public IActionResult Students(AdmissionsStudentsModel? model)
@@ -77,7 +81,7 @@ public class AdmissionsController : Controller
         return View(model);
     }
 
-    [HttpGet("/Enroll")]
+    [HttpGet]
     public IActionResult NewStudent()
     {
         var model = new StudentFormModel();
@@ -87,7 +91,7 @@ public class AdmissionsController : Controller
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult NewStudent(StudentFormModel formModel)
+    public async Task<IActionResult> NewStudent(StudentFormModel formModel)
     {
         if (!ModelState.IsValid)
         {
@@ -102,6 +106,24 @@ public class AdmissionsController : Controller
             _logger.LogError($"Error adding new student: {addResult.Message}");
             var errMsg = new TempDataExtension(false, $"Error adding new student: {addResult.Message}");
             TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            return View(formModel);
+        }
+        
+        // remove whitespace from alias
+        string formattedAlias = string.Join("", student.Alias
+            .Where(c => !char.IsWhiteSpace(c)));
+        
+        var user = new IdentityUser{ UserName = formattedAlias };
+        var result = await _userManager.CreateAsync(user, addResult.Data.Password);
+        if (!result.Succeeded)
+        {
+            List<string> errors = new List<string>();
+            foreach (var error in result.Errors)
+            {
+                errors.Add(error.Description);
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            _logger.LogError($"Error adding new student account: {string.Join(", ", errors)}");
             return View(formModel);
         }
 

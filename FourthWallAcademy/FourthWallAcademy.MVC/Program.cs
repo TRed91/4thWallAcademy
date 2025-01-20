@@ -1,6 +1,9 @@
 using FourthWallAcademy.App;
 using FourthWallAcademy.App.Services;
 using FourthWallAcademy.MVC;
+using FourthWallAcademy.MVC.db;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
@@ -8,6 +11,14 @@ using Serilog.Sinks.MSSqlServer;
 var builder = WebApplication.CreateBuilder(args);
 
 var appconfig = new AppConfiguration(builder.Configuration);
+
+// Register DB Context
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration["ConnectionString"]));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -48,6 +59,9 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseStaticFiles();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

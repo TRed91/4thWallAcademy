@@ -13,7 +13,7 @@ public interface IStudentService
     Result DeleteStudentPower(StudentPower studentPower);
     Result AddStudentWeakness(StudentWeakness studentWeakness);
     Result DeleteStudentWeakness(StudentWeakness studentWeakness);
-    Result AddStudent(Student student);
+    Result<StudentPassword> AddStudent(Student student);
     Result UpdateStudent(Student student);
     Result DeleteStudent(int id);
     Result<GradesReport> GetGradesReport(DateTime startDate, DateTime endDate);

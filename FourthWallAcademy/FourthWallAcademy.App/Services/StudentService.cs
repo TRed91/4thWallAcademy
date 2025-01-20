@@ -136,25 +136,33 @@ public class StudentService : IStudentService
         }
     }
 
-    public Result AddStudent(Student student)
+    public Result<StudentPassword> AddStudent(Student student)
     {
         if (DateTime.Today.Year - student.DoB.Year < 14)
         {
-            return ResultFactory.Fail("Student is too young");
+            return ResultFactory.Fail<StudentPassword>("Student is too young");
         }
         try
         {
             var existingStudent = _repo.GetStudentByAlias(student.Alias);
             if (existingStudent != null)
             {
-                return ResultFactory.Fail($"Student with Alias {student.Alias} already exists");
+                return ResultFactory
+                    .Fail<StudentPassword>($"Student with Alias {student.Alias} already exists");
             }
             _repo.AddStudent(student);
-            return ResultFactory.Success();
+            var password = GenerateStudentPassword(student.Alias);
+            var studentPassword = new StudentPassword
+            {
+                StudentID = student.StudentID,
+                Password = password
+            };
+            _repo.AddStudentPassword(studentPassword);
+            return ResultFactory.Success(studentPassword);
         }
         catch (Exception ex)
         {
-            return ResultFactory.Fail(ex.Message);
+            return ResultFactory.Fail<StudentPassword>(ex.Message);
         }
     }
 
@@ -199,5 +207,20 @@ public class StudentService : IStudentService
         {
             return ResultFactory.Fail<GradesReport>(ex.Message);
         }
+    }
+
+    private static string GenerateStudentPassword(string alias)
+    {
+        string formattedAlias = string.Join("", alias.Where(c => !char.IsWhiteSpace(c)));
+        var rng = new Random();
+        int[] nums =
+        {
+            rng.Next(0, 10),
+            rng.Next(0, 10),
+            rng.Next(0, 10),
+            rng.Next(0, 10),
+        };
+        var numsString = string.Join("", nums);
+        return "!" + formattedAlias + numsString;
     }
 }

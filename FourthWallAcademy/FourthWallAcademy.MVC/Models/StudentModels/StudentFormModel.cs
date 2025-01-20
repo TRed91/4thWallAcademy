@@ -16,6 +16,7 @@ public class StudentFormModel : IValidatableObject
     }
     
     [Required]
+    [MinLength(3)]
     public string Alias { get; set; }
     [Required]
     [Display(Name = "Last Name")]
@@ -36,10 +37,12 @@ public class StudentFormModel : IValidatableObject
             errors.Add(new ValidationResult("Student must be at least 14 years old.", ["DoB"]));
         }
 
-        if (Alias.Any(c => !char.IsLetter(c)))
+        var allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ. ";
+        if (Alias.Any(c => !allowedChars.Contains(c)))
         {
-            errors.Add(new ValidationResult("Alias must only contain letters.", ["Alias"]));
+            errors.Add(new ValidationResult("Alias contains invalid characters.", ["Alias"]));
         }
+        
         if (FirstName.Any(c => !char.IsLetter(c)))
         {
             errors.Add(new ValidationResult("First Name must only contain letters.", ["FirstName"]));
