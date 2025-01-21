@@ -115,6 +115,7 @@ public class AdmissionsController : Controller
         
         var user = new IdentityUser{ UserName = formattedAlias };
         var result = await _userManager.CreateAsync(user, addResult.Data.Password);
+        
         if (!result.Succeeded)
         {
             List<string> errors = new List<string>();
@@ -125,6 +126,12 @@ public class AdmissionsController : Controller
             }
             _logger.LogError($"Error adding new student account: {string.Join(", ", errors)}");
             return View(formModel);
+        }
+        
+        var registeredUser = await _userManager.FindByNameAsync(formattedAlias);
+        if (registeredUser != null)
+        {
+            await _userManager.AddToRoleAsync(registeredUser, "Student");
         }
 
         var msg = $"New student added: Id: {student.StudentID}, Alias: {student.Alias}";
@@ -152,7 +159,7 @@ public class AdmissionsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult EditStudent(int id, StudentFormModel model)
+    public async Task<IActionResult> EditStudent(int id, StudentFormModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -170,6 +177,14 @@ public class AdmissionsController : Controller
             
             return View(model);
         }
+        
+        // format the old and new alias to update the identity record
+        string oldFormattedAlias = string.Join("",studentResult.Data.Alias
+            .Where(c => !char.IsWhiteSpace(c)));
+        
+        string newFormattedAlias = string.Join("", model.Alias
+            .Where(c => !char.IsWhiteSpace(c)));
+        
         // replace the student data with model
         var student = studentResult.Data;
         student.Alias = model.Alias;
@@ -177,7 +192,7 @@ public class AdmissionsController : Controller
         student.LastName = model.LastName;
         student.DoB = model.DoB;
         
-        // update
+        // update the student table
         var updateResult = _studentService.UpdateStudent(student);
         if (!updateResult.Ok)
         {
@@ -185,7 +200,31 @@ public class AdmissionsController : Controller
             _logger.LogError(msg);
             var errMsg = new TempDataExtension(false, msg);
             TempData["message"] = TempDataSerializer.Serialize(errMsg);
-            
+            return View(model);
+        }
+        
+        // fetch and update the identity
+        var identityUser = await _userManager.FindByNameAsync(oldFormattedAlias);
+        if (identityUser == null)
+        {
+            var msg = $"Student Identity not found: {oldFormattedAlias}";
+            _logger.LogError(msg);
+            var errMsg = new TempDataExtension(false, msg);
+            TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            return RedirectToAction("StudentDetails", new { id });
+        }
+        
+        identityUser.UserName = newFormattedAlias;
+        identityUser.NormalizedUserName = newFormattedAlias.ToUpper();
+        var result = await _userManager.UpdateAsync(identityUser);
+        if (!result.Succeeded)
+        {
+            var errMsg = $"Error updating student account: {string.Join(", ", result.Errors)}";
+            _logger.LogError(errMsg);
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
             return View(model);
         }
 
