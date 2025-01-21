@@ -1,6 +1,7 @@
 using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Repositories;
 using FourthWallAcademy.Core.Interfaces.Services;
+using FourthWallAcademy.MVC.db.Entities;
 using FourthWallAcademy.MVC.Models;
 using FourthWallAcademy.MVC.Models.StudentModels;
 using FourthWallAcademy.MVC.Utilities;
@@ -17,14 +18,14 @@ public class AdmissionsController : Controller
     private readonly ISectionService _sectionService;
     private readonly IPowerService _powerService;
     private readonly IWeaknessService _weaknessService;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<IdentityStudent> _userManager;
 
     public AdmissionsController(ILogger<AdmissionsController> logger, 
         IStudentService studentService, 
         ISectionService sectionService,
         IPowerService powerService,
         IWeaknessService weaknessService,
-        UserManager<IdentityUser> userManager)
+        UserManager<IdentityStudent> userManager)
     {
         _logger = logger;
         _studentService = studentService;
@@ -113,7 +114,7 @@ public class AdmissionsController : Controller
         string formattedAlias = string.Join("", student.Alias
             .Where(c => !char.IsWhiteSpace(c)));
         
-        var user = new IdentityUser{ UserName = formattedAlias };
+        var user = new IdentityStudent{ StudentID = student.StudentID, UserName = formattedAlias };
         var result = await _userManager.CreateAsync(user, addResult.Data.Password);
         
         if (!result.Succeeded)

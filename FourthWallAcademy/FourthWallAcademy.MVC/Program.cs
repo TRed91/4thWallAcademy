@@ -2,6 +2,7 @@ using FourthWallAcademy.App;
 using FourthWallAcademy.App.Services;
 using FourthWallAcademy.MVC;
 using FourthWallAcademy.MVC.db;
+using FourthWallAcademy.MVC.db.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -16,7 +17,7 @@ var appconfig = new AppConfiguration(builder.Configuration);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration["ConnectionString"]));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<IdentityStudent, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 

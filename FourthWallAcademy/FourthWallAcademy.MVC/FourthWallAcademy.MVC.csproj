@@ -39,7 +39,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="db\Entities\" />
+      <Folder Include="db\Migrations\" />
     </ItemGroup>
 
 </Project>
