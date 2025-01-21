@@ -1,0 +1,25 @@
+@model FourthWallAcademy.MVC.Models.IdentityModels.LoginModel
+
+@{
+    ViewData["Title"] = "4th Wall Academy : Login";
+}
+
+<form asp-controller="Account" 
+      asp-action="Login" 
+      method="post" 
+      class="card d-flex flex-column gap-3">
+    @Html.AntiForgeryToken()
+    <div>
+        <input asp-for="Username" class="form-control" placeholder="Username">
+        <span asp-validation-for="Username"></span>
+    </div>
+    <div>
+        <input asp-for="Password" class="form-control" placeholder="Password">
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div>
+        <input asp-for="RememberMe" class="form-check"></input>
+        <label asp-for="RememberMe" class="form-label"></label>
+    </div>
+    <button class="btn btn-primary">Login</button>
+</form>

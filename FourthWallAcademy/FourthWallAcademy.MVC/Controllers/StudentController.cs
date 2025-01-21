@@ -1,45 +1,57 @@
-﻿using FourthWallAcademy.Core.Interfaces.Services;
+﻿using System.Security.Claims;
+using FourthWallAcademy.Core.Interfaces.Services;
+using FourthWallAcademy.MVC.db.Entities;
 using FourthWallAcademy.MVC.Models;
 using FourthWallAcademy.MVC.Models.StudentModels;
 using FourthWallAcademy.MVC.Utilities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FourthWallAcademy.MVC.Controllers;
 
+[Authorize(Roles = "Student, Admission, Manager, Admin")]
 public class StudentController : Controller
 {
     private readonly ILogger _logger;
     private readonly IStudentService _studentService;
     private readonly ISectionService _sectionService;
+    private readonly UserManager<IdentityStudent> _userManager;
 
-    public StudentController(ILogger<StudentController> logger, IStudentService studentService, ISectionService sectionService)
+    public StudentController(ILogger<StudentController> logger, 
+        IStudentService studentService, 
+        ISectionService sectionService,
+        UserManager<IdentityStudent> userManager)
     {
         _logger = logger;
         _studentService = studentService;
         _sectionService = sectionService;
+        _userManager = userManager;
     }
     
-    public IActionResult Profile(int id)
+    public async Task<IActionResult> Profile()
     {
+        var student = await _userManager.GetUserAsync(User);
+        
         // Fetch Data
-        var profileResult = _studentService.GetStudentById(id);
+        var profileResult = _studentService.GetStudentById(student.StudentID);
 
         if (!profileResult.Ok)
         {
-            _logger.LogWarning($"Error retrieving student with id {id}: {profileResult.Message}");
+            _logger.LogWarning($"Error retrieving student with id {student.StudentID}: {profileResult.Message}");
             var td = new TempDataExtension(false, 
-                $"Error retrieving student with id {id}");
+                $"Error retrieving student with id {student.StudentID}");
             TempData["message"] = TempDataSerializer.Serialize(td);
             return RedirectToAction("Index", "Home");
         }
 
-        var sectionsResult = _sectionService.GetStudentSections(id);
+        var sectionsResult = _sectionService.GetStudentSections(student.StudentID);
         
         if (!profileResult.Ok)
         {
-            _logger.LogWarning($"Error retrieving sections of student with id {id}: {sectionsResult.Message}");
+            _logger.LogWarning($"Error retrieving sections of student with id {student.StudentID}: {sectionsResult.Message}");
             var td = new TempDataExtension(false, 
-                $"Error retrieving sections of student with id {id}");
+                $"Error retrieving sections of student with id {student.StudentID}");
             TempData["message"] = TempDataSerializer.Serialize(td);
             return RedirectToAction("Index", "Home");
         }
