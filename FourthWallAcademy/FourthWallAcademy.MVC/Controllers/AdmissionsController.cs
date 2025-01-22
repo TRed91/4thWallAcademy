@@ -5,6 +5,7 @@ using FourthWallAcademy.MVC.db.Entities;
 using FourthWallAcademy.MVC.Models;
 using FourthWallAcademy.MVC.Models.StudentModels;
 using FourthWallAcademy.MVC.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,14 +19,14 @@ public class AdmissionsController : Controller
     private readonly ISectionService _sectionService;
     private readonly IPowerService _powerService;
     private readonly IWeaknessService _weaknessService;
-    private readonly UserManager<IdentityStudent> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
 
     public AdmissionsController(ILogger<AdmissionsController> logger, 
         IStudentService studentService, 
         ISectionService sectionService,
         IPowerService powerService,
         IWeaknessService weaknessService,
-        UserManager<IdentityStudent> userManager)
+        UserManager<ApplicationUser> userManager)
     {
         _logger = logger;
         _studentService = studentService;
@@ -35,6 +36,7 @@ public class AdmissionsController : Controller
         _userManager = userManager;
     }
     
+    [Authorize(Roles = "Admission, Admin")]
     public IActionResult Students(AdmissionsStudentsModel? model)
     {
         if (model.Form == null)
@@ -82,6 +84,7 @@ public class AdmissionsController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "Admission, Admin")]
     [HttpGet]
     public IActionResult NewStudent()
     {
@@ -90,6 +93,7 @@ public class AdmissionsController : Controller
         return View(model);
     }
     
+    [Authorize(Roles = "Admission, Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> NewStudent(StudentFormModel formModel)
@@ -114,7 +118,7 @@ public class AdmissionsController : Controller
         string formattedAlias = string.Join("", student.Alias
             .Where(c => !char.IsWhiteSpace(c)));
         
-        var user = new IdentityStudent{ StudentID = student.StudentID, UserName = formattedAlias };
+        var user = new ApplicationUser{ StudentID = student.StudentID, UserName = formattedAlias };
         var result = await _userManager.CreateAsync(user, addResult.Data.Password);
         
         if (!result.Succeeded)
@@ -129,6 +133,7 @@ public class AdmissionsController : Controller
             return View(formModel);
         }
         
+        // Add the student role
         var registeredUser = await _userManager.FindByNameAsync(formattedAlias);
         if (registeredUser != null)
         {
@@ -142,6 +147,7 @@ public class AdmissionsController : Controller
         return RedirectToAction("Students");
     }
 
+    [Authorize(Roles = "Admission, Admin")]
     [HttpGet]
     public IActionResult EditStudent(int id)
     {
@@ -158,6 +164,7 @@ public class AdmissionsController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "Admission, Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditStudent(int id, StudentFormModel model)
@@ -237,6 +244,7 @@ public class AdmissionsController : Controller
         return RedirectToAction("StudentDetails", new { id });
     }
 
+    [Authorize(Roles = "Manager, Admission, Admin")]
     public IActionResult StudentDetails(int id)
     {
         var profileResult = _studentService.GetStudentById(id);
@@ -268,6 +276,7 @@ public class AdmissionsController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "Admission, Admin")]
     [HttpGet]
     public IActionResult StudentPowers(int id)
     {
@@ -306,6 +315,7 @@ public class AdmissionsController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "Admission, Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult StudentPowers(int id, StudentPowersModel model)
@@ -339,6 +349,7 @@ public class AdmissionsController : Controller
         return RedirectToAction("StudentPowers", new { id });
     }
 
+    [Authorize(Roles = "Admission, Admin")]
     [HttpGet]
     public IActionResult StudentWeaknesses (int id)
     {
@@ -375,6 +386,7 @@ public class AdmissionsController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "Admission, Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult StudentWeaknesses(int id, StudentWeaknessModel model)
@@ -407,6 +419,7 @@ public class AdmissionsController : Controller
         return RedirectToAction("StudentWeaknesses", new { id });
     }
 
+    [Authorize(Roles = "Admission, Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult RemoveStudentWeakness(int studentId, int weaknessId)
@@ -430,6 +443,7 @@ public class AdmissionsController : Controller
         return RedirectToAction("StudentWeaknesses", new { id = studentId });
     }
     
+    [Authorize(Roles = "Admission, Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult RemoveStudentPower(int studentId, int powerId)

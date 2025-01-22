@@ -49,7 +49,7 @@
             <td>@student.Alias</td>
             <td>@student.DoB.ToShortDateString()</td>
             <td>
-                <a asp-controller="Student" asp-action="Profile" asp-route-id="@student.StudentID" class="link-primary text-center">
+                <a asp-controller="Admissions" asp-action="StudentDetails" asp-route-id="@student.StudentID" class="link-primary text-center">
                     Details
                 </a>
             </td>

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FourthWallAcademy.MVC.db;
 
-public class ApplicationDbContext : IdentityDbContext<IdentityStudent>
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {

@@ -2,10 +2,12 @@
 using FourthWallAcademy.Core.Interfaces.Services;
 using FourthWallAcademy.MVC.Models.InstructorsModels;
 using FourthWallAcademy.MVC.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FourthWallAcademy.MVC.Controllers;
 
+[Authorize(Roles = "Manager, Admin")]
 public class InstructorsController : Controller
 {
     private readonly ILogger _logger;

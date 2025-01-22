@@ -19,6 +19,7 @@
         <p class="lead">@Model.Student.DoB.Day-@Model.Student.DoB.Month-@Model.Student.DoB.Year</p>
     </div>
 </div>
+<a class="link-primary fw-bold fs-2 mb-3" asp-action="Schedule">Schedule</a>
 <div class="d-flex flex-wrap gap-5">
     <div class="flex-grow-1">
         <h2>Powers</h2>
@@ -85,7 +86,7 @@
                 <td>@sec.EndDate.Day-@sec.EndDate.Month-@sec.EndDate.Year</td>
                 <td>@sec.StudentSections[0].Grade</td>
                 <td>@sec.StudentSections[0].Absences</td>
-                <td><a asp-controller="Sections" asp-action="Details" asp-route-id="@sec.SectionID">Details</a></td>
+                <td><a asp-action="SectionDetails" asp-route-id="@sec.SectionID">Details</a></td>
             </tr>
         }
         </tbody>

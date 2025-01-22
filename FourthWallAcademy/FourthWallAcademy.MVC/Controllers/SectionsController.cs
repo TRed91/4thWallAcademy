@@ -4,6 +4,7 @@ using FourthWallAcademy.Core.Interfaces.Services;
 using FourthWallAcademy.MVC.Models;
 using FourthWallAcademy.MVC.Models.SectionModels;
 using FourthWallAcademy.MVC.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -30,6 +31,7 @@ public class SectionsController : Controller
         _studentService = studentService;
     }
     
+    [Authorize(Roles = "Manager, Admin")]
     public IActionResult Index(SectionsIndexModel model)
     {
         // fetch data
@@ -97,6 +99,7 @@ public class SectionsController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "Admission, Manager, Admin")]
     public IActionResult Details(int id)
     {
         var sectionsResult = _sectionService.GetSectionById(id);
@@ -121,6 +124,7 @@ public class SectionsController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "Manager, Admin")]
     [HttpGet]
     public IActionResult Add()
     {
@@ -141,6 +145,7 @@ public class SectionsController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "Manager, Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Add(SectionsFormModel model)
@@ -180,6 +185,7 @@ public class SectionsController : Controller
         return RedirectToAction("Index");
     }
 
+    [Authorize(Roles = "Manager, Admin")]
     [HttpGet]
     public IActionResult Edit(int id)
     {
@@ -202,6 +208,7 @@ public class SectionsController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "Manager, Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Edit(int id, SectionsFormModel model)
@@ -242,6 +249,7 @@ public class SectionsController : Controller
         return RedirectToAction("Details", new { id });
     }
 
+    [Authorize(Roles = "Manager, Admin")]
     [HttpGet]
     public IActionResult Enroll(int id, SectionEnrollModel model)
     {
@@ -298,6 +306,7 @@ public class SectionsController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "Manager, Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult EnrollStudent(int id, SectionEnrollModel model)
@@ -326,6 +335,7 @@ public class SectionsController : Controller
         return RedirectToAction("Enroll", new { id });
     }
 
+    [Authorize(Roles = "Manager, Admin")]
     [HttpGet]
     public IActionResult Remove(int sectionId, int studentId)
     {
@@ -349,6 +359,7 @@ public class SectionsController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "Manager, Admin")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Remove(StudentSectionRemoveModel model)

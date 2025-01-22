@@ -7,14 +7,43 @@ namespace FourthWallAcademy.MVC.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly UserManager<IdentityStudent> _userManager;
-    private readonly SignInManager<IdentityStudent> _signInManager;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
 
-    public AccountController(UserManager<IdentityStudent> userManager, 
-        SignInManager<IdentityStudent> signInManager)
+    public AccountController(UserManager<ApplicationUser> userManager, 
+        SignInManager<ApplicationUser> signInManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Register()
+    {
+        var model = new RegisterUser();
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Register(RegisterUser model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var user = new ApplicationUser{ UserName = model.Username, StudentID = 0 };
+        var result = await _userManager.CreateAsync(user, model.Password);
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return View(model);
+        }
+        await _signInManager.SignInAsync(user, isPersistent: false);
+        return RedirectToAction("Index", "Home");
     }
 
     [HttpGet]
@@ -50,7 +79,7 @@ public class AccountController : Controller
             return View(model);
         }
         
-        return RedirectToAction("Profile", "Student", new { id = student.StudentID });
+        return RedirectToAction("Index", "Home");
     }
 
     [HttpPost]
@@ -58,5 +87,10 @@ public class AccountController : Controller
     {
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
+    }
+
+    public IActionResult AccessDenied()
+    {
+        return View();
     }
 }

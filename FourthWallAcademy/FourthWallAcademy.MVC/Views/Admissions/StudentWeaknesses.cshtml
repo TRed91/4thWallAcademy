@@ -45,7 +45,7 @@
             <td>@w.RiskLevel</td>
             <td>
                 <div class="d-flex flex-wrap gap-2">
-                <a href="" class="text-primary">Details</a>|
+                <a asp-controller="Weaknesses" asp-action="Details" asp-route-id="@w.WeaknessID">Details</a>|
                 <form method="post"
                       asp-controller="Admissions"
                       asp-action="RemoveStudentWeakness"

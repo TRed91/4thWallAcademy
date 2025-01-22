@@ -3,11 +3,11 @@
 @{
     ViewData["Title"] = "4th Wall Academy : Login";
 }
-
+<div class="d-flex justify-content-center">
 <form asp-controller="Account" 
       asp-action="Login" 
       method="post" 
-      class="card d-flex flex-column gap-3">
+      class="card d-flex flex-column gap-3 p-5 col-sm-12 col-md-6 col-lg-4">
     @Html.AntiForgeryToken()
     <div>
         <input asp-for="Username" class="form-control" placeholder="Username">
@@ -18,8 +18,10 @@
         <span asp-validation-for="Password"></span>
     </div>
     <div>
-        <input asp-for="RememberMe" class="form-check"></input>
+        <input asp-for="RememberMe" class="form-check-inline"></input>
         <label asp-for="RememberMe" class="form-label"></label>
     </div>
     <button class="btn btn-primary">Login</button>
+    <div asp-validation-summary="All"></div>
 </form>
+</div>

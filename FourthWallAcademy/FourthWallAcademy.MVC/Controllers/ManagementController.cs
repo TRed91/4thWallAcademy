@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FourthWallAcademy.MVC.Controllers;
 
+[Authorize(Roles = "Manager, Admin")]
 public class ManagementController : Controller
 {
     private readonly ILogger _logger;

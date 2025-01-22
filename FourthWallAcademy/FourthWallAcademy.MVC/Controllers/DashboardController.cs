@@ -3,11 +3,13 @@ using FourthWallAcademy.Core.Interfaces.Services;
 using FourthWallAcademy.Core.Models;
 using FourthWallAcademy.MVC.Models.ReportModels;
 using FourthWallAcademy.MVC.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FourthWallAcademy.MVC.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class DashboardController : Controller
 {
     private readonly ILogger _logger;

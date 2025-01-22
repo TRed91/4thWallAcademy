@@ -1,0 +1,35 @@
+﻿@model FourthWallAcademy.MVC.Models.SectionModels.SectionDetailsModel
+
+@{
+    ViewData["Title"] = $"4th Wall Academy : Section Details {Model.Section.Course.CourseName}";
+}
+
+<h1 class="display-2 text-center">Section Details</h1>
+<section>
+    <div class="mb-3">
+        <p class="mb-3"><strong>Course:</strong> @Model.Section.Course.CourseName</p>
+        <p class="mb-3"><strong>Instructor:</strong> @Model.Section.Instructor.Alias</p>
+    </div>
+    <div class="mb-3 d-flex flex-wrap gap-sm-2 gap-md-3 gap-lg-5">
+        <div>
+            <p class="mb-3"><strong>Start Date:</strong> @Model.Section.StartDate.ToShortDateString()</p>
+            <p class="mb-3"><strong>End Date:</strong> @Model.Section.EndDate.ToShortDateString()</p>
+        </div>
+        <div>
+            <p class="mb-3">
+                <strong>Start Time:</strong> 
+                @Model.Section.StartTime.Hours:@(Model.Section.StartTime.Minutes < 10
+                    ? "0" + Model.Section.StartTime.Minutes
+                    : Model.Section.StartTime.Minutes)
+            </p>
+            <p class="mb-3">
+                <strong>End Time:</strong> 
+                @Model.Section.EndTime.Hours:@(Model.Section.EndTime.Minutes < 10
+                    ? "0" + Model.Section.EndTime.Minutes
+                    : Model.Section.EndTime.Minutes)
+            </p>
+        </div>
+    </div>
+</section>
+
+<a asp-action="Profile" class="link-primary mb-3 mt-3" style="cursor: pointer">Go Back</a>

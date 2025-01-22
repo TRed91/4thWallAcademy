@@ -22,6 +22,10 @@ public class SectionService : ISectionService
         try
         {
             var sections = _repo.GetSectionsByStudent(studentId);
+            if (sections.Count == 0)
+            {
+                return ResultFactory.Fail<StudentSchedule>("Student is not enrolled in any sections");
+            }
             var filteredSections = sections
                 .Where(s => s.EndDate >= startDate && s.StartDate <= endDate)
                 .OrderBy(s => s.StartDate)

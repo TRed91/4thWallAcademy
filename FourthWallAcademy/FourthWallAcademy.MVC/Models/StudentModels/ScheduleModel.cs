@@ -6,7 +6,7 @@ namespace FourthWallAcademy.MVC.Models.StudentModels;
 public class ScheduleModel
 {
     public StudentSchedule? Schedule { get; set; }
-    public ScheduleForm Form { get; set; }
+    public ScheduleForm Form { get; set; } = new ScheduleForm();
 }
 
 public class ScheduleForm

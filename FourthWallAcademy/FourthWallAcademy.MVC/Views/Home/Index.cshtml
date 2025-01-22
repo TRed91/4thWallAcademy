@@ -1,8 +1,9 @@
-﻿@{
+﻿@model HomeModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to the 4th Wall Academy Web App</h1>
-    
+    <h2 class="display-6">@Model.UserName</h2>
 </div>

@@ -16,14 +16,13 @@
         </a>
         <ul class="nav nav-pills">
             <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Home</a></li>
-            <li class="nav-item"><a asp-controller="Student" asp-action="Schedule" class="nav-link">Schedule</a></li>
+            <li class="nav-item"><a asp-controller="Student" asp-action="Profile" class="nav-link">Students</a></li>
             <li class="nav-item"><a asp-controller="Management" asp-action="Index" class="nav-link">Manage</a></li>
             <li class="nav-item"><a asp-controller="Admissions" asp-action="Students" class="nav-link">Admissions</a></li>
             <li class="nav-item"><a asp-controller="Dashboard" asp-action="Index" class="nav-link">Dashboard</a></li>
-            <li class="nav-item"><a asp-controller="Student" asp-action="Profile" class="nav-link">Profile</a></li>
             <li class="nav-item">
                 <form asp-controller="Account" asp-action="Logout" method="post">
-                    <button class="btn btn-link">Logout</button>
+                    <button class="btn btn-link text-decoration-none">Logout</button>
                 </form></li>
         </ul>
     </header>
