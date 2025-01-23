@@ -7,9 +7,9 @@ namespace FourthWallAcademy.Tests;
 public class StudentServiceTests
 {
     [Test]
-    public void GenerateStudentPasswordTest_FormatsAlias()
+    public void GenerateStudentPassword_FormatsAlias()
     {
-        var service = new StudentService(new MockStudentRepo());
+        var service = new StudentService(new MockStudentRepo(new MockDB()));
         var student = new Student
         {
             FirstName = "John",
@@ -26,7 +26,7 @@ public class StudentServiceTests
     [Test]
     public void AddStudent_Fails_TooYoung()
     {
-        var service = new StudentService(new MockStudentRepo());
+        var service = new StudentService(new MockStudentRepo(new MockDB()));
         var student = new Student
         {
             FirstName = "John",

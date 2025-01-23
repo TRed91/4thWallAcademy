@@ -1,4 +1,5 @@
-﻿using _4thWallCafe.Core.Utilities;
+﻿using System.Runtime.ExceptionServices;
+using _4thWallCafe.Core.Utilities;
 using FourthWallAcademy.App.Utilities;
 using FourthWallAcademy.Core.Entities;
 using FourthWallAcademy.Core.Interfaces.Repositories;
