@@ -43,7 +43,8 @@ if (builder.Configuration.GetValue<bool>("Logging:DbLogging:Enabled"))
 }
 Log.Logger = loggerConfiguration.CreateLogger();
 
-builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+builder.Services.AddLogging(loggingBuilder => 
+    loggingBuilder.AddSerilog(dispose: true));
 
 // Register FourthWallAcademy Services
 var sf = new ServiceFactory(appconfig);
