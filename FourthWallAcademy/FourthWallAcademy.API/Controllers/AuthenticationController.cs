@@ -35,7 +35,7 @@ public class AuthenticationController : ControllerBase
         
         _signInManager.AuthenticationScheme = IdentityConstants.BearerScheme;
         
-        var signInResult = await _signInManager.PasswordSignInAsync(model.Alias, model.Password, false, false);
+        var signInResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
         if (!signInResult.Succeeded)
         {
             return TypedResults.Problem(signInResult.ToString(), statusCode: StatusCodes.Status401Unauthorized);

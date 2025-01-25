@@ -56,4 +56,23 @@ public class ScheduleController : ControllerBase
         
         return Ok(scheduleResult.Data);
     }
+
+    [HttpGet("{id}")]
+    [Authorize(Roles = "Admin, Admission, Manager")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<StudentSchedule>> GetAnySchedule(int id, DateTime? fromDate, DateTime? toDate)
+    {
+        var startDate = fromDate ?? DateTime.Now;
+        var endDate = toDate ?? DateTime.Now.AddDays(7);
+        
+        var scheduleResult = _sectionService.GetStudentSchedule(id, startDate, endDate);
+        
+        if (!scheduleResult.Ok)
+        {
+            _logger.LogError("Unable to get student schedule: " + scheduleResult.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+        
+        return Ok(scheduleResult.Data);
+    }
 }
