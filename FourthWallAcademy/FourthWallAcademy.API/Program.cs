@@ -11,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 var appConfig = new AppConfiguration(builder.Configuration);
 
 // add Nswag
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
 // Configure Identity
@@ -33,7 +32,7 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>(options =>
         options.SignIn.RequireConfirmedPhoneNumber = false;
         options.Lockout.MaxFailedAccessAttempts = 5;
         options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-    })
+    }).AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
@@ -77,7 +76,6 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.MapIdentityApi<ApplicationUser>();
 
 if (app.Environment.IsDevelopment())
 {

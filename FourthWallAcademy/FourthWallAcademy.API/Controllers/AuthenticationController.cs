@@ -24,7 +24,7 @@ public class AuthenticationController : ControllerBase
         _signInManager = signInManager;
         _userManager = userManager;
     }
-
+    
     [HttpPost]
     public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login(LoginModel model)
     {
@@ -32,6 +32,9 @@ public class AuthenticationController : ControllerBase
         {
             return TypedResults.Problem(ModelState.ToString(), statusCode: 400);
         }
+        
+        _signInManager.AuthenticationScheme = IdentityConstants.BearerScheme;
+        
         var signInResult = await _signInManager.PasswordSignInAsync(model.Alias, model.Password, false, false);
         if (!signInResult.Succeeded)
         {
