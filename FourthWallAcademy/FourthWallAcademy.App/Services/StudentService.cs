@@ -77,6 +77,19 @@ public class StudentService : IStudentService
         }
     }
 
+    public Result UpdateStudentPower(StudentPower studentPower)
+    {
+        try
+        {
+            _repo.UpdateStudentPower(studentPower);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
+    }
+
     public Result DeleteStudentPower(StudentPower studentPower)
     {
         if (studentPower.PowerID == 0)
@@ -107,6 +120,19 @@ public class StudentService : IStudentService
         try
         {
             _repo.AddStudentWeakness(studentWeakness);
+            return ResultFactory.Success();
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail(ex.Message);
+        }
+    }
+
+    public Result UpdateStudentWeakness(StudentWeakness studentWeakness)
+    {
+        try
+        {
+            _repo.UpdateStudentWeakness(studentWeakness);
             return ResultFactory.Success();
         }
         catch (Exception ex)

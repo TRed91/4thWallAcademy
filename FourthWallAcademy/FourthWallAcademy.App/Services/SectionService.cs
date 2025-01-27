@@ -123,6 +123,24 @@ public class SectionService : ISectionService
         }
     }
 
+    public Result<StudentSection> GetStudentSectionById(int sectionId, int studentId)
+    {
+        try
+        {
+            var section = _repo.GetStudentSection(studentId, sectionId);
+            if (section == null)
+            {
+                return ResultFactory.Fail<StudentSection>("StudentSection not found");
+            }
+
+            return ResultFactory.Success(section);
+        }
+        catch (Exception ex)
+        {
+            return ResultFactory.Fail<StudentSection>(ex.Message);
+        }
+    }
+
     public Result AddSection(Section section)
     {
         var validationResult = ValidationResult(section);

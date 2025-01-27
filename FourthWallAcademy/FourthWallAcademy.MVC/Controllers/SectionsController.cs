@@ -380,4 +380,67 @@ public class SectionsController : Controller
         TempData["Message"] = TempDataSerializer.Serialize(sucTempData);
         return RedirectToAction("Details", new { id = model.SectionId });
     }
+
+    [Authorize(Roles = "Manager, Admin")]
+    [HttpGet]
+    public IActionResult EditStudentSection(int sectionId, int studentId)
+    {
+        var result = _sectionService.GetStudentSectionById(sectionId, studentId);
+        if (!result.Ok)
+        {
+            var errMsg = "There was an error retrieving the student section.";
+            var errTempData = new TempDataExtension(false, errMsg);
+            TempData["Message"] = TempDataSerializer.Serialize(errTempData);
+            _logger.LogError(errMsg + ": " + result.Message);
+            return RedirectToAction("Details", new { id = sectionId });
+        }
+
+        var model = new StudentSectionEditModel
+        {
+            CourseName = result.Data.Section.Course.CourseName,
+            StudentAlias = result.Data.Student.Alias,
+            SectionId = sectionId,
+            StudentId = studentId,
+            Form = new StudentSectionForm
+            {
+                Absences = result.Data.Absences,
+                Grade = result.Data.Grade,
+            }
+        };
+        return View(model);
+    }
+
+    [Authorize(Roles = "Manager, Admin")]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult EditStudentSection(StudentSectionEditModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var studentSection = new StudentSection
+        {
+            SectionID = model.SectionId,
+            StudentID = model.StudentId,
+            Absences = model.Form.Absences,
+            Grade = model.Form.Grade,
+        };
+        var editResult = _sectionService.UpdateStudentSection(studentSection);
+        if (!editResult.Ok)
+        {
+            var errMsg = $"There was an error updating the student section.";
+            var errTempData = new TempDataExtension(false, errMsg);
+            TempData["Message"] = TempDataSerializer.Serialize(errTempData);
+            _logger.LogError(errMsg + ": " + editResult.Message);
+            return RedirectToAction("Details", new { id = model.SectionId });
+        }
+        
+        var msg = "Student section updated successfully.";
+        _logger.LogInformation(msg + $"Student ID: {model.StudentId}, Section ID: {model.SectionId}.");
+        var tempData = new TempDataExtension(true, msg);
+        TempData["Message"] = TempDataSerializer.Serialize(tempData);
+        return RedirectToAction("Details", new { id = model.SectionId });
+    }
 }

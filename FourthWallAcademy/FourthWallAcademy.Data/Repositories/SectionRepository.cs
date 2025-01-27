@@ -49,7 +49,11 @@ public class SectionRepository : ISectionRepository
         {
             var sql = @"SELECT * FROM StudentSection 
                         WHERE StudentID = @studentId AND SectionID = @sectionId";
-            return cn.QueryFirstOrDefault<StudentSection>(sql, new { studentId, sectionId });
+            var section = cn.QueryFirstOrDefault<StudentSection>(sql, new { studentId, sectionId });
+            section.Student = cn.QueryFirstOrDefault<Student>("SELECT * FROM Student WHERE StudentID = @studentId", new { studentId });
+            section.Section = cn.QueryFirstOrDefault<Section>("SELECT * FROM Section WHERE SectionID = @sectionId", new { sectionId });
+            section.Section.Course = cn.QueryFirstOrDefault<Course>("SELECT * FROM Course WHERE CourseID = @CourseID", new { section.Section.CourseID });
+            return section;
         }
     }
 
@@ -244,11 +248,14 @@ public class SectionRepository : ISectionRepository
         {
             var sql = @"UPDATE StudentSection 
                         SET Grade = @Grade, 
-                            Absences = @Absences;";
+                            Absences = @Absences
+                        WHERE SectionID = @SectionID AND StudentID = @StudentID;";
             var p = new
             {
                 studentSection.Grade,
-                studentSection.Absences
+                studentSection.Absences,
+                studentSection.SectionID,
+                studentSection.StudentID
             };
             cn.Execute(sql, p);
         }

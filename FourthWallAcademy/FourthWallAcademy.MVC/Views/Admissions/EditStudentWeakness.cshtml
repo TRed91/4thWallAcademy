@@ -1,0 +1,27 @@
+﻿@model FourthWallAcademy.MVC.Models.StudentModels.StudentWeaknessEditModel
+
+@{
+    ViewData["Title"] = "4th Wall Academy: Edit Student Weakness";
+}
+
+<h1 class="display-4">Edit Student Weakness</h1>
+<h3 class="display-6">Student: @Model.Alias</h3>
+<h3 class="display-6">Power: @Model.WeaknessName</h3>
+
+<form asp-controller="Admissions" asp-action="EditStudentWeakness" method="post" class="m-4 w-50">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Alias)
+    @Html.HiddenFor(m => m.WeaknessName)
+    @Html.HiddenFor(m => m.WeaknessId)
+    @Html.HiddenFor(m => m.StudentId)
+    <div class="mb-3">
+        <label asp-for="RiskLevel" class="form-label"></label>
+        <input asp-for="RiskLevel" class="form-control">
+        <span asp-validation-for="RiskLevel" class="text-danger"></span>
+    </div>
+    <div class="d-flex gap-5 align-items-center mt-4">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="StudentWeaknesses" asp-route-id="@Model.StudentId" class="link-primary link">Go Back</a>
+    </div>
+    <div asp-validation-summary="All"></div>
+</form>

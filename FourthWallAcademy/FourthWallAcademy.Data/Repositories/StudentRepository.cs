@@ -134,6 +134,21 @@ public class StudentRepository : IStudentRepository
         }
     }
 
+    public void UpdateStudentPower(StudentPower studentPower)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"UPDATE StudentPower SET Rating = @Rating
+                        WHERE StudentID = @StudentID AND PowerID = @PowerID;";
+            cn.Execute(sql, new
+            {
+                studentPower.StudentID, 
+                studentPower.PowerID, 
+                studentPower.Rating
+            });
+        }
+    }
+
     public void DeleteStudentPower(StudentPower studentPower)
     {
         using (var cn = new SqlConnection(_connectionString))
@@ -154,6 +169,21 @@ public class StudentRepository : IStudentRepository
         {
             var sql = @"INSERT INTO StudentWeakness (StudentID, WeaknessID, RiskLevel)
                         VALUES (@StudentID, @WeaknessID, @RiskLevel);";
+            cn.Execute(sql, new
+            {
+                studentWeakness.StudentID,
+                studentWeakness.WeaknessID,
+                studentWeakness.RiskLevel
+            });
+        }
+    }
+
+    public void UpdateStudentWeakness(StudentWeakness studentWeakness)
+    {
+        using (var cn = new SqlConnection(_connectionString))
+        {
+            var sql = @"UPDATE StudentWeakness SET RiskLevel = @RiskLevel
+                        WHERE StudentID = @StudentID AND WeaknessID = @WeaknessID;";
             cn.Execute(sql, new
             {
                 studentWeakness.StudentID,

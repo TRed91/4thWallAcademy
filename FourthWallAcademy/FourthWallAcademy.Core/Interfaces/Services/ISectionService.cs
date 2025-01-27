@@ -12,6 +12,7 @@ public interface ISectionService
     Result<List<Section>> GetStudentSections(int studentId);
     Result<List<Section>> GetInstructorSections(int instructorId);
     Result<List<StudentSection>> GetStudentsBySection(int sectionId);
+    Result<StudentSection> GetStudentSectionById(int sectionId, int studentId);
     Result AddSection(Section section);
     Result UpdateSection(Section section);
     Result DeleteSection(Section section);

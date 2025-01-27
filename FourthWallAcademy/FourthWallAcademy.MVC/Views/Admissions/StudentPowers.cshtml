@@ -45,7 +45,8 @@
                 <td>@power.Power.PowerType.PowerTypeName</td>
                 <td>@power.Rating</td>
                 <td><div class="d-flex flex-wrap gap-2">
-                        <a asp-controller="Powers" asp-action="Details" asp-route-id="@power.PowerID">Details</a>|
+                    <a asp-controller="Powers" asp-action="Details" asp-route-id="@power.PowerID">Details</a>|
+                        <a asp-controller="Admissions" asp-action="EditStudentPower" asp-route-powerId="@power.PowerID" asp-route-studentId="@Model.StudentID">Edit</a>|
                         <form method="post"
                               asp-controller="Admissions"
                               asp-action="RemoveStudentPower"

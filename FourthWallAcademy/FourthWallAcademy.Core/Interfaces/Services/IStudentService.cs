@@ -10,8 +10,10 @@ public interface IStudentService
     Result<List<Student>> GetStudents();
     Result<List<Student>> GetStudentsByStartingLetter(char letter);
     Result AddStudentPower(StudentPower studentPower);
+    Result UpdateStudentPower(StudentPower studentPower);
     Result DeleteStudentPower(StudentPower studentPower);
     Result AddStudentWeakness(StudentWeakness studentWeakness);
+    Result UpdateStudentWeakness(StudentWeakness studentWeakness);
     Result DeleteStudentWeakness(StudentWeakness studentWeakness);
     Result<StudentPassword> AddStudent(Student student);
     Result UpdateStudent(Student student);

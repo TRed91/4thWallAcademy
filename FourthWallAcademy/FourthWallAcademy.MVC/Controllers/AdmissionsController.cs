@@ -351,6 +351,110 @@ public class AdmissionsController : Controller
 
     [Authorize(Roles = "Admission, Admin")]
     [HttpGet]
+    public IActionResult EditStudentPower(int studentId, int powerId)
+    {
+        var studentResult = _studentService.GetStudentById(studentId);
+        var studentPower = studentResult.Data.StudentPowers.FirstOrDefault(p => p.PowerID == powerId);
+        studentPower.Power = studentResult.Data.StudentPowers
+            .Where(p => p.PowerID == powerId)
+            .Select(p => p.Power)
+            .FirstOrDefault();
+
+        var model = new StudentPowerEditModel
+        {
+            Alias = studentResult.Data.Alias,
+            PowerName = studentPower.Power.PowerName,
+            PowerId = powerId,
+            StudentId = studentId,
+            Rating = studentPower.Rating,
+        };
+        return View(model);
+    }
+
+    [Authorize(Roles = "Admission, Admin")]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult EditStudentPower(StudentPowerEditModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+        var studentPower = new StudentPower
+        {
+            StudentID = model.StudentId,
+            PowerID = model.PowerId,
+            Rating = model.Rating,
+        };
+        var updateResult = _studentService.UpdateStudentPower(studentPower);
+        if (!updateResult.Ok)
+        {
+            _logger.LogError($"Error updating Student Power: {updateResult.Message}");
+            var errMsg = new TempDataExtension(false, "Error updating Student Power");
+            TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            return View(model);
+        }
+        
+        _logger.LogInformation($"Student power updated" + $"Student ID: {model.StudentId}, PowerID: {model.PowerId}");
+        var msg = new TempDataExtension(true, $"Student power updated");
+        TempData["message"] = TempDataSerializer.Serialize(msg);
+        return RedirectToAction("StudentPowers", new { id = model.StudentId });
+    }
+    
+    [Authorize(Roles = "Admission, Admin")]
+    [HttpGet]
+    public IActionResult EditStudentWeakness(int studentId, int weaknessId)
+    {
+        var studentResult = _studentService.GetStudentById(studentId);
+        var studentWeakness = studentResult.Data.StudentWeaknesses.FirstOrDefault(w => w.WeaknessID == weaknessId);
+        studentWeakness.Weakness = studentResult.Data.StudentWeaknesses
+            .Where(w => w.WeaknessID == weaknessId)
+            .Select(p => p.Weakness)
+            .FirstOrDefault();
+
+        var model = new StudentWeaknessEditModel
+        {
+            Alias = studentResult.Data.Alias,
+            WeaknessName = studentWeakness.Weakness.WeaknessName,
+            WeaknessId = weaknessId,
+            StudentId = studentId,
+            RiskLevel = studentWeakness.RiskLevel,
+        };
+        return View(model);
+    }
+
+    [Authorize(Roles = "Admission, Admin")]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult EditStudentWeakness(StudentWeaknessEditModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+        var studentWeakness = new StudentWeakness
+        {
+            StudentID = model.StudentId,
+            WeaknessID = model.WeaknessId,
+            RiskLevel = model.RiskLevel,
+        };
+        var updateResult = _studentService.UpdateStudentWeakness(studentWeakness);
+        if (!updateResult.Ok)
+        {
+            _logger.LogError($"Error updating Student Weakness: {updateResult.Message}");
+            var errMsg = new TempDataExtension(false, "Error updating Student Weakness");
+            TempData["message"] = TempDataSerializer.Serialize(errMsg);
+            return View(model);
+        }
+        
+        _logger.LogInformation($"Student weakness updated" + $"Student ID: {model.StudentId}, Weakness ID: {model.WeaknessId}");
+        var msg = new TempDataExtension(true, $"Student weakness updated");
+        TempData["message"] = TempDataSerializer.Serialize(msg);
+        return RedirectToAction("StudentWeaknesses", new { id = model.StudentId });
+    }
+
+    [Authorize(Roles = "Admission, Admin")]
+    [HttpGet]
     public IActionResult StudentWeaknesses (int id)
     {
         var studentResult = _studentService.GetStudentById(id);

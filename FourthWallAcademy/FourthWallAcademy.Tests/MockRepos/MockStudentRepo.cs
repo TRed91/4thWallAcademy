@@ -41,12 +41,22 @@ public class MockStudentRepo : IStudentRepository
         throw new NotImplementedException();
     }
 
+    public void UpdateStudentPower(StudentPower studentPower)
+    {
+        throw new NotImplementedException();
+    }
+
     public void DeleteStudentPower(StudentPower studentPower)
     {
         throw new NotImplementedException();
     }
 
     public void AddStudentWeakness(StudentWeakness studentWeakness)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void UpdateStudentWeakness(StudentWeakness studentWeakness)
     {
         throw new NotImplementedException();
     }

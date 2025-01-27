@@ -49,6 +49,7 @@
         <th>Grade</th>
         <th>Absences</th>
         <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -58,6 +59,7 @@
                 <td>@student.Student.Alias</td>
                 <td>@student.Grade</td>
                 <td>@student.Absences</td>
+                <td><a asp-action="EditStudentSection" asp-route-studentId="@student.StudentID" asp-route-sectionId="@student.SectionID">Edit</a></td>
                 <td>
                     <form asp-controller="Sections" asp-action="Remove" method="get">
                         @Html.AntiForgeryToken()
