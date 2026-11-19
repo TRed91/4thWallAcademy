@@ -54,21 +54,24 @@ Users can have one of the following roles assigned to them:
 - Admissions: Can add new Students. This also creates an account with the student role and a random password.
 - Manager: Can add, remove or update courses, sections and instructors
 - Student: Can view only their schedule and student details. Account has to be created by a user with Admissions or Admin Role.
-For the styling I will leverage bootstrap classes for responsive design.
+For the styling I leverage bootstrap classes for responsive design.
 The header and footer are static while the options bar and main section are dynamic.
 
-Users with the Student Role only have access to their Profile and Schedule pages.
-The student’s profile shows all information including powers, weaknesses and sections. A user with the student role can only view their own profile and are redirected to an ‘unauthenticated error’ page if trying to view a profile with a different id in the url. The same goes for the schedule page.
-Users with the Admissions role have access to the Students pages
+Users with the **Student** Role only have access to their Profile and Schedule pages.
+The student’s profile shows all information including powers, weaknesses and sections. 
+A user with the student role can only view their own profile and are redirected to an ‘unauthenticated error’ page if trying to view a profile with a different id in the url. The same goes for the schedule page.
+
+Users with the **Admissions** role have access to the Students pages
 Here users can view registered students, add new students and view student details.
 The student details page is similar to the profile page but includes links to edit various data for a specific student.
 The page for enrolling new students and editing existing student’s personal information are visually identical with the exception that fields in the edit form are already filled out.
 Enrolling new Students also creates an account with a random password.
 The pages for editing powers and weaknesses for a student are also similar.
-Users with the Manage Role have access to the Manage Pages where Instructors, Courses and Sections can be added, updated and removed.
+
+Users with the **Manage** Role have access to the Manage Pages where Instructors, Courses and Sections can be added, updated and removed.
 By default the Courses Subsection is selected. Here you can add a course or view course details.
 The Edit button on Course Details page leads to an edit form that is visually identical to the ‘Add Course’ form. The Delete button redirects to a confirmation page before deleting the course.
-Caution: Deleting a course also deletes all related sections!
+**Caution**: Deleting a course also deletes all related sections!
 Here sections can be created, updated, deleted and students can be enrolled or removed from sections.
 The ‘Edit Section’ form is visually identical to the ‘Add Section’ form. The Sections End Time defaults to 45 minutes after the start time.
 When hitting the Enroll Student link the user is redirected to a list of students to select from. A different version of the section details page is also accessible to students. The student version hides buttons and the list of enrolled students
@@ -76,7 +79,9 @@ Hitting the Enroll link adds the student to the section and redirects to the sec
 Lastly the ‘Instructors’ subsection displays a list of instructors. Also new instructors can be added.
 Again. The form for adding and editing an Instructor are visually identical.
 The Terminate button redirects to a confirmation page before terminating an instructor.
-Lastly users with the Admin Role have access to all sites content as well as the Admin Dashboard
+
+Lastly users with the **Admin** Role have access to all sites content as well as the Admin Dashboard
+
 The Enrollment Reports are divided in two subsections. ‘Sections’ and ‘Students’
 
 ### App Feedback and Error handling
